@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "atomic_note_template.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "atomic_note_template"
             }
           },
           {
@@ -27,15 +27,16 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "atomic_note_template.md",
+                "file": "journal/tasks.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "atomic_note_template"
+              "title": "tasks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -197,11 +198,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "3583bcd6d1df0a42",
+  "active": "07ccc1960b92a245",
   "lastOpenFiles": [
-    "LICENSE",
-    "library",
+    "library/protocols.md",
+    "journal/tasks.md",
+    "journal",
     "atomic_note_template.md",
-    "README.md"
+    "library/protocols.md~",
+    "README.md",
+    "LICENSE",
+    "library"
   ]
 }
