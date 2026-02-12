@@ -5,3 +5,6 @@
 - [ ] Study UDP
 - [ ] Study TCP
 - [ ] Study HTTP
+	- [ ] REST
+	- [ ] 
+- [ ] DNS
