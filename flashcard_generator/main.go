@@ -7,6 +7,7 @@ import (
 	"path"
 
 	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/ast"
 	"github.com/yuin/goldmark/text"
 )
 
@@ -30,6 +31,14 @@ func main() {
 		p := goldmark.DefaultParser()
 
 		node := p.Parse(text.NewReader(source))
+
+		ast.Walk(node, func(n ast.Node, entering bool) (ast.WalkStatus, error) {
+			if entering {
+				fmt.Println(n.Lines())
+			}
+
+			return ast.WalkContinue, nil
+		})
 
 		fmt.Println(fileName)
 	}
