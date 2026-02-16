@@ -185,6 +185,13 @@
   },
   "active": "3583bcd6d1df0a42",
   "lastOpenFiles": [
+    "flashcard_generator/README.md",
+    "flashcard_generator/src/card/card.go~",
+    "flashcard_generator/src/card/card_test.go~",
+    "flashcard_generator/src/card/card_test.go",
+    "flashcard_generator/src/card/card.go",
+    "flashcard_generator/src/card",
+    "flashcard_generator/src",
     "library/protocol_stack.md",
     "library/protocols.md",
     "atomic_note_template.md",
@@ -196,12 +203,6 @@
     "flashcard_generator/go.sum",
     "carrer_plan.md",
     "library/test",
-    "flashcard_generator/main.go",
-    "flashcard_generator/go.mod",
-    "flashcard_generator",
-    "journal",
-    "library/protocols.md~",
-    "README.md",
-    "LICENSE"
+    "README.md"
   ]
 }
