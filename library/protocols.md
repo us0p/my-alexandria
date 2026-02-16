@@ -2,6 +2,7 @@
 id: 260207-protocols
 tags:
   - architecture
+  - networking
 created: 2026-02-07
 status: draft
 ---
