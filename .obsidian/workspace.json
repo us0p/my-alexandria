@@ -185,10 +185,10 @@
   },
   "active": "3583bcd6d1df0a42",
   "lastOpenFiles": [
-    "atomic_note_template.md",
     "library/protocol_stack.md",
-    "MVC Tradicional.md",
     "library/protocols.md",
+    "atomic_note_template.md",
+    "MVC Tradicional.md",
     "journal/tasks.md",
     "library/test/tests.md",
     "flashcard_generator/main.go~",
