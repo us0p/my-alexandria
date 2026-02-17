@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flashcard_generator/src/card"
+	deckmanagement "flashcard_generator/src/infra/deck_management"
 	"fmt"
 	"log"
 	"os"
@@ -25,22 +27,15 @@ func main() {
 		log.Fatal(err)
 	}
 
-	f, err := os.OpenFile(
-		"test_deck.txt",
-		// create files if doesn't exist | open for writing only | truncate file
-		os.O_CREATE|os.O_WRONLY|os.O_TRUNC,
-		0644,
-	)
+	dm, err := deckmanagement.NewDeckManagement("test_deck.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer f.Close()
+	defer dm.CloseDeck()
 
-	f.WriteString("#separator:Semicolon\n")
-	f.WriteString("#columns:Front;Back;GUID;TAGS\n")
-	f.WriteString("#deck:alexandria\n")
-	f.WriteString("#tags column: 4 \n")
-	f.WriteString("#guid column: 3 \n")
+	if err = dm.WriteHeader(); err != nil {
+		log.Fatal(err)
+	}
 
 	for _, fileName := range files {
 		source, err := os.ReadFile(path.Join(LIBRARY_PATH, fileName))
@@ -62,15 +57,14 @@ func main() {
 
 		metadata := meta.Get(ctx)
 
-		fileTags := toStringSlice(metadata["tags"])
-
 		var (
 			inFlashcards bool
-			question,
-			answer string
 		)
 
 		qCount := 1
+		card := card.Card{
+			Tags: toStringSlice(metadata["tags"]),
+		}
 
 		ast.Walk(node, func(n ast.Node, entering bool) (ast.WalkStatus, error) {
 			if !entering {
@@ -91,23 +85,19 @@ func main() {
 				content := getNodeText(n, source)
 
 				if strings.HasPrefix(content, "Q") {
-					question = content
+					card.Question = strings.TrimPrefix(content, "Q: ")
 				} else {
-					answer = content
+					card.Answer = strings.TrimPrefix(content, "A: ")
 				}
 
-				if question != "" && answer != "" {
-					fmt.Fprintf(
-						f,
-						"%s;%s;%s;%s\n",
-						strings.TrimPrefix(question, "Q: "),
-						strings.TrimPrefix(answer, "A: "),
-						fmt.Sprintf("%s-Q%d", metadata["id"], qCount),
-						strings.Join(fileTags, " "),
-					)
+				if card.Question != "" && card.Answer != "" {
+					card.ID = fmt.Sprintf("%s-Q%d", metadata["id"], qCount)
+					if err = dm.AddCard(card); err != nil {
+						log.Fatal(err)
+					}
 					qCount += 1
-					question = ""
-					answer = ""
+					card.Question = ""
+					card.Answer = ""
 				}
 
 				// Skip walking into children since we handled them manually
