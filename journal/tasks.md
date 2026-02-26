@@ -17,20 +17,20 @@
 - [ ] System design
 
 ## Tools
+- [ ] Git
+- [ ] Go
 - [ ] Linux
 - [ ] Bash
-- [ ] Go
-- [ ] Redis
 - [ ] PostgreSQL
-- [ ] Terraform
-- [ ] Git
-- [ ] GitHub Actions
 - [ ] Docker
-- [ ] Kubernetes
+- [ ] Prometheus || Grafana || Datadog
+- [ ] Redis
 - [ ] Kafka
+- [ ] GitHub Actions
+- [ ] Terraform
+- [ ] Kubernetes
 - [ ] Elasticsearch
 - [ ] AI in Development
 - [ ] Ansible
-- [ ] Prometheus || Grafana || Datadog
 
 ... Blockchain stuff
