@@ -13,8 +13,12 @@
 - [ ] WebSockets
 - [ ] gRPC
 - [ ] GraphQL
+- [ ] SDA
+	- [ ] DDD
+ 	- [ ] Clean Architecture
+  	- [ ] System Design
 - [ ] API Development
-- [ ] System design
+
 
 ## Tools
 - [ ] Git
