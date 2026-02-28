@@ -13,15 +13,28 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "library/protocols.md",
+                "file": "library/protocol_stack.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "protocols"
+              "title": "protocol_stack"
+            }
+          },
+          {
+            "id": "ce7bc03f84ba29d5",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/mind_maps/leetcode_grind.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "leetcode_grind.excalidraw"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -94,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "Excalidraw/mind_maps/leetcode_grind.excalidraw.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +117,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for README"
+              "title": "Backlinks for leetcode_grind.excalidraw"
             }
           },
           {
@@ -180,11 +193,18 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "3583bcd6d1df0a42",
+  "active": "ce7bc03f84ba29d5",
   "lastOpenFiles": [
+    "Excalidraw/mind_maps",
+    "library/protocol_stack.md",
+    "Excalidraw/mind_maps/leetcode_grind.excalidraw.md",
+    "Excalidraw",
+    "library/mind_maps",
+    "library/protocols.md",
     "flashcard_generator/README.md",
     "flashcard_generator/src/card/card.go~",
     "flashcard_generator/src/card/card_test.go~",
@@ -192,17 +212,13 @@
     "flashcard_generator/src/card/card.go",
     "flashcard_generator/src/card",
     "flashcard_generator/src",
-    "library/protocol_stack.md",
-    "library/protocols.md",
     "atomic_note_template.md",
     "MVC Tradicional.md",
     "journal/tasks.md",
     "library/test/tests.md",
     "flashcard_generator/main.go~",
     "flashcard_generator/4913",
-    "flashcard_generator/go.sum",
     "carrer_plan.md",
-    "library/test",
     "README.md"
   ]
 }
