@@ -8,29 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "3583bcd6d1df0a42",
+            "id": "b56be63d7085f572",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "library/protocol_stack.md",
+                "file": "library/protocols.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "protocol_stack"
+              "title": "protocols"
             }
           },
           {
-            "id": "ce7bc03f84ba29d5",
+            "id": "9dedb00b6546d423",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/mind_maps/leetcode_grind.excalidraw.md"
+                "file": "atomic_note_template.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "excalidraw-icon",
-              "title": "leetcode_grind.excalidraw"
+              "icon": "lucide-file",
+              "title": "atomic_note_template"
             }
           }
         ],
@@ -197,14 +199,15 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "ce7bc03f84ba29d5",
+  "active": "9dedb00b6546d423",
   "lastOpenFiles": [
-    "Excalidraw/mind_maps",
-    "library/protocol_stack.md",
     "Excalidraw/mind_maps/leetcode_grind.excalidraw.md",
+    "journal/tasks.md",
+    "library/protocol_stack.md",
+    "library/protocols.md",
+    "Excalidraw/mind_maps",
     "Excalidraw",
     "library/mind_maps",
-    "library/protocols.md",
     "flashcard_generator/README.md",
     "flashcard_generator/src/card/card.go~",
     "flashcard_generator/src/card/card_test.go~",
@@ -214,10 +217,8 @@
     "flashcard_generator/src",
     "atomic_note_template.md",
     "MVC Tradicional.md",
-    "journal/tasks.md",
     "library/test/tests.md",
     "flashcard_generator/main.go~",
-    "flashcard_generator/4913",
     "carrer_plan.md",
     "README.md"
   ]
