@@ -13,18 +13,85 @@ A **Protocol Suite** is the definition of the communication protocols that parti
 
 The **Layers** of a protocol stack work together to enable communication between devices.
 
-User applications interacts with the top layer which adds capabilities to lower layers.
+## How data flows from one layer to another
+User applications interacts with the top layer which adds capabilities to lower layers. Each layer adds its own small piece of information (header/trailer) but doesn't modify the actual data from the upper layer.
 
-A protocol stack is divided into three major sections:
-- **Media**: How devices communicate with each other.
-- **Transport**: How data is moved from one place to another.
-- **Applications**: How applications communicate with each other.
+| Layer           | Responsibility                                                               | Protocol Data Unit (PDU) |
+| --------------- | ---------------------------------------------------------------------------- | ------------------------ |
+| **Application** | Create original data (e.g. HTTP request)                                     | **Data**                 |
+| **Transport**   | Add transport headers (TCP/UDP) on top of **Data**                           | **Segment**              |
+| **Network**     | Add ip header on top of **Segment**                                          | **Packet**               |
+| **Data Link**   | Add frame header + trailer (MAC addresses, error check) on top of **Packet** | **Frame**                |
+| **Physical**    | Converts **Frame** into bits/signals on wire, fiver or radio                 | **Bits**                 |
 
-An OS will have two well defined interfaces:
-- **Media to Transport Layers**: Defines how transport protocols make use of particular media and hardware. It's associated with a device driver, e.g.: How **TCP/IP (Transport Layer)** would talk to the network interface controller.
-- **Transport to Application layers**: Defines how application programs make use of the transport layers, e.g.: Defines how a web browser talk to **TCP/IP**.
+This wrapping process is **encapsulation** and it's what makes this design scalable. On the receiving end, each layer only reads its own header and ignores the rest.
 
-A protocol stack makes use of a **Spanning Layer** which is a layer that can cut across multiple layers of the stack to provide services used by multiple layers. An example of a spanning layer is security mechanisms like encryption which can appear at transport layers ([TLS]()) and application layers ([HTTPS]()). It provides flexibility at different levels of the stack.
+> Lower layers treat upper-layer data as opaque payload, so they don't care about format.
+
+Since each layer solves a specific problem, they don't need to understand each other's data.
+
+This allows you to swap protocols on the same layer and the suite would still work without any changes in other layers.
+
+Example:
+```plaintext
+-- Original Suite
+HTTP
+TCP
+IP
+Ethernet
+Fiber
+
+-- Replaces Ethernet by Wi-Fi
+HTTP
+TCP
+IP
+Wi-Fi
+Fiber
+```
+
+Everything from IP above still working unchanged.
+## Layer Directional Dependency
+Layers abstract different scope of communications:
+- **Physical**: raw signal transmission
+- **Data Link**: local network delivery
+- **Network**: routing between networks
+- **Transport**: end-to-end host communication
+- **Application**: user protocols
+
+ Layers are only independent in implementation, this directional dependency exists because topmost layers depends on services provided by the layer below. 
+```plaintext
+Application
+    ↓ needs
+Transport
+    ↓ needs
+Network
+    ↓ needs
+Data Link
+    ↓ needs
+Physical
+
+-- Original Suite
+HTTP
+TCP
+IP
+Ethernet
+Fiber
+
+-- Changing layer order breaks directional dependency
+Wi-Fi
+TCP
+IP
+HTTP
+Fiber
+```
+
+## Spanning Layers
+A protocol stack makes use of a **Spanning Layer** which is a layer that can interact with multiple layers **simultaneously** in the stack to provide services relevant to the whole stack. An example of a spanning layer is security mechanisms like encryption which can appear at transport layers ([TLS]()) and application layers ([HTTPS]()). It provides flexibility at different levels of the stack.
+
+Spanning layers exists because clear layering isn't realistic, a system needs features that affect many layers simultaneously:
+- Security
+- Monitoring/Telemetry
+- Network management
 ## Why do Protocol Stack exists?
 Each protocol tries to solve a single problem. A protocol stack stacks protocols on top of each other so we can have more robust forms of communication. The simple form of each protocol give us the flexibility we need to create that stack.
 
@@ -43,10 +110,12 @@ Each protocol of a stack complements an important characteristic that's missing 
 - [Protocols](protocols.md): What is a protocol and what is its purpose?
 - [TCP/IP Model]: Original protocol stack organization
 - [OSI Model]: Modern protocol stack organization
-## Questions
-- How does data flows from one protocol to another? And how is this made simple so conversions aren't needed?
 ## TL;DR
 A protocol stack is a suite of protocols grouped together. Each protocol adds capabilities on top of each other. Users interacts with the top most protocol of the stack.
+
+The topmost protocol generates data and the subsequent layers encapsulate that data with their own headers without touching the insides, this allow for fast communication as there's no need to convert formats.
+
+Because of this encapsulation, you can replace protocols in the same layer without having to change other layers. But you can't swap layers among themselves as this breaks their directional dependency.
 
 Spanning layers are layers that can interact with more than two layers in the stack, they add flexibility into the design.
 ## Flashcards
@@ -55,12 +124,12 @@ Spanning layers are layers that can interact with more than two layers in the st
 - Q: What is a protocol suite?
 - A: Is the definition of the communication protocols that participate of the protocol stack.
 - Q: What is a spanning layer and what is their purpose?
-- A: Is a layer that can interact with more than two layers in the stack, they add flexibility into the design. 
+- A: Is a layer that can interact with more than two layers in the stack, they add functionality required by more than one layer.
 - Q: Why do protocol stacks exist?
 - A: This modular design exists to make it easier to create more robust forms of communication by connecting one protocol into the other, without having to create translation layers for each combination of protocols.
-- Q: What are the two interfaces an OS will usually have to interact with protocols?
-- A:  Media to Transport Layers and Transport to Application layers.
-- Q: What is the purpose of the media to transport layer interface of an OS?
-- A: Define how transport protocols make use of particular media and hardware. 
-- Q: What is the purpose of the transport to application layer interface of an OS?
-- A: Define how application programs make use of the transport layers.
+- Q: How data flows from one layer to another?
+- A: Each layer encapsulates the information received from the layer above with their own header without touching the insides.
+- Q: What is the Protocol Data Unit of each layer?
+- A: Data, Segment, Packet, Frame, Bits.
+- Q: How can we manage specific protocols inside the stack? Can we replace them with other? Can we change their ordering? Why?
+- A: You can change protocol in the same layer without affecting the overall system, but you can not swap layers as this would break their directional dependency.

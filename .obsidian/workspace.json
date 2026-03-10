@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "atomic_note_template.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "atomic_note_template"
+              "title": "README"
             }
           }
         ],
@@ -59,7 +59,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "Explorador de arquivos"
             }
           },
           {
@@ -189,22 +189,23 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false,
+      "switcher:Abrir a troca rápida": false,
+      "graph:Abrir visualização em gráfico": false,
+      "canvas:Criar novo canvas": false,
+      "daily-notes:Abrir a nota de hoje": false,
+      "templates:Inserir modelo": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Criar nova base": false,
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
   "active": "9dedb00b6546d423",
   "lastOpenFiles": [
-    "Excalidraw/mind_maps/leetcode_grind.excalidraw.md",
-    "journal/tasks.md",
     "library/protocol_stack.md",
     "library/protocols.md",
+    "atomic_note_template.md",
+    "Excalidraw/mind_maps/leetcode_grind.excalidraw.md",
+    "journal/tasks.md",
     "Excalidraw/mind_maps",
     "Excalidraw",
     "library/mind_maps",
@@ -215,7 +216,6 @@
     "flashcard_generator/src/card/card.go",
     "flashcard_generator/src/card",
     "flashcard_generator/src",
-    "atomic_note_template.md",
     "MVC Tradicional.md",
     "library/test/tests.md",
     "flashcard_generator/main.go~",
