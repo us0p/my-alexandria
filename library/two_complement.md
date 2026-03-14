@@ -2,6 +2,7 @@
 id: 260314-two_complement
 tags:
   - algorithms
+  - computer_theory
 created: 2026-03-14
 status: draft
 ---
