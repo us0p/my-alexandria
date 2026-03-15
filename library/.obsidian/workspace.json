@@ -1,24 +1,20 @@
 {
   "main": {
-    "id": "ba8eadcb98c74152",
+    "id": "bd17e980b8c76ea8",
     "type": "split",
     "children": [
       {
-        "id": "236eac098d83a655",
+        "id": "e2040bb3ee56aa5a",
         "type": "tabs",
         "children": [
           {
-            "id": "45072e70f2510159",
+            "id": "339a9fec460cf9a8",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "library/two_complement.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "two_complement"
+              "title": "New tab"
             }
           }
         ]
@@ -27,15 +23,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "f7b271b0f14075ad",
+    "id": "398a662d9b339475",
     "type": "split",
     "children": [
       {
-        "id": "1a9e2b0e0f6c8d02",
+        "id": "31ebd99564f98ec2",
         "type": "tabs",
         "children": [
           {
-            "id": "150d240b5edc876d",
+            "id": "735d5740ddacfda9",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,7 +44,7 @@
             }
           },
           {
-            "id": "168ff751d04cb4d4",
+            "id": "6b2f6d8fa36c1c55",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -65,7 +61,7 @@
             }
           },
           {
-            "id": "c98de4676dd4ed99",
+            "id": "7f14ed7620761584",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -81,20 +77,19 @@
     "width": 300
   },
   "right": {
-    "id": "5e28a55c2c74d083",
+    "id": "1b1356eab0d51a67",
     "type": "split",
     "children": [
       {
-        "id": "d8536106cd815e2a",
+        "id": "d98840cec4418afb",
         "type": "tabs",
         "children": [
           {
-            "id": "53f73204740d4b92",
+            "id": "00fa96ba0dfe2643",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Excalidraw/mind_maps/leetcode_grind.excalidraw.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,25 +99,24 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for leetcode_grind.excalidraw"
+              "title": "Backlinks"
             }
           },
           {
-            "id": "0d117d983fcc2c1f",
+            "id": "39a53668b9962c54",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from README"
+              "title": "Outgoing links"
             }
           },
           {
-            "id": "a5275c3b2eabdd51",
+            "id": "59b417ea0c8eb30a",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -137,7 +131,7 @@
             }
           },
           {
-            "id": "81213c3bc282176e",
+            "id": "4fdafe92cbf89e65",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -151,18 +145,17 @@
             }
           },
           {
-            "id": "b10ea85bea798c4b",
+            "id": "0c4e8d7618b0b8cc",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of README"
+              "title": "Outline"
             }
           }
         ]
@@ -180,32 +173,9 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false,
-      "obsidian-excalidraw-plugin:New drawing": false
+      "bases:Create new base": false
     }
   },
-  "active": "45072e70f2510159",
-  "lastOpenFiles": [
-    "library/two_complement.md",
-    "library/protocols.md",
-    "atomic_note_template.md",
-    "library/protocol_stack.md",
-    "README.md",
-    "Excalidraw/mind_maps/leetcode_grind.excalidraw.md",
-    "journal/tasks.md",
-    "Excalidraw/mind_maps",
-    "Excalidraw",
-    "library/mind_maps",
-    "flashcard_generator/README.md",
-    "flashcard_generator/src/card/card.go~",
-    "flashcard_generator/src/card/card_test.go~",
-    "flashcard_generator/src/card/card_test.go",
-    "flashcard_generator/src/card/card.go",
-    "flashcard_generator/src/card",
-    "flashcard_generator/src",
-    "MVC Tradicional.md",
-    "library/test/tests.md",
-    "flashcard_generator/main.go~",
-    "carrer_plan.md"
-  ]
+  "active": "339a9fec460cf9a8",
+  "lastOpenFiles": []
 }
