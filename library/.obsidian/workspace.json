@@ -8,13 +8,13 @@
         "type": "tabs",
         "children": [
           {
-            "id": "339a9fec460cf9a8",
+            "id": "55d06d3ff5d13027",
             "type": "leaf",
             "state": {
-              "type": "empty",
+              "type": "graph",
               "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ]
@@ -176,6 +176,14 @@
       "bases:Create new base": false
     }
   },
-  "active": "339a9fec460cf9a8",
-  "lastOpenFiles": []
+  "active": "55d06d3ff5d13027",
+  "lastOpenFiles": [
+    "techniques/bit_manipulation_patterns.md",
+    "bit_manipulation.md",
+    "binary_system.md",
+    "techniques",
+    "protocols.md",
+    "two_complement.md",
+    "protocol_stack.md"
+  ]
 }
