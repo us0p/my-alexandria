@@ -5,58 +5,36 @@ status: draft | refined
 tags: [arquitetura, sistemas, teoria]
 created: 2026-01-30
 ---
-# 📌 Título claro e específico
-> Deve responder implicitamente: *“Qual problema essa nota resolve?”*
+# Title
+- concept definition
 ---
-## ❓ Pergunta central
-> Qual é a pergunta **real** que essa nota responde?
-
+## Understanding
+- explanation of the concept, using your own words.
+- Focus on cause and effect.
 Ex:
-- Por que a arquitetura hexagonal reduz acoplamento?
-- Quando **não** usar esse padrão?
+- This pattern exists because systems are likely to couple business rules and external details...
+- The separation allows changing interfaces without having to rewrite central rules...
 ---
-## 🧠 Explicação (com suas palavras)
-> Anotação **generativa**. Nada de copiar fonte.
-- Explique o conceito como se estivesse ensinando
-- Use frases completas
-- Foco em **causa → efeito**
-
-Ex:
-- Esse padrão existe porque sistemas tendem a acoplar regras de negócio a detalhes externos...
-- A separação permite trocar interfaces sem reescrever regras centrais...
+## Trade-offs
+- Limitations
+- Costs
+- Complexity 
 ---
-## ⚖️ Trade-offs / Limites
-> Onde quebra? O que custa?
-- Complexidade inicial
-- Overengineering em sistemas simples
-- Curva de aprendizado
+## Examples
 ---
-## 🧪 Exemplos
-### Exemplo típico
-- Aplicação web com múltiplas interfaces (REST, CLI)
-### Contraexemplo
-- CRUD simples sem lógica relevante
+## References
+### Connects with
+Add link to relative notes
+### Contrasts with
+- Add link to alternatives that tries to solve the same problem
+- Always add relation definition like "expands", "contrasts", "depends"
 ---
-## 🔁 Relações (Zettelkasten)
-### Conecta com:
-- [[Arquitetura em Camadas]]
-- [[DDD – Separação de Domínios]]
-- [[Complexidade Acidental vs Essencial]]
-### Contrasta com:
-- [[MVC Tradicional]]
-> 💡 Links sempre com **verbo implícito**: “expande”, “contrasta”, “depende”
+## Questions
+- Points that are still not clear.
 ---
-## 💭 Fricções / Dúvidas
-> Pontos que ainda não estão claros (ouro puro)
-- Ainda não entendo como isso afeta testes de integração
-- Revisar impacto em performance
+## TL;DR
+Very short resume with only the essential information needed.
 ---
-## 🧠 Síntese em 2–3 linhas
-> Se você só lesse isso daqui a 1 ano, o que deveria lembrar?
----
-## 🎯 Flashcards candidatos
-> ⚠️ **Não escreva cards ainda. Só marque.**
-- [ ] O que é arquitetura hexagonal?
-- [ ] Qual problema ela resolve?
-- [ ] Quando não usar?
-- [ ] Qual trade-off principal?
+## Flashcards
+- Q: Some question about the notes.
+- A: The answer for the question above.
