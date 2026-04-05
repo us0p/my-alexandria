@@ -6,13 +6,13 @@ created: 2026-04-03
 status: draft
 ---
 # Natural Language Processing
-It's a broad field focused enable computers to understand and generate human language. It tries to achieve this by analyzing the meaning of words together and individually.
+It's a broad field focused in enabling computers to understand and generate human language. It tries to achieve this by analyzing the meaning of words together and individually.
 
-NLP tasks are executed by a [Transformer Model]() which are language models trained on  a large base of raw text to perform a specific task.
+NLP tasks are executed by a [Transformer Model]() which are language models trained on  a large base of raw text to perform a **specific task**.
 ## NLP x LLM
-NLP, is not the same as LLMs as the focus is to analyze text and generate completion and not to present reasoning capabilities and are usually built with a specific task in mind.
+NLP, is not the same as LLMs as the focus is to analyze text and generate completion and not to present reasoning capabilities. NLP are usually built with a specific task in mind.
 
-For example, a NLP model doesn't know who was the soccer world champion in 2002, but it know that 'egg' is the missing word in the sentence "I eat a chicken's ---".
+For example, a NLP model wouldn't know how to solve a math problem that takes several steps as it would need reasoning to plan and execute.
 # Understanding
 Natural Language Processing is a study field that tries to make computers understand human language in order to perform simple language tasks like sentiment analysis and text completion.
 NLP mustn't be mistaken with LLMs as they don't have reasoning capabilities.
@@ -24,23 +24,17 @@ Creating not biased models require very careful data cleaning. If you're using a
 ## Costs
 Training a model from scratch require a lot of computational power, while there are already some providers that simplify this infrastructure setup, you still need to pay for those services.
 ## Hallucinations
-Hallucination is when a NLP model generates fluent, confident output that is false or not grounded in reality or source data. The confident generation of this text makes it hard those hallucinations hard to detect specially if you're not informed about what the model is doing.
+Hallucination is when a NLP model generates fluent, confident output that is false or not grounded in reality or source data. The confident generation of this text makes it hard to detect hallucinations, specially if you're not informed about what the model is doing.
 
 It's a natural problem present in all NLP models.
-
-Lately it's been addressed via:
-- [Retrieval-Augmented Generation (RAG)]()
-- [Tools]()
 # Examples
 A NLP model trained to generate text can generate coherent and relevant text based on prompt.
 ## References
 ### Connects with
 - [Large Language Models - LLMs]()
 - [Transformer Models]()
-- [Retrieval-Augmented Generation (RAG)]()
-- [Tools]()
 ## TL;DR
-NLP is a study field that tries to make computers understand human language. It's trained on large amount of raw text and are specialized in one of many specific language tasks. A NLP model can suffer from Hallucination and Bias based on training data and usage. Though recently improvement has been made with RAG and Tools capabilities to guide the model response with more narrow instructions.
+NLP is a study field that tries to make computers understand human language. It's trained on large amount of raw text and are specialized in one of many specific language tasks. A NLP model can suffer from Hallucination and Bias based on training data and usage.
 ## Flashcards
 - Q: What is a NLP model?
 - A: It's a study field that tries to enable computers to understand human language and perform language tasks.
