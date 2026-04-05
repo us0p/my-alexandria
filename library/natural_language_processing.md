@@ -8,7 +8,7 @@ status: draft
 # Natural Language Processing
 It's a broad field focused in enabling computers to understand and generate human language. It tries to achieve this by analyzing the meaning of words together and individually.
 
-NLP tasks are executed by a [Transformer Model]() which are language models trained on  a large base of raw text to perform a **specific task**.
+NLP tasks are executed by a [Transformer Model](transformer_architecture.md) which are language models trained on  a large base of raw text to perform a **specific task**.
 ## NLP x LLM
 NLP, is not the same as LLMs as the focus is to analyze text and generate completion and not to present reasoning capabilities. NLP are usually built with a specific task in mind.
 
@@ -31,8 +31,8 @@ It's a natural problem present in all NLP models.
 A NLP model trained to generate text can generate coherent and relevant text based on prompt.
 ## References
 ### Connects with
-- [Large Language Models - LLMs]()
-- [Transformer Models]()
+- [Large Language Models - LLMs](large_language_models.md)
+- [Transformer Models](transformer_architecture.md)
 ## TL;DR
 NLP is a study field that tries to make computers understand human language. It's trained on large amount of raw text and are specialized in one of many specific language tasks. A NLP model can suffer from Hallucination and Bias based on training data and usage.
 ## Flashcards

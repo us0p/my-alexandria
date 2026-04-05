@@ -32,6 +32,7 @@ There are several LLMs today that can perform a large variety of tasks, from tex
 # References
 ## Connects with
 - [Natural Language Processing - NLP](natural_language_processing.md)
+- [Transformer Architecture](transformer_architecture.md)
 - [Retrieval-Augmented Generation (RAG)]()
 - [Tools]()
 - [Tokens]()
