@@ -6,7 +6,7 @@ created: 2026-04-05
 status: draft
 ---
 # Large Language Models (LLM)
-It's a subset of [NLP](natural_language_processing.md) with massive training data sets called **parameters**.
+It's a subset of [NLP](natural_language_processing.md) with massive training data sets called **parameters**. Most modern LLMs use the [Decoder-Only Architecture](transformer_architecture.md#Transformer%20Blocks) with some of the largest models containing hundreds of billions of parameters.
 
 Different from a NLP model, a LLM has reasoning capabilities and can perform several tasks with minimal training and can learn with examples.
 
@@ -47,3 +47,5 @@ It's a specific area of the NLP study field and it's much more skilled than a si
 - A: Bias, Cost, Context Window and Hallucinations.
 - Q: How can we reduce the hallucination impact on an application?
 - A: You can implement a Retrieval-Augmented Generation system and use tool calling capabilities to provide more context to the model so it has a more target content to generate responses on top of it.
+- Q: What's the most common architecture for a LLM?
+- A: Most LLMs use the Decoder-Only architecture.

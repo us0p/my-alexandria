@@ -13,6 +13,23 @@ NLP tasks are executed by a [Transformer Model](transformer_architecture.md) whi
 NLP, is not the same as LLMs as the focus is to analyze text and generate completion and not to present reasoning capabilities. NLP are usually built with a specific task in mind.
 
 For example, a NLP model wouldn't know how to solve a math problem that takes several steps as it would need reasoning to plan and execute.
+## Types of language models
+| Task                                   | Suggested Architecture                                                         | Examples      |
+| -------------------------------------- | ------------------------------------------------------------------------------ | ------------- |
+| Text classification (sentiment, topic) | [Encoder](transformer_architecture.md#Transformer%20Blocks)                    | BERT, RoBERTa |
+| Text generation (creative writing)     | [Decoder](transformer_architecture.md#Transformer%20Blocks)                    | GPT, LLaMA    |
+| Translation                            | [Encoder-Decoder](transformer_architecture.md#Transformer%20Blocks)            | T5, BART      |
+| Summarization                          | [Encoder-Decoder](transformer_architecture.md#Transformer%20Blocks)            | BART, T5      |
+| Named entity recognition               | [Encoder](transformer_architecture.md#Transformer%20Blocks)                    | BERT, RoBERTa |
+| Question answering (extractive)        | [Encoder](transformer_architecture.md#Transformer%20Blocks)                    | BERT, RoBERTa |
+| Question answering (generative)        | [Encoder-Decoder or Decoder](transformer_architecture.md#Transformer%20Blocks) | T5, GPT       |
+| Conversational AI                      | [Decoder](transformer_architecture.md#Transformer%20Blocks)<br>                | GPT, LLaMA    |
+When considering a language model to use, think about:
+1. What kind of understanding does your task need? (Bidirectional or unidirectional)
+2. Are you generating new text or analyzing existing text?
+3. Do you need to transform one sequence into another?
+
+The answers to these questions will guide you toward the right architecture.
 # Understanding
 Natural Language Processing is a study field that tries to make computers understand human language in order to perform simple language tasks like sentiment analysis and text completion.
 NLP mustn't be mistaken with LLMs as they don't have reasoning capabilities.
@@ -42,3 +59,5 @@ NLP is a study field that tries to make computers understand human language. It'
 - A: NLP models aren't trained on the same amount of data as LLMs, because of that LLMs demonstrate a much better reasoning capability and also can perform many language tasks without specific training, where as NLP models are usually trained with a much smaller data and with a specific task in mind.
 - Q: What are the 3 limitations that NLP models have?
 - A: Bias: Information without filter and treatment. Hallucinations: Fluent and confident generation of information that's not true or doesn't exist. Cost: It's still very expensive to train or host a NLP model.
+- Q: What are the 3 questions you should make when you have to decide the language model type you're gonna use?
+- A:  1. What kind of understanding does your task need?  2. Are you generating new text or analyzing existing text? 3. Do you need to transform one sequence into another?
