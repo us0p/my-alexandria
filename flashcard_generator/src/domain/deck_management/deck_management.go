@@ -1,7 +1,7 @@
 package deckmanagement
 
 import (
-	"flashcard_generator/src/card"
+	"flashcard_generator/src/domain/card"
 	"fmt"
 	"os"
 	"strings"

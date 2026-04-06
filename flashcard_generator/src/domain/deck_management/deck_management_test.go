@@ -1,8 +1,8 @@
 package deckmanagement_test
 
 import (
-	"flashcard_generator/src/card"
-	deckmanagement "flashcard_generator/src/infra/deck_management"
+	"flashcard_generator/src/domain/card"
+	deckmanagement "flashcard_generator/src/domain/deck_management"
 	"fmt"
 	"os"
 	"path"
