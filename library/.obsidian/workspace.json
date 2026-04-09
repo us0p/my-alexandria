@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "646d3642cbbad866",
+        "id": "18541c8423e9b912",
         "type": "tabs",
         "children": [
           {
-            "id": "d1fbefb42f15a5c4",
+            "id": "427a4d315209f2b4",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "text_generation_inference.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "text_generation_inference"
             }
           }
         ]
@@ -176,8 +180,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "d1fbefb42f15a5c4",
+  "active": "427a4d315209f2b4",
   "lastOpenFiles": [
+    "images/beam_search_workflow.png",
+    "images/logit_penalty_workflow.png",
+    "images/token_selection_workflow.png",
     "text_generation_inference.md",
     "training_models.md",
     "protocols.md",
