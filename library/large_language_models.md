@@ -18,7 +18,7 @@ It's a subset of the NLP study field with massive training data sets. LLMs can p
 # Trade-offs
 Along side all the [limitation of a NLP model](natural_language_processing.md#Trade-offs), a LLM also have the following limitations:
 ## Context Window
-The amount of information the model can process at once. It's limited by the number of [Tokens]() and even with bigger sizes of context window, the model response usually gets a lot less accurate as the size of the context window increases.
+The amount of information the model can process at once. It's limited by the number of [Tokens](tokenization.md) and even with bigger sizes of context window, the model response usually gets a lot less accurate as the size of the context window increases.
 
 >Hallucinations are lately been addressed via: 
 >- [Retrieval-Augmented Generation (RAG)]()
@@ -35,7 +35,9 @@ There are several LLMs today that can perform a large variety of tasks, from tex
 - [Transformer Architecture](transformer_architecture.md)
 - [Retrieval-Augmented Generation (RAG)]()
 - [Tools]()
-- [Tokens]()
+- [Tokens](tokenization.md)
+- [Text Inference](text_generation_inference.md)
+- [Model Training](training_models.md)
 # TL;DR
 It's a specific area of the NLP study field and it's much more skilled than a single NLP model. It can perform several language tasks with minimal training and can learn by example or be fine-tuned. As any NLP model, it suffers from **bias**, **high training cost** and currently, still has a very short **context window** size. It also suffers from **hallucinations** but lately this is being addressed via **RAG** and **tool calling** strategies.
 # Flashcards

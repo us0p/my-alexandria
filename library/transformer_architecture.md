@@ -49,7 +49,7 @@ The **attention layer** is what gives the architecture the ability to grasp the 
 - **Compute power**: Training and running models require large amounts of memory which are becoming very expensive with the increasing need for AI setups.
 - **Data Hunger**: Can't produce a good result from a poor input without a massive dataset (can't generalize well with low data).
 - **Context Window**: Fixed maximum length input.
-- **Inference Latency (Auto-regressive Models like GPT)**: [Tokens]() are generated sequentially.
+- **Inference Latency (Auto-regressive Models like GPT)**: [Tokens](tokenization.md) are generated sequentially.
 - **Poor Numerical & Logical Precision**: This architecture excels at approximating patterns which is not really good when dealing with exact logic, specially with float numbers.
 # Example
 BERT is a good example of a transformer model  which is used to analyse the sentiment or topic of a particular text.
@@ -60,7 +60,8 @@ It would be able to tell that the sentence "Brazil is a comedy" is actually BAD.
 - [NLP](natural_language_processing.md)
 - [LLM](large_language_models.md)
 - [Training Models](training_models.md)
-- [Tokens]()
+- [Tokens](tokenization.md)
+- [Text Inference](text_generation_inference.md)
 # TL;DR
 It's an architecture that define how to train language models on large amounts of raw text. The architecture determines that a model is composed of two blocks: **Encoder** and  **Decoder** Model is optimized to generate outputs. Each of these blocks can be used independently.
 The attention layer is what drives the model's attention to specific words in the sentence and allow him to understand the meaning of a sentence.

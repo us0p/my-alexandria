@@ -50,6 +50,9 @@ A NLP model trained to generate text can generate coherent and relevant text bas
 ### Connects with
 - [Large Language Models - LLMs](large_language_models.md)
 - [Transformer Models](transformer_architecture.md)
+- [Tokenizers](tokenization.md)
+- [Text Inference](text_generation_inference.md)
+- [Model Training](training_models.md)
 ## TL;DR
 NLP is a study field that tries to make computers understand human language. It's trained on large amount of raw text and are specialized in one of many specific language tasks. A NLP model can suffer from Hallucination and Bias based on training data and usage.
 ## Flashcards
