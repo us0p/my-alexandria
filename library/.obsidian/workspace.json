@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "b1f2b854cb9675b9",
+            "id": "8120d8077c552c4a",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -180,14 +180,16 @@
       "bases:Criar nova base": false
     }
   },
-  "active": "b1f2b854cb9675b9",
+  "active": "8120d8077c552c4a",
   "lastOpenFiles": [
+    "text_generation_inference.md",
+    "training_models.md",
+    "large_language_model.md",
+    "trokenization.md",
     "tokenization.md",
     "transformer_architecture.md",
-    "training_models.md",
     "large_language_models.md",
     "natural_language_processing.md",
-    "text_generation_inference.md",
     "images/sub_word_tokenization_example.png",
     "images/nlp_model_inference_workflow.png",
     "images/beam_search_workflow.png",

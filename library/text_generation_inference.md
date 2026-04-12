@@ -6,7 +6,7 @@ created: 2026-04-08
 status: draft
 ---
 # Text Generation Inference
-Process of generating human like text from a **Prompt**. [LLMs](large_language_model.md) use the [training](training_models.md) to formulate responses one word at a time. This sequential generation is what allows LLMs to produce coherent and contextually relevant text.
+Process of generating human like text from a **Prompt**. [LLMs](large_language_models.md) use the [training](training_models.md) to formulate responses one word at a time. This sequential generation is what allows LLMs to produce coherent and contextually relevant text.
 
 - **Context Length**: Maximum number of [Tokens](tokenization.md) that the LLM can process at once. Models with different context length capabilities are designed to balance capability with efficiency. The capability is limited by:
 	1. Architecture Size.

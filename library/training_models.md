@@ -45,7 +45,7 @@ Leverage a **pre-trained** model on the English language and then **fine-tune** 
 - [NLP](natural_language_processing.md)
 - [LLM](large_language_models.md)
 - [Transformer Architecture](transformer_architecture.md)
-- [Token](trokenization.md)
+- [Token](tokenization.md)
 - [Text Inference](text_generation_inference.md)
 # TL;DR
 Training a model involves several different strategies from pre-training steps with self-supervised strategies that don't require human intervention to specialized training with transfer learning strategies like fine tuning a model on a specific task. Most important trade-offs are: Accuracy x Compute Cost, Performance x Latency, Data Size x Quality, Bias x Coverage, Speed x Quality, Sustainability x Capability.
