@@ -21,11 +21,11 @@ nth bit is 2 ^ n
 ## Units of digital data
 - **Bit (b)**: Individual 0 or 1
 - **Byte (B)**: Group of 8 b
-- **Kilobyte (kb)**: 1024 B
-- **Megabyte (mb)**: 1024k b
-- **Gigabyte (gb)**: 1024m b
-- **Terabyte (tb)**: 1024 gb
-- **Petabyte (pt)**: 1025 tb
+- **Kilobyte (KB)**: 1024 B
+- **Megabyte (MB)**: 1024 KB
+- **Gigabyte (GB)**: 1024 MB
+- **Terabyte (TB)**: 1024 GB
+- **Petabyte (PT)**: 1025 TB
 ## Why do we use the binary system?
 We use bits because of the underlying physical system that relies on transistors. A transistor can only be powered on (1) or powered off (0). Each transistor represents a bit and that's why computers only use the binary system to perform every calculation.
 ## Examples
@@ -51,4 +51,4 @@ Each bit is a power of 2 starting from 0 up to n.
 - Q: Why do we use the binary system?
 - A: The binary system is used because of underlying transistor technology.
 - Q: What are the binary units? And their respective sizes?
-- A: bit (0 or 1), B(1024 b), kb(1024 B), mg(1024 kb), gb(1024 mb), tb(1024 gb), pb(1024 tb)
+- A: bit (0 or 1), B(1024 b), KB(1024 B), MG(1024 KB), GB(1024 MB), TB(1024 GB), PB(1024 TB)

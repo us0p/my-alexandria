@@ -8,6 +8,8 @@ status: draft
 **Token** a word, a segment of a word or a symbol in the [NLP Model's](natural_language_processing.md) vocabulary.
 
 Tokenization is the process of mapping the **Token** to it's numerical representation and adding relevant information to the model (like special characters).
+## Vocabulary
+A model's vocabulary is the set of word, sub-words or characters that a model knows the meaning for.
 ## Tokenization steps
 1. Split the input into words, sub-words, or symbols (punctuation), the result is called Tokens.
 2. Map each token to an integer.
