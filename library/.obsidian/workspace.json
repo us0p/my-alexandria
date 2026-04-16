@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "text_generation_inference.md",
+                "file": "techniques/bit_manipulation_patterns.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "text_generation_inference"
+              "title": "bit_manipulation_patterns"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -182,11 +182,11 @@
   },
   "active": "baaea5e0981e6b42",
   "lastOpenFiles": [
-    "text_generation_inference.md",
     "two_complement.md",
     "transformer_architecture.md",
     "training_models.md",
     "tokenization.md",
+    "text_generation_inference.md",
     "protocols.md",
     "protocol_stack.md",
     "natural_language_processing.md",
@@ -194,6 +194,7 @@
     "decoding_strategies.md",
     "bit_manipulation.md",
     "binary_system.md",
+    "techniques/bit_manipulation_patterns.md",
     "images/logit_penalty_workflow.png",
     "large_language_model.md",
     "trokenization.md",
@@ -204,7 +205,6 @@
     "images/encoder_decoder_model_workflow.png",
     "images",
     "images/model_training_workflow.png",
-    "techniques/bit_manipulation_patterns.md",
     "techniques"
   ]
 }

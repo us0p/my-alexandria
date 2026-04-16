@@ -5,7 +5,17 @@ tags:
   - computer_theory
 created: 2026-03-16
 status: draft
+type: concept
 ---
+## TL;DR
+Bit manipulation is a performant and memory efficient way of handling underlying bits.
+
+The operators are:
+- **AND(&)**: Keep bits that are equal in both numbers
+- **OR(|)**: Sets a bit if they're different in both numbers
+- **XOR(^)**: Sets a bit if they're different, if they're equal, unsets it.
+- **Left Shift(<<)**: Moves all the bits to the left n times.
+- **Right Shift(>>)**: Moves all the bits tot he right n times.
 # Bit Manipulation
 Are operations we do that have direct effect on top of the underlying bits.
 ## Operators
@@ -60,15 +70,6 @@ It also commonly used on compression algorithms.
 ### Connects with
 - [Two's Complement](two_complement): Sign number representation system.
 - [Bit manipulation patterns](bit_manipulation_patterns.md): Techniques and patterns about bit manipulation.
-## TL;DR
-Bit manipulation is a performant and memory efficient way of handling underlying bits.
-
-The operators are:
-- **AND(&)**: Keep bits that are equal in both numbers
-- **OR(|)**: Sets a bit if they're different in both numbers
-- **XOR(^)**: Sets a bit if they're different, if they're equal, unsets it.
-- **Left Shift(<<)**: Moves all the bits to the left n times.
-- **Right Shift(>>)**: Moves all the bits tot he right n times.
 ## Flashcards
 - Q: What is bit manipulation
 - A: Operations made on numbers down to individual bits

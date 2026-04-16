@@ -4,7 +4,10 @@ tags:
   - AI
 created: 2026-04-05
 status: draft
+type: concept
 ---
+# TL;DR
+It's a specific area of the NLP study field and it's much more skilled than a single NLP model. It can perform several language tasks with minimal training and can learn by example or be fine-tuned. As any NLP model, it suffers from **bias**, **high training cost** and currently, still has a very short **context window** size. It also suffers from **hallucinations** but lately this is being addressed via **RAG** and **tool calling** strategies.
 # Large Language Models (LLM)
 It's a subset of [NLP](natural_language_processing.md) with massive training data sets called **parameters**. Most modern LLMs use the [Decoder-Only Architecture](transformer_architecture.md#Transformer%20Blocks) with some of the largest models containing hundreds of billions of parameters.
 
@@ -38,8 +41,6 @@ There are several LLMs today that can perform a large variety of tasks, from tex
 - [Tokens](tokenization.md)
 - [Text Inference](text_generation_inference.md)
 - [Model Training](training_models.md)
-# TL;DR
-It's a specific area of the NLP study field and it's much more skilled than a single NLP model. It can perform several language tasks with minimal training and can learn by example or be fine-tuned. As any NLP model, it suffers from **bias**, **high training cost** and currently, still has a very short **context window** size. It also suffers from **hallucinations** but lately this is being addressed via **RAG** and **tool calling** strategies.
 # Flashcards
 - Q: What is a LLM?
 - A: A Large Language Model is a NLP model with a massive data set called **parameters** having usually billions of parameters each.

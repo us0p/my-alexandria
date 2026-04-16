@@ -5,7 +5,16 @@ tags:
   - networking
 created: 2026-02-16
 status: draft
+type: concept
 ---
+## TL;DR
+A protocol stack is a suite of protocols grouped together. Each protocol adds capabilities on top of each other. Users interacts with the top most protocol of the stack.
+
+The topmost protocol generates data and the subsequent layers encapsulate that data with their own headers without touching the insides, this allow for fast communication as there's no need to convert formats.
+
+Because of this encapsulation, you can replace protocols in the same layer without having to change other layers. But you can't swap layers among themselves as this breaks their directional dependency.
+
+Spanning layers are layers that can interact with more than two layers in the stack, they add flexibility into the design.
 # Protocol Stack
 It's an implementation of a computer networking **Protocol Suite**. It's divided into **Layers**, each one having a single specific purpose in mind making the design of the stack simple.
 
@@ -110,14 +119,6 @@ Each protocol of a stack complements an important characteristic that's missing 
 - [Protocols](protocols.md): What is a protocol and what is its purpose?
 - [TCP/IP Model]: Original protocol stack organization
 - [OSI Model]: Modern protocol stack organization
-## TL;DR
-A protocol stack is a suite of protocols grouped together. Each protocol adds capabilities on top of each other. Users interacts with the top most protocol of the stack.
-
-The topmost protocol generates data and the subsequent layers encapsulate that data with their own headers without touching the insides, this allow for fast communication as there's no need to convert formats.
-
-Because of this encapsulation, you can replace protocols in the same layer without having to change other layers. But you can't swap layers among themselves as this breaks their directional dependency.
-
-Spanning layers are layers that can interact with more than two layers in the stack, they add flexibility into the design.
 ## Flashcards
 - Q: What is a protocol stack?
 - A: A protocol stack is a suite of protocols grouped together. Each protocol adds capabilities on top of each other.

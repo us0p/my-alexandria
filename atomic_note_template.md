@@ -1,6 +1,6 @@
 ---
 id: 20260130-hex-arch
-type: zettel
+type: concept
 status: draft | refined
 tags: [arquitetura, sistemas, teoria]
 created: 2026-01-30

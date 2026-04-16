@@ -26,7 +26,7 @@ x >> n: Divide by 2^n
 - A: x | (1<<n)
 - Q: How to toggle the nth bit of x?
 - A: x ^ (1<<n)
-- Q: How to multiply x by a 2^n using bitwise operators?
+- Q: How to multiply x by a 2^n using bit wise operators?
 - A: x << n
-- Q: How to divide x by 2^n using bitwise operators?
+- Q: How to divide x by 2^n using bit wise operators?
 - A: x >> n

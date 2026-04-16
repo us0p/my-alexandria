@@ -4,7 +4,11 @@ tags:
   - AI
 created: 2026-04-05
 status: draft
+type: concept
 ---
+# TL;DR
+It's an architecture that define how to train language models on large amounts of raw text. The architecture determines that a model is composed of two blocks: **Encoder** and  **Decoder** Model is optimized to generate outputs. Each of these blocks can be used independently.
+The attention layer is what drives the model's attention to specific words in the sentence and allow him to understand the meaning of a sentence.
 # Transformer Architecture
 Introduced in June of 2017 and originally designed for translations, it's an architecture that define how to train language models on large amounts of raw text in a [Self-Supervised](training_models.md#Self-Supervised%20Learning) fashion that can perform specific language tasks.
 
@@ -62,9 +66,6 @@ It would be able to tell that the sentence "Brazil is a comedy" is actually BAD.
 - [Training Models](training_models.md)
 - [Tokens](tokenization.md)
 - [Text Inference](text_generation_inference.md)
-# TL;DR
-It's an architecture that define how to train language models on large amounts of raw text. The architecture determines that a model is composed of two blocks: **Encoder** and  **Decoder** Model is optimized to generate outputs. Each of these blocks can be used independently.
-The attention layer is what drives the model's attention to specific words in the sentence and allow him to understand the meaning of a sentence.
 # Flashcards
 - Q: What is the transformer architecture?
 - A: It's an architecture that define how to train language models on large amounts of raw text.

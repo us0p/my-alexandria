@@ -4,7 +4,10 @@ tags:
   - AI
 created: 2026-04-08
 status: draft
+type: concept
 ---
+## TL;DR
+Text Inference is composed of two phases (**Prefill and Decoding**). The **decoding** phase can the managed by the use of the [Sampling Filters](decoding_strategies.md) and it's directly impacted by the **Context Length**. The [Transformer Model](transformer_architecture.md) is what extracts the meaning of the input and produces the initial **Embeddings** that are converted to [Logits](decoding_strategies.md) that generate the **probabilities** for each token.
 # Text Generation Inference
 Process of generating human like text from a **Prompt**. [LLMs](large_language_models.md) use the [training](training_models.md) to formulate responses one word at a time. This sequential generation is what allows LLMs to produce coherent and contextually relevant text.
 
@@ -108,8 +111,6 @@ Consider a model that classifies sentiment on a input has two labels 'NEGATIVE' 
 - [Tokenization](tokenization.md)
 - [Transformer Architecture](transformer_architecture.md)
 - [Decoding Strategies](decoding_strategies.md)
-## TL;DR
-Text Inference is composed of two phases (**Prefill and Decoding**). The **decoding** phase can the managed by the use of the [Sampling Filters](decoding_strategies.md) and it's directly impacted by the **Context Length**. The [Transformer Model](transformer_architecture.md) is what extracts the meaning of the input and produces the initial **Embeddings** that are converted to [Logits](decoding_strategies.md) that generate the **probabilities** for each token.
 ## Flashcards
 - Q: What is Text Inference?
 - A: It's the process of generating human like text from a **Prompt**. The model predicts the next word based on the probabilities it learnt during its training.

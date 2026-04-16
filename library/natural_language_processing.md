@@ -4,7 +4,10 @@ tags:
   - AI
 created: 2026-04-03
 status: draft
+type: concept
 ---
+## TL;DR
+NLP is a study field that tries to make computers understand human language. It's trained on large amount of raw text and are specialized in one of many specific language tasks. A NLP model can suffer from Hallucination and Bias based on training data and usage.
 # Natural Language Processing
 It's a broad field focused in enabling computers to understand and generate human language. It tries to achieve this by analyzing the meaning of words together and individually.
 
@@ -53,8 +56,6 @@ A NLP model trained to generate text can generate coherent and relevant text bas
 - [Tokenizers](tokenization.md)
 - [Text Inference](text_generation_inference.md)
 - [Model Training](training_models.md)
-## TL;DR
-NLP is a study field that tries to make computers understand human language. It's trained on large amount of raw text and are specialized in one of many specific language tasks. A NLP model can suffer from Hallucination and Bias based on training data and usage.
 ## Flashcards
 - Q: What is a NLP model?
 - A: It's a study field that tries to enable computers to understand human language and perform language tasks.

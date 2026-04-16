@@ -4,7 +4,14 @@ status: draft
 tags:
   - AI
 created: 2026-04-13
+type: concept
 ---
+## TL;DR
+Once the model produces the **Logits** it applies a series of filters on them to get the necessary **Tokens**. Filters are:
+1. Temperature Scaling: Configures more deterministic or creative responses.
+2. Top-k/Top-p filtering: Different configurations that determine which tokens are going to be considered.
+The model also applies **Penalties** to repetitive tokens to avoid repetition in the response.
+A well known strategy that looks at many possible paths instead of doing it sequentially is the **Beam Search** which considers many logits at the same time and pick only the most probable ones.
 # Decoding strategies
 ![[token_selection_workflow.png]]
 
@@ -59,9 +66,6 @@ A greedy decoding strategy would always pick the first token as it has the bigge
 - [LLM](large_language_models.md)
 - [NLP](natural_language_processing.md)
 - [Text Inference](text_generation_inference.md)
-## TL;DR
-The model also applies **Penalties** to repetitive tokens to avoid repetition in the response.
-A well known strategy that looks at many possible paths instead of doing it sequentially is the **Beam Search** which considers many logits at the same time and pick only the most probable ones.
 ## Flashcards
 - Q: What is a logit?
 - A: It's the raw, unnormalized score of a token before passing through the softmax function.

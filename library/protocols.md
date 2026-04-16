@@ -5,7 +5,10 @@ tags:
   - networking
 created: 2026-02-07
 status: draft
+type: concept
 ---
+## TL;DR
+Protocol is a communication contract with a set of well defined rules that determines how computers in a network must behave in order to communicate successfully.
 # Protocols
 A protocol is a contract for communication that describes how computer systems and programs must behave.
 
@@ -33,8 +36,6 @@ They can be stacked to achieve more robust forms of communication and can use ve
 - [TCP](): Reliable datagram transport protocol
 - [HTTP](): How Client and Server application can communicate.
 - [Protocol Stack](protocol_stack.md): How protocols stack on top of each other and why.
-## TL;DR
-Protocol is a communication contract with a set of well defined rules that determines how computers in a network must behave in order to communicate successfully.
 ## Flashcards
 - Q: What is a protocol?
 - A: A protocol is a contract for communication that describes how computer systems and programs must behave.

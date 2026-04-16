@@ -4,7 +4,10 @@ tags:
   - AI
 created: 2026-04-05
 status: draft
+type: concept
 ---
+# TL;DR
+Training a model involves several different strategies from pre-training steps with self-supervised strategies that don't require human intervention to specialized training with transfer learning strategies like fine tuning a model on a specific task. Most important trade-offs are: Accuracy x Compute Cost, Performance x Latency, Data Size x Quality, Bias x Coverage, Speed x Quality, Sustainability x Capability.
 # Training Models
 Language models are trained to predict the probability of a word given the surrounding context.
 ## Pre-training
@@ -47,8 +50,6 @@ Leverage a **pre-trained** model on the English language and then **fine-tune** 
 - [Transformer Architecture](transformer_architecture.md)
 - [Token](tokenization.md)
 - [Text Inference](text_generation_inference.md)
-# TL;DR
-Training a model involves several different strategies from pre-training steps with self-supervised strategies that don't require human intervention to specialized training with transfer learning strategies like fine tuning a model on a specific task. Most important trade-offs are: Accuracy x Compute Cost, Performance x Latency, Data Size x Quality, Bias x Coverage, Speed x Quality, Sustainability x Capability.
 # Flashcards
 Q: Models are trained to do what in specific?
 A: Models are trained to predict the probability of the next word given its surrounding context.

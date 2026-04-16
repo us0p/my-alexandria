@@ -5,7 +5,12 @@ tags:
   - computer_theory
 created: 2026-03-14
 status: draft
+type: concept
 ---
+## TL;DR
+To get the binary representation of a negative number you take the maximum number of available integers `2^n` minus the module of the number you want to represent. It's like counting backwards.
+
+The amount of negative numbers that can be represented by an N bit integer is equal to `2 ^ (n - 1)` and the numbers goes from `-(2 ^ (n - 1))..(2^n-1)`, this drift in the number of numbers is because of the zero.
 # Two's complement
 It's the standard way computers represent signed integers.
 
@@ -68,11 +73,6 @@ The range of numbers we can represent with 8 bits therefore is: `-128..127 (256 
 - 127 -> 01111111
 - -128 -> 10000000
 - -1 -> 11111111 (2 ^ 8 - |-1| = 256 - 1 = 255)
-
-## TL;DR
-To get the binary representation of a negative number you take the maximum number of available integers `2^n` minus the module of the number you want to represent. It's like counting backwards.
-
-The amount of negative numbers that can be represented by an N bit integer is equal to `2 ^ (n - 1)` and the numbers goes from `-(2 ^ (n - 1))..(2^n-1)`, this drift in the number of numbers is because of the zero.
 ## Flashcards
 - Q: What are two's complement used for in computing?
 - A: It's used to represent negative number using binary notation.
