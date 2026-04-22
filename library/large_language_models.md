@@ -16,6 +16,14 @@ Different from a NLP model, a LLM has reasoning capabilities and can perform sev
 Can also be fine-tuned to perform a wide range of language tasks or to increase its focus.
 
 For example, a LLM can solve math problems and puzzles with several steps as it can plan and act accordingly.
+## Agentic capabilities
+In addition to text generation, many models support:
+- **Tool Calling**: Call external tools and use results in their responses and reasoning.
+- **Structured Output**: Model's response is constrained to follow a defined format.
+- **Multimodality**: Process and return data other than text.
+- **Reasoning**: Perform multi-step reasoning to arrive at a conclusion.
+
+The **Reasoning** capability is what make LLMs suitable for [Agentic applications](llm_agent.md). They drive the agent's decision-making process, determining which tools to call, how to interpret results and when to provide a final answer.
 # Understanding
 It's a subset of the NLP study field with massive training data sets. LLMs can perform several language tasks with minimal training. It can also learn by examples or be fine-tuned to perform more specific tasks.
 # Trade-offs
@@ -41,6 +49,9 @@ There are several LLMs today that can perform a large variety of tasks, from tex
 - [Tokens](tokenization.md)
 - [Text Inference](text_generation_inference.md)
 - [Model Training](training_models.md)
+- [Agents](llm_agent.md)
+## Questions
+- What's the difference between chat models and embedding models.
 # Flashcards
 - Q: What is a LLM?
 - A: A Large Language Model is a NLP model with a massive data set called **parameters** having usually billions of parameters each.
@@ -52,3 +63,5 @@ There are several LLMs today that can perform a large variety of tasks, from tex
 - A: You can implement a Retrieval-Augmented Generation system and use tool calling capabilities to provide more context to the model so it has a more target content to generate responses on top of it.
 - Q: What's the most common architecture for a LLM?
 - A: Most LLMs use the Decoder-Only architecture.
+- Q: What are the agentic capabilities an LLM provides?
+- A: Tool calling, structured output, multimodaility and reasoning.
