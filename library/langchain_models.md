@@ -38,7 +38,7 @@ It allows applications to work around model capabilities dynamically:
 - **Summarization Middleware** can trigger summarization based on a model's [context window size](text_generation_inference.md#The%20context%20length%20challenge).
 - Model inputs can be gated based on supported **modalities** and **maximum input tokens**.
 ## Multimodal
-Certain models can process and return non-textual data. You can pass non-text data with [Content Blocks](). **Content Blocks** can also be present in the [AIMessage]() if the response contains multimodal data.
+Certain models can process and return non-textual data. You can pass non-text data with [`Content Blocks`](langchain_messages.md#Message%20content). **Content Blocks** can also be present in the [`AIMessage`](langchain_messages.md) if the response contains multimodal data.
 ## Reasoning
 **If supported by the underlying model**, you can surface the reasoning process to better understand how the model arrived at its final answer.
 ```python
@@ -49,7 +49,7 @@ print(" ".join(step["reasoning"] for step in reasoning_steps))
 
 >Depending on the model, you can specify the level of effort it should put into reasoning. Please check the [reference](https://reference.langchain.com/python/integrations/?_gl=1*11qy6pc*_gcl_au*MTU4OTcyNjY2LjE3NzM4Njc3MjE.*_ga*MTYxODAxODM1OS4xNzczODY3NzIx*_ga_47WX3HKKY2*czE3NzY4ODk1ODUkbzE4JGcwJHQxNzc2ODg5NTg1JGo2MCRsMCRoMA..) for your respective chat model.
 ## Token Usage
-Some providers return token usage information as part of the invocation response. When available this information will be included in the [AIMessage]() objects.
+Some providers return token usage information as part of the invocation response. When available this information will be included in the [`AIMessage`](langchain_messages.md) objects.
 
 You can track aggregate token counts across models in an application using either a callback or context manager.
 ### Callback handler
@@ -201,7 +201,7 @@ model = init_chat_model(
 ```
 ### Model invocation
 #### Invoke
-- Returns a single [AIMessage]().
+- Returns a single [`AIMessage`](langchain_messages.md).
 ```python
 # call model with a single message or a list of messages
 response = model.invoke("Why do parrots have colorful feather?")
@@ -216,7 +216,7 @@ response = model.invoke([
 #### Stream
 - Returns output progressively.
 - Calling this method returns an [Iterator]() that yield output chunks as they're produced..
-- Returns multiple [AIMessageChunk](). Tool calls are built through [ToolCallChunk]().
+- Returns multiple [`AIMessageChunk`](langchain_messages.md). Tool calls are built through [`ToolCallChunk`](langchain_messages.md).
 - Each chunk in a stream is designed to be gathered into a full message via summation.
 ```python
 full = None
@@ -262,7 +262,7 @@ model.batch(
 )
 ```
 #### Invocation Configuration
-When invoking a model, you can pass additional configuration through the `config` parameters using a [RunnableConfig](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig?_gl=1*11ua93o*_gcl_au*MTU4OTcyNjY2LjE3NzM4Njc3MjE.*_ga*MTYxODAxODM1OS4xNzczODY3NzIx*_ga_47WX3HKKY2*czE3NzY4NzUxNDIkbzE2JGcxJHQxNzc2ODc1MjQwJGo2MCRsMCRoMA..) dictionary.
+When invoking a model, you can pass additional configuration through the `config` parameters using a [`RunnableConfig`](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig?_gl=1*11ua93o*_gcl_au*MTU4OTcyNjY2LjE3NzM4Njc3MjE.*_ga*MTYxODAxODM1OS4xNzczODY3NzIx*_ga_47WX3HKKY2*czE3NzY4NzUxNDIkbzE2JGcxJHQxNzc2ODc1MjQwJGo2MCRsMCRoMA..) dictionary.
 ### Adding tools to the model
 To make [tools]() that you've defined available for the model, you must bind them using `bing_tools()`.
 ```python
@@ -368,7 +368,7 @@ print(response)
 - [Tools]()
 - [Structured Output]()
 - [LLMs](large_language_models.md)
-- [Messages]()
+- [Messages](langchain_messages.md)
 - [Iterator]()
 - [Pydantic]()
 - [TypedDict]()
