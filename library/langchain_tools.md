@@ -8,7 +8,9 @@ tags:
 created: 2026-04-24
 ---
 ## TL;DR
-Very short summary with only essential info.
+LangChain Tools are function that are made available to the LLM which uses the function signature to determine when, and how to use it, allowing it to take actions in the real world.
+
+A tool can have access to the environment metadata by accessing the `runtime: ToolRuntime` object. This object can be safely mutated and it's not shared with the model.
 # LangChain Tools
 Tools allows [LLMs](large_language_models.md) to take actions in the world by allowing them to interact with resources like databases, execute code, etc.
 
@@ -29,6 +31,8 @@ def search_database(query: str, limit: int = 10) -> str:
 	"""
 	return f"Found {limit} results for '{query}'"
 ```
+## Prebuilt tools
+LangChain provides a collection of prebuilt tools and toolkits for common tasks. Check the [documentation](https://docs.langchain.com/oss/python/integrations/tools) for more.
 ## Access Context
 Tools can access runtime information through the `ToolRuntime` parameter which provide access to the core components:
 
@@ -188,20 +192,80 @@ def get_weather(city: str, runtime: ToolRuntime) -> str:
 ```
 
 >If you use `runtime.stream_writter` inside your tool , the tool must be invoked within a LangGraph execution context.
+## Tool return values
+### String
+Use it when the tool should provide plain text for the model, e.g. naturally human-readable text.
+
+```python
+from langchain.tools import tool
+
+@tool
+def get_weather(city: str) -> str:
+	"""Get weather for a city."""
+	return f"It is currently sunny in {city}."
+```
+
+Behavior:
+- Return value is converted to [`ToolMessage`](langchain_messages.md).
+- No agent state fields are changed unless the model or another tool does so later.
+### Object
+Use it when downstream reasoning benefits from explicit fields instead of free-form text.
+
+```python
+from langchain.tools import tool
+
+@tool
+def get_weather_data(city: str) -> dict:
+	"""Get structured weather data for a city."""
+	return {
+		"city": city,
+		"temperature_c": 22,
+		"conditions": "sunny"
+	}
+```
+
+Behavior:
+- Returned object is serialized and sent back as tool output.
+- The model can read specific fields and reason over them.
+- It doesn't update the graph state.
+### Command
+Use this when the tool is not just returning data, but also mutating agent state.
+```python
+from langchain.messages import ToolMessage
+from langchain.tools import ToolRuntime, tool
+from langgraph.types import Command
+
+@tool
+def set_language(language: str, runtime: ToolRuntime) -> Command:
+	"""Set the preferred response language."""
+	return Command(
+		update={
+			"preferred_language": language,
+			"messages": [
+				ToolMessage(
+					content=f"Language set to {language}.",
+					tool_call_id=runtime.tool_call_id,
+				)
+			]
+		}
+	)
+```
+
+You can return a `Command` with or without including a [`ToolMessage`](langchain_messages.md). If the model needs to see that the tool succeeded, include a [`ToolMessage`](langchain_messages.md) in the update as above.
+
+Behavior:
+- The command updates state using `update`.
+- Updated state is available to subsequent steps in the same run.
+- Use reducers for fields that may be updated by parallel tool calls.
 ## Understanding
-- Explanation in your own words
-- Focus on cause and effect
-## When to Use
-- Situations where this is useful
-## When NOT to Use
-- Situations where this is overkill or harmful
+A LangChain tool is just a function that has its signature provided to the model so that it can request its execution based on the information the signature provides like type, name, description and return type.
+A tool can use the `runtime: ToolRuntime` parameter to get some environment metadata like, ***State**, **Store**, **Context**, **Stream Writer**, **Execution Info**, **Server Info**, and **Config**. Which can be used to give model more information about user preferences for a particular chat, environment configuration, etc.
 ## Trade-offs
-- Limitations
-- Costs
-- Complexity
+- Adding to many tools can cause the model to become confused and actually degrade performance.
+- The same way, adding too much context to a tool might cause the model to become confused as well.
 ## Failure Modes
-- Common mistakes
-- Misuses
+- Not using reducers to specify how state accessed in parallel should be managed.
+- Adding too much metadata where it's not needed, increases complexity and doesn't bring real value.
 ## Implementation (Practical)
 ### Customize tool properties
 ```python
@@ -317,25 +381,94 @@ def get_assistant_scoped_data(runtime: ToolRuntime) -> str:
             print(f"User: {server.user.identity}")
     return "done"
 ```
-## Tool return values
-You can choose different return values for your tools:
-- `string`: for human-readable results.
-- `object`: for structured results the model should parse.
-- `Command`: with optional message when you need to write to state.
 ## Real-world Usage
-- Where this was applied
-- Link to decisions or systems
+- A building block of any agentic system.
 ## Relationships
 ### Depends on
-- Link to concepts notes that are necessary for this practice
-
+- [LLM](large_language_models.md)
+- [Python type hints]()
+- [LangChain Messages](langchain_messages.md)
+- [Pydantic]()
 ### Enables
-- Link to concepts that can be achieved through this practice
-
-### Used in
-- Link to decision notes if any
-## Questions
-- Things still unclear
+- [Agents](llm_agent.md)
 ## Flashcards
-- Q:
-- A:
+- Q: What are LangChain Tools?
+- A: Functions made available to an LLM, allowing it to decide when and how to call them to take actions in the real world.
+- Q: How does an LLM decide whether to use a tool?
+- A: By analyzing the tool’s function signature, including its name, description, input types, and return type.
+- Q: What is the purpose of the `runtime: ToolRuntime` object?
+- A: To provide access to environment metadata that can be safely mutated and is not shared with the model.
+- Q: What makes up a LangChain tool?
+- A: A function with a well-defined signature, including a docstring and type hints.
+- Q: What role does the docstring play in a tool definition?
+- A: It becomes the tool’s description, helping the model understand when to use it.
+- Q: Why are type hints required in tool definitions?
+- A: They define the tool’s input schema for the model.
+- Q: What are prebuilt tools in LangChain?
+- A: Ready-to-use tools and toolkits provided by LangChain for common tasks.
+- Q: What types of information can be accessed through `ToolRuntime`?
+- A: State, store, context, stream writer, execution info, server info, config, and tool call ID.
+- Q: What is short-term memory in the context of tools?
+- A: A state that exists during a conversation, including message history and custom fields.
+- Q: How can a tool access the last user message?
+- A: By reading the message history from `runtime.state["messages"]`.
+- Q: What is the purpose of the context in `ToolRuntime`?
+- A: To provide immutable configuration data passed at invocation time.
+- Q: How is user-specific data accessed in tools using context?
+- A: Through structured context objects like dataclasses (e.g., `UserContext`).
+- Q: What is long-term memory (store) in LangChain tools?
+- A: Persistent storage that survives across conversations using a namespace/key pattern.
+- Q: What is recommended for production use of long-term memory?
+- A: A persistent store implementation like `PostgreStore`.
+- Q: How can tools read and write to long-term memory?
+- A: Using methods like `store.get()` and `store.put()` via `runtime.store`.
+- Q: What is the purpose of the stream writer in tools?
+- A: To send real-time updates during tool execution.
+- Q: When can `runtime.stream_writer` be used?
+- A: Only when the tool is executed within a LangGraph execution context.
+- Q: What are the three main types of tool return values?
+- A: String, object (dict), and Command.
+- Q: When should a tool return a string?
+- A: When providing plain, human-readable text output.
+- Q: What happens when a tool returns a string?
+- A: It is converted into a ToolMessage without modifying agent state.
+- Q: When should a tool return an object (dict)?
+- A: When structured data is needed for downstream reasoning.
+- Q: What is the behavior of object return values?
+- A: They are serialized and allow the model to reason over specific fields without updating state.
+- Q: When should a tool return a Command?
+- A: When it needs to modify the agent’s state.
+- Q: What does a Command return value do?
+- A: It updates the agent’s state and can include ToolMessages.
+- Q: Why might you include a ToolMessage in a Command update?
+- A: So the model can see the result of the tool execution.
+- Q: What is a key characteristic of LangChain tools?
+- A: They expose their function signature to the model for decision-making.
+- Q: What kinds of metadata can tools access via ToolRuntime?
+- A: Execution info, server info, config, and tool call ID.
+- Q: What are some trade-offs of using many tools?
+- A: Too many tools or too much context can confuse the model and degrade performance.
+- Q: What is a common failure mode related to tool state updates?
+- A: Not using reducers to manage state updates when tools run in parallel.
+- Q: What is another failure mode when designing tools?
+- A: Adding unnecessary metadata that increases complexity without value.
+- Q: How can you customize a tool’s name and description?
+- A: By passing parameters to the `@tool` decorator.
+- Q: How can you define complex input schemas for tools?
+- A: Using Pydantic models or JSON Schema.
+- Q: What is the benefit of using Pydantic for tool inputs?
+- A: It provides structured and validated input definitions.
+- Q: How can a tool update agent state in practice?
+- A: By returning a Command object with updated fields and optional ToolMessages.
+- Q: Why are reducers important when tools update shared state?
+- A: Because tools can run in parallel, and reducers define how state conflicts are resolved.
+- Q: What kind of execution metadata can be accessed inside a tool?
+- A: Thread ID, run ID, and retry attempt number.
+- Q: When is server info available in ToolRuntime?
+- A: Only when running on LangGraph Server.
+- Q: What is the role of LangChain tools in real-world applications?
+- A: They are a core building block for agentic systems.
+- Q: What do LangChain tools depend on?
+- A: LLMs, Python type hints, LangChain messages, and optionally Pydantic.
+- Q: What do LangChain tools enable?
+- A: The creation of agents that can interact with external systems and take actions.
