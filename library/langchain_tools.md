@@ -260,6 +260,14 @@ Behavior:
 ## Understanding
 A LangChain tool is just a function that has its signature provided to the model so that it can request its execution based on the information the signature provides like type, name, description and return type.
 A tool can use the `runtime: ToolRuntime` parameter to get some environment metadata like, ***State**, **Store**, **Context**, **Stream Writer**, **Execution Info**, **Server Info**, and **Config**. Which can be used to give model more information about user preferences for a particular chat, environment configuration, etc.
+## When to Use
+- Need external side effects (API, DB, filesystem)
+- Need deterministic operations (math, retrieval)
+- Need persistent memory interaction
+## When NOT to Use
+- Pure reasoning tasks (LLM alone is better)
+- When latency matters (tools add overhead)
+- When logic can be embedded in prompt
 ## Trade-offs
 - Adding to many tools can cause the model to become confused and actually degrade performance.
 - The same way, adding too much context to a tool might cause the model to become confused as well.
