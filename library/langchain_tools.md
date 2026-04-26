@@ -39,11 +39,11 @@ Tools can access runtime information through the `ToolRuntime` parameter which i
 >The parameter `runtime: ToolRuntime` is automatically injected and hidden from the LLM - it won't appear in the tool's schema.
 ### Core runtime components
 
-| Component                                                                             | Description                                                                                                   | Use case                                            |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| [State](docs.langchain.com/oss/python/langchain/tools#short-term-memory-state)        | Short-term memory - mutable data that exists for the current conversation (messages, counters, custom fields) | Access conversation history, track tool call counts |
-| [Context](https://docs.langchain.com/oss/python/langchain/tools#context)              | Immutable configuration passed at invocation time (user IDs, session info)                                    | Personalize responses based on user identity        |
-| [Store](https://docs.langchain.com/oss/python/langchain/tools#long-term-memory-store) | Long-term memory - persistent data that survives across conversations                                         | Save user preferences, maintain knowledge base      |
+| Component                                                                              | Description                                                                                                   | Use case                                            |
+| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| [State](https://docs.langchain.com/oss/python/langchain/tools#short-term-memory-state) | Short-term memory - mutable data that exists for the current conversation (messages, counters, custom fields) | Access conversation history, track tool call counts |
+| [Context](https://docs.langchain.com/oss/python/langchain/tools#context)               | Immutable configuration passed at invocation time (user IDs, session info)                                    | Personalize responses based on user identity        |
+| [Store](https://docs.langchain.com/oss/python/langchain/tools#long-term-memory-store)  | Long-term memory - persistent data that survives across conversations                                         | Save user preferences, maintain knowledge base      |
 ### Specific use components
 | [Stream Writer](https://docs.langchain.com/oss/python/langchain/tools#stream-writer)   | Emit real-time updates during tool execution                                                                                                                                                                                                                                            | Show progress for long-running operations                   |
 | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
@@ -127,7 +127,7 @@ A tool can use the `runtime: ToolRuntime` parameter to get some environment meta
 - Pure reasoning tasks (LLM alone is better)
 - When latency matters (tools add overhead)
 - When logic can be embedded in prompt
-### Patterns
+## Patterns
 - Bridge interaction between LLMs and external world.
 - Provide deterministic results into probabilistic reasoning.
 - It composes the execution layer of an Agent.
