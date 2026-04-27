@@ -196,32 +196,59 @@ def get_weather(
 	return result
 ```
 ### Update state
-Use `Command` to update the agent's state. Include a [`ToolMessage`](langchain_messages.md) in the update so the model can see the result of the tool call:
+Use [`Command`](#Command) to update the agent's state. Include a [`ToolMessage`](langchain_messages.md) in the update so the model can see the result of the tool call.
+
+You can also use [`Command`](#Command) in other tools to hint the model on what to do next.
 ```python
-from langchain.agents import AgentState
+from langchain.tools import tool, ToolRuntime
 from langchain.messages import ToolMessage
-from langchain.tools import ToolRuntime, tool
+from langchain.agents import AgentState
 from langgraph.types import Command
+from pydantic import BaseModel
 
 
 class CustomState(AgentState):
     user_name: str
 
+class CustomContext(BaseModel):
+    user_id: str
 
+# this tool performs the change in the state
 @tool
-def set_user_name(new_name: str, runtime: ToolRuntime[None, CustomState]) -> Command:
-    """Set the user's name in the conversation state."""
-    return Command(
-        update={
-            "user_name": new_name,
+def update_user_info(
+    runtime: ToolRuntime[CustomContext, CustomState],
+) -> Command:
+    """Look up and update user info."""
+    user_id = runtime.context.user_id
+    name = "John Smith" if user_id == "user_123" else "Unknown user"
+    return Command(update={
+        "user_name": name,
+        # update the message history
+        "messages": [
+            ToolMessage(
+                "Successfully looked up user information",
+                tool_call_id=runtime.tool_call_id
+            )
+        ]
+    })
+
+# You can force the execution of other tools using the Command return
+@tool
+def greet(
+    runtime: ToolRuntime[CustomContext, CustomState]
+) -> str | Command:
+    """Use this to greet the user once you found their info."""
+    user_name = runtime.state.get("user_name", None)
+    if user_name is None:
+       return Command(update={
             "messages": [
                 ToolMessage(
-                    content=f"User name set to {new_name}.",
-                    tool_call_id=runtime.tool_call_id,
+                    "Please call the 'update_user_info' tool it will get and update the user's name.",
+                    tool_call_id=runtime.tool_call_id
                 )
-            ],
-        }
-    )
+            ]
+        })
+    return f"Hello {user_name}!"
 ```
 >When tools update state variables, consider defining a [reducer](https://docs.langchain.com/oss/python/langgraph/graph-api#reducers) for those fields. Since LLMs can call multiple tools in parallel.
 ## Real-world Usage

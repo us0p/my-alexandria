@@ -2,10 +2,7 @@
 Are concepts that are worth keeping reference. 
 
 High-frequency notes should create shortcuits for stuff you need to revisit
-often. Usually they refer to stuff that doesn't chage often.
-
-Their goal is to make fast and simple the recall all the knowledge you have
-about this particular concept.
+often. Usually they refer to stuff that doesn't chage.
 
 High-frequency notes should be optimized for:
 - fast-recall
@@ -26,11 +23,11 @@ not high-frequency.
 
 ## Low-frequency concepts
 Low-frequency concepts should be reference notes. They shouldn't be mixed 
-with high-freuquency notes as this increases the cognitive overload.
+with high-frequency notes as this increases the cognitive overload.
 
 Shouldn't be extense. If you're copying the same example of the 
-documentation, it's better to store a reference to it as the documentation
-is always going to be the most up to date document.
+documentation, it's better to store a reference to the documentation as
+it's always going to be the most up to date document.
 
 If you're storying something different than the documentation or something 
 that's not in the documentation, then it's worth to store it as a 
