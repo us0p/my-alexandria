@@ -1228,7 +1228,8 @@
             "hasTextLink": false,
             "locked": false,
             "startBinding": null,
-            "endBinding": null
+            "endBinding": null,
+            "polygon": false
           },
           {
             "type": "line",
@@ -1280,7 +1281,8 @@
             "hasTextLink": false,
             "locked": false,
             "startBinding": null,
-            "endBinding": null
+            "endBinding": null,
+            "polygon": false
           },
           {
             "type": "line",
@@ -1336,7 +1338,8 @@
             "hasTextLink": false,
             "locked": false,
             "startBinding": null,
-            "endBinding": null
+            "endBinding": null,
+            "polygon": false
           },
           {
             "type": "line",
@@ -1396,7 +1399,8 @@
             "hasTextLink": false,
             "locked": false,
             "startBinding": null,
-            "endBinding": null
+            "endBinding": null,
+            "polygon": false
           },
           {
             "type": "line",
@@ -1448,7 +1452,8 @@
             "hasTextLink": false,
             "locked": false,
             "startBinding": null,
-            "endBinding": null
+            "endBinding": null,
+            "polygon": false
           },
           {
             "type": "line",
@@ -1504,7 +1509,8 @@
             "hasTextLink": false,
             "locked": false,
             "startBinding": null,
-            "endBinding": null
+            "endBinding": null,
+            "polygon": false
           }
         ],
         "id": "b5oOw9kU4L1zvdTGQhmR1",
@@ -1843,7 +1849,8 @@
             "updated": 1777464699603,
             "link": null,
             "hasTextLink": false,
-            "locked": false
+            "locked": false,
+            "polygon": false
           },
           {
             "id": "LX6kTl9A8K36ld2MEV4tI",

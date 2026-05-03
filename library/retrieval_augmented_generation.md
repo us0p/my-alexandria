@@ -14,7 +14,7 @@ LLM knowledge is static → retrieval makes it dynamic and grounded.
 # Retrieval-Augmented Generation - RAG
 Retrieval is the process of getting back information based on user request. The common workflow is to **load documents** and then **create semantic representations** of them, known as **knowledge base**, so that we can perform a **semantic search** based on user query to retrieve relevant documents or section of documents.
 
-RAG is the process of adding this extra context to an [LLM](large_language_model.md) so that it can produce more accurate responses.
+RAG is the process of adding this extra context to an [LLM](large_language_models.md) so that it can produce more accurate responses.
 ## Why RAG instead of [Fine-Tuning](training_models.md)
 - LLMs have static knowledge (training cutoff)  
 - Updating them requires retraining (expensive)  
