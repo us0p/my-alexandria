@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "go_variable_and_constants.md",
+                "file": "go_data_types.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "go_variable_and_constants"
+              "title": "go_data_types"
             }
           }
         ]
@@ -184,6 +184,7 @@
   "active": "baaea5e0981e6b42",
   "lastOpenFiles": [
     "go_variable_and_constants.md",
+    "go_data_types.md",
     "retrieval_augmented_generation.md",
     "images/typical_retrieval_pipeline_workflow.png",
     "drawings/typical_retrieval_pipeline.md",
