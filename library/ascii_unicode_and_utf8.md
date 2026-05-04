@@ -11,7 +11,7 @@ created: 2026-05-03
 # Unicode & Character Encoding (UTF-8, ASCII)
 A system for representing text in computers by mapping characters to numeric codes (**Unicode**), and defining how those codes are stored as bytes (encodings like **UTF-8** or **ASCII**).
 
-**ASCII** only maps characters to numbers but since it only maps 127 characters, we can easily fit those representations within a single byte. So it can also be considered an encoding system.
+**ASCII** (American Standard Code for Information Interchange) also maps characters to numbers, But it doesn't include most characters used in the world like Chinese characters, it only includes characters from the American alphabet (127 characters including letters, number and special characters) which can easily fit within a single byte. So it can also be considered an encoding system.
 
 **UTF-8** is an encoding system that converts the **Unicode code points** into **1 to 4 bytes** representation. For example, the **code point** for "A" is `U+0041` which can be converted to a single [byte](binary_system.md) `01010010`, in the other hand the **code point** for the hindi letter "न" is `U+0928` which needs 3 bytes to be represented `11100000 10100100 10101000`.
 
@@ -20,6 +20,14 @@ The first **127 code points** in **Unicode** are the same as in **ASCII** repres
 Since **UTF-8** uses 1 to 4 bytes to represent a code point, placing the most frequent code points (English characters) first, not only increases portability as makes the system more efficient as it will use less memory in general to represent most text.
 
 > Always: Store and transmit all text as UTF-8 and be explicit about encoding boundaries (I/O, APIs, files).
+## Code points and characters
+The **Unicode code point** `U+0061` is the lower case Latin letter 'A': `a`.
+
+The lower case grave-accented letter 'A', `à` is a character, and it's also a **code point** `U+00E0`, but it has other representations. For example, we can use the "combining" grave accent code point, `U+0300`, and attach to the lower case letter a, `U+0061`, to create the same character `à`.
+
+Therefore, **a character may be represented by a number of different sequences of code points, and therefore different sequences of UTF-8 bytes**.
+
+>The concept of character in computing is therefore ambiguous. To make things dependable, there are normalization techniques that guarantee that a given character is always represented by the same code points.
 ## Understanding
 - Computers don’t store “text”—they store numbers. Early systems like **ASCII** mapped a small set of characters (mostly English) to numbers, which worked until global text was needed.
 - Different systems created incompatible encodings, causing garbled text when data moved between them.
@@ -116,3 +124,7 @@ Q: What is an example of a Unicode code point?
 A: 'A' is U+0041.
 Q: What is an example of UTF-8 encoding?  
 A: '€' is encoded as three bytes: 0xE2 0x82 0xAC.
+Q: Why are characters ambiguous in computing?
+A: Because a character may be represented by different sequences of code points, and different sequences of UTF-8 bytes.
+Q: How character ambiguity is handled in computing?
+A: There are normalization techniques that guarantee that a given character is always represented by the same code point.
