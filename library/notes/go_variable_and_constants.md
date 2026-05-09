@@ -18,6 +18,13 @@ Variables can be defined with one of the following sintaxes:
 - `const`: It's evaluated at compile time, so there's no runtime overhead. It stores immutable values. Must always be initialized and can be untyped allowing then to be used with different compatible types.
 
 >You don't necessarily need to provide the type for the variable as the compiler will provide the necessary type for the variable during compile time. Hence we have short forms for variable declarations.
+## Blank identifier
+Allows you to bypass variable naming by using a underscore (`_`) instead. It's good when you care only for the second value.
+
+For example the [comma-ok idiom](go_maps.md#Comma-ok%20idiom)
+```go
+_, ok := m["key"]
+```
 ## Iota
 Used with constants to simplify definitions of incrementing numbers.
 

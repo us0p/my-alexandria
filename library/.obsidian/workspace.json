@@ -13,15 +13,44 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "go_arrays_and_slices.md",
+                "file": "notes/go_maps.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "go_arrays_and_slices"
+              "title": "go_maps"
+            }
+          },
+          {
+            "id": "6e302ba5b4ba288e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/go_data_types.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "go_data_types"
+            }
+          },
+          {
+            "id": "4534f5fc5b1d65da",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/go_variable_and_constants.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "go_variable_and_constants"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -181,40 +210,40 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "48f007933a869291",
+  "active": "6e302ba5b4ba288e",
   "lastOpenFiles": [
-    "Untitled.md",
-    "go_arrays_and_slices.md",
-    "go_docmentation_system.md",
+    "notes/go_maps.md",
+    "notes/go_variable_and_constants.md",
+    "notes/go_data_types.md",
+    "notes",
+    "notes/go_strings.md",
+    "notes/go_arrays_and_slices.md",
+    "notes/go_docmentation_system.md",
     "images/go_documentation_generation.png",
     "Pasted image 20260507073921.png",
-    "go_data_types.md",
-    "ascii_unicode_and_utf8.md",
-    "binary_system.md",
-    "go_variable_and_constants.md",
-    "retrieval_augmented_generation.md",
+    "notes/ascii_unicode_and_utf8.md",
+    "notes/binary_system.md",
+    "notes/retrieval_augmented_generation.md",
     "images/typical_retrieval_pipeline_workflow.png",
     "drawings/typical_retrieval_pipeline.md",
     "drawings",
-    "langchain_structured_output.md",
-    "llm_agent.md",
-    "langchain_models.md",
-    "langchain_state.md",
-    "langchain_tools.md",
+    "notes/langchain_structured_output.md",
+    "notes/llm_agent.md",
+    "notes/langchain_models.md",
+    "notes/langchain_state.md",
+    "notes/langchain_tools.md",
     "images/langchain_state_history_summarization_workflow.png",
-    "text_generation_inference.md",
-    "tokenization.md",
+    "notes/text_generation_inference.md",
+    "notes/tokenization.md",
     "images/langchain_toolruntime_context.png",
-    "langchain_messages.md",
-    "large_language_models.md",
+    "notes/langchain_messages.md",
+    "notes/large_language_models.md",
     "techniques/bit_manipulation_patterns.md",
-    "two_complement.md",
-    "transformer_architecture.md",
-    "training_models.md",
-    "protocols.md",
-    "protocol_stack.md",
-    "natural_language_processing.md",
-    "decoding_strategies.md",
+    "notes/two_complement.md",
+    "notes/transformer_architecture.md",
+    "notes/training_models.md",
+    "notes/protocols.md",
+    "notes/protocol_stack.md",
     "images/logit_penalty_workflow.png",
     "images/sub_word_tokenization_example.png",
     "images/nlp_model_inference_workflow.png",

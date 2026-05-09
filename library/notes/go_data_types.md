@@ -14,7 +14,7 @@ Go is a **statically typed** language with types determined at compile time. Typ
 
 Heres a list of Go types per category:
 - `bool`
-- `string`
+- [`string`](go_strings.md)
 - `int`, `int8`, `int16`, `int32`, `int64`, `uint`, `uint8`, `uint16`, `uint32`, `uint64`, `uintptr` (large enough to store uninterpreted bits of a pointer value)
 - `byte` (alias for `int8`)
 - `rune` (alias for `int32`. Represents a Unicode code point)
@@ -87,7 +87,7 @@ func square(x int) int {
 var f FuncType = FuncType(square)
 ```
 ## Type Assertions
-To get the underlying type of an [interface](), we can assert/convert the interface to an specific value. For that we use the [comma-ok idiom]():
+To get the underlying type of an [interface](), we can assert/convert the interface to an specific value. For that we use the [comma-ok idiom](go_maps.md#Comma-ok%20idiom):
 ```go
 var a interface{} = 1
 if v, ok := a.(int); !ok {
@@ -107,7 +107,7 @@ switch v := a.(type) {
 	// ...
 }
 ```
-### Type conversion and assertion best practices
+## Type conversion and assertion best practices
 - Always check and handle errors when performing type assertion with multiple values.
 - Avoid using unsafe type conversion and assertion as much as possible.
 - Use custom types to provide safety and clarity. Custom types can provide more safety and clarity in the code, and can also reduce the number of type assertions required.
@@ -136,84 +136,11 @@ To mitigate this precision issues, you should consider the following best practi
 - **Avoid direct comparisons**: Instead of `a == b`, consider using a small tolerance value to check if difference is within acceptable range.
 - **Round values appropriately**: Consider rounding it to an appropriate number of decimal places.
 - **Use specialized libraries**: Consider for applications that require precise floating-point calculations.
-## Strings
-### Raw strings literals
-Are strings literal sequences between **back quotes**. Within the quotes, any character will appear just as it is displayed between the back quotes.
-
-```go
-a := `Say "hello" to Go!\n`
-fmt.Println(a) // Prints: Say "hello" to Go!\n
-
-b := `Raw strings
-can also be used
-to create multiline strings`
-```
-
->Backslashes have no special behavior in raw strings literals. If you want escaping to work, you must use **Interpreted String Literals** with double quotes `""`.
-### UTF-8 and string literals
-In Go a string is a **read-only [slice]() of [bytes](binary_system.md)**. A string holds arbitrary bytes. It's not required to hold [Unicode text, UTF-8](ascii_unicode_and_utf8.md) or any other predefined format.
-
-As implied up front, **indexing a string accesses individual bytes, not characters**. 
-```go
-func main() {
-	const placeOfInterest = `⌘` 
-	
-	fmt.Printf("plain string: ") 
-	fmt.Printf("%s", placeOfInterest)
-	fmt.Printf("\n") 
-	
-	fmt.Printf("quoted string: ") 
-	// This verb escapes not only non-printable sequences, but also any non-ASCII bytes while interpreting UTF-8.
-	fmt.Printf("%+q", placeOfInterest) 
-	fmt.Printf("\n") 
-	
-	fmt.Printf("hex bytes: ") 
-	for i := 0; i < len(placeOfInterest); i++ { 
-		fmt.Printf("%x ", placeOfInterest[i]) 
-	} 
-	fmt.Printf("\n")
-}
-```
-
-The output is:
-```plaintext
-plain string: ⌘
-quoted string: "\u2318"
-hex bytes: e2 8c 98 
-```
-
-We can see that the "Place of interest" symbol ⌘, is represented by three [bytes](binary_system.md) and that those bytes are the [UTF-8](ascii_unicode_and_utf8.md) encoding of the hexadecimal value `2318`.
-
->The UTF-8 representation of the string was created when the source code was written. **Source code in Go is defined to be UTF-8 text**. This means that any string literal (raw or not) is always going to be valid UTF-8, but during runtime, a string **value** is just a slice of bytes, and therefore, it's not guaranteed to be composed of valid UTF-8 bytes. It's also possible to create invalid UTF-8 string literals using escape sequences like `\xff`.
-### Bytes, characters and runes
-Since the definition of [character is ambiguous in computing](ascii_unicode_and_utf8.md#Code%20points%20and%20characters), the correct term to refer to individual characters into a string would be **code point**, but since it's a bit of a mouthful, Go introduces a shorter term for the concept: `rune`.
-
-A `rune` means the same as **code point** but it's also an alias for the type `int32` so programs can be clearer when an integer value represents a code point.
-
-Therefore, a character constant (individual characters in a string) are a `rune` constant. Individual runes are represented by single quotes: `'⌘'`, this is a rune with an integer value `0x2318`.
-### Range loops
-We've seen what happens with a regular [`for loop`]() when we iterate a string. A [`for range loop`]() decodes one [UTF-8 encoded](ascii_unicode_and_utf8.md) `rune` on each iteration. **Each time around the loop, the index of the loop is the starting position of the current rune, measured in bytes**.
-```go
-const nihongo = "日本語" 
-for index, runeValue := range nihongo {
-	fmt.Printf("%#U starts at byte position %d\n", runeValue, index) 
-}
-```
-
-The output shows how each code point occupies multiple bytes:
-```plaintext
-U+65E5 '日' starts at byte position 0
-U+672C '本' starts at byte position 3
-U+8A9E '語' starts at byte position 6
-```
-
->If a `for range` loop isn't sufficient, you can try the [unicode/utf8](https://go.dev/pkg/unicode/utf8/) standard library.
 ## Understanding
 - Go uses **static typing** so errors are caught at compile time and performance is optimized early.
 - It avoids **implicit conversions**, forcing explicit casting to prevent hidden bugs and precision loss.
 - Type inference reduces verbosity while still preserving strict type safety.
 - Custom types add **meaning and safety**, preventing misuse of similar-looking values.
-- Strings are **byte sequences**, so Unicode text requires `rune` for correct character handling.
 - Type assertions enable flexibility with interfaces but require checks to avoid runtime errors.
 - Limitations like overflow and floating-point precision come from **hardware constraints**.
 - Overall, Go prioritizes **explicitness, safety, and predictability** over convenience.
@@ -231,24 +158,20 @@ U+8A9E '語' starts at byte position 6
 ## Trade-offs
 - **Verbosity**: Explicit conversions (`int` ↔ `float64`, etc.) add extra code.
 - **Rigidity**: No implicit casting means less flexibility when combining values.
-- **Learning curve**: Understanding nuances like `rune` vs `byte`, or UTF-8 handling, takes time.
 - **Precision pitfalls**: Floating-point limitations can still cause subtle bugs.
 - **Overflow behavior**: Silent wraparound at runtime can lead to unexpected results if not handled carefully.
 - **Complexity with interfaces**: Type assertions require care (and checks) to avoid runtime panics.
 ## Examples
-- A chat app that supports emojis and international languages (`rune` usage).
 - Reading a file or handling HTTP request bodies (`byte` heavy).
 - An e-commerce system distinguishing `UserID` from `ProductID`.  Both might be integers, but represent different concepts.
 ## References
 ### Connects with
 - [Go variables](go_variable_and_constants.md)
 - [Go interfaces]()
-- [Go Comma-OK Idiom]()
+- [Go Comma-OK Idiom](go_maps.md)
 - [Go Switches]()
-- [Go Slices]()
-- [Binary System](binary_system.md)
-- [ASCII, Unicode and UTF-8](ascii_unicode_and_utf8.md)
-- [Go loops]()
+- [Go Slices](go_arrays_and_slices.md)
+- [Go Strings](go_strings.md)
 ## Iterate on
 - Document is too dense, need to split into more manageable pieces.
 ## Flashcards
@@ -268,8 +191,6 @@ Q: What is a `byte` in Go?
 A: An alias for `int8`.
 Q: What is a `rune` in Go?  
 A: An alias for `int32` representing a Unicode code point.
-Q: Why are `rune` types important?  
-A: They allow correct handling of Unicode characters in strings.
 Q: What is a custom type in Go?  
 A: A user-defined type created using the `type` keyword to add meaning and safety.
 Q: Why use custom types?  
@@ -296,20 +217,6 @@ Q: What is a limitation of floating-point numbers?
 A: They can introduce precision errors due to finite representation.
 Q: Why should floating-point values not be compared directly?  
 A: Because small precision errors can lead to incorrect equality checks.
-Q: What is a string in Go?  
-A: A read-only slice of bytes.
-Q: Why is string indexing potentially misleading?  
-A: Because it accesses bytes, not characters.
-Q: How are characters properly represented in Go strings?  
-A: Using runes, which represent Unicode code points.
-Q: What is the difference between raw and interpreted string literals?  
-A: Raw strings preserve characters exactly, while interpreted strings process escape sequences.
-Q: How does a `for range` loop iterate over strings?  
-A: It decodes UTF-8 and returns one rune at a time.
-Q: What does the index in a `for range` string loop represent?  
-A: The byte position where the rune starts.
-Q: Why are Go strings not guaranteed to be valid UTF-8 at runtime?  
-A: Because they are just byte slices and can contain arbitrary data.
 Q: What is a key benefit of Go’s static typing?  
 A: Errors are caught at compile time, improving safety and performance.
 Q: What is a key trade-off of strict typing in Go?  
@@ -320,9 +227,5 @@ Q: When is Go’s type system especially beneficial?
 A: In large systems, performance-critical applications, and clear data modeling.
 Q: When might Go’s strict typing be a drawback?  
 A: In rapid prototyping or when working with highly dynamic data.
-Q: What is a common failure mode related to strings?  
-A: Treating each byte as a character instead of handling runes properly.
-Q: What is a real-world use case for runes?  
-A: Handling multilingual text or emojis correctly.
 Q: What is a real-world use case for byte-level operations?  
 A: Processing file data or HTTP request bodies.

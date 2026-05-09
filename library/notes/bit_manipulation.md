@@ -68,7 +68,7 @@ It also commonly used on compression algorithms.
 - [Bit Flag]: Used to store many booleans inside a single integer
 ## References
 ### Connects with
-- [Two's Complement](two_complement): Sign number representation system.
+- [Two's Complement](two_complement.md): Sign number representation system.
 - [Bit manipulation patterns](bit_manipulation_patterns.md): Techniques and patterns about bit manipulation.
 ## Flashcards
 - Q: What is bit manipulation
