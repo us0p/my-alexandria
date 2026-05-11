@@ -206,8 +206,9 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "6e302ba5b4ba288e",
+  "active": "735d5740ddacfda9",
   "lastOpenFiles": [
+    "notes/go_structs.md",
     "notes/go_conditionals.md",
     "notes/go_variable_and_constants.md",
     "notes/go_data_types.md",
@@ -240,7 +241,6 @@
     "notes/transformer_architecture.md",
     "notes/training_models.md",
     "notes/protocols.md",
-    "notes/protocol_stack.md",
     "images/logit_penalty_workflow.png",
     "images/sub_word_tokenization_example.png",
     "images/nlp_model_inference_workflow.png",
