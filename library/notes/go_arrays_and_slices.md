@@ -221,6 +221,7 @@ Using [Generics]() is preferable when the slice only needs to support different 
 - [Go Generics]()
 - [Go Interfaces]()
 - [Go Data Types](go_data_types.md)
+- [Go loops](go_loops.md)
 ## Flashcards
 Q: What is the main difference between arrays and slices in Go?  
 A: Arrays have fixed size and are copied by value, while slices are dynamic views over arrays that share underlying data.

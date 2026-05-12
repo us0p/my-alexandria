@@ -97,7 +97,7 @@ U+8A9E '語' starts at byte position 6
 - [Binary System](binary_system.md)
 - [ASCII, Unicode and UTF-8](ascii_unicode_and_utf8.md)
 - [Go Slices](go_arrays_and_slices.md)
-- [Go loops]()
+- [Go loops](go_loops.md)
 ## Flashcards
 Q: Why are `rune` types important?  
 A: They allow correct handling of Unicode characters in strings.

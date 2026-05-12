@@ -92,14 +92,14 @@ func main() {
 
 If we had used a `map[string]map[string]int`, we would have to take care of verification, map initialization etc. The example shows clearly the benefits of type's zero values and why we would want to use a composite type like [`struct`]() as a map key.
 ## References
-- [Go structs]()
+- [Go structs](go_structs.md)
 - [Go types](go_data_types.md)
 - [Go Blank identifier](go_variable_and_constants.md)
 - [Go arrays and slices](go_arrays_and_slices.md)
 - [Go concurrency]()
 - [Hash Maps]()
 - [Go strings](go_strings.md)
-- [Go loops]()
+- [Go loops](go_loops.md)
 ## Flashcards
 Q: What is a Go map?  
 A: A Go map is a built-in associative data type that maps keys to values and provides fast lookups, inserts, and deletes.

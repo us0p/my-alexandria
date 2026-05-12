@@ -176,7 +176,7 @@ default:
 ## References
  - [Go variables](go_variable_and_constants.md)
  - [Go data types](go_data_types.md)
- - [Go loops]()
+ - [Go loops](go_loops.md)
 ## Flashcards
 - Q: What are Go conditionals used for?
 - A: They are used to control program flow based on conditions.

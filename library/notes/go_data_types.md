@@ -169,7 +169,7 @@ To mitigate this precision issues, you should consider the following best practi
 - [Go variables](go_variable_and_constants.md)
 - [Go interfaces]()
 - [Go Comma-OK Idiom](go_maps.md)
-- [Go Switches]()
+- [Go Switches](go_conditionals.md)
 - [Go Slices](go_arrays_and_slices.md)
 - [Go Strings](go_strings.md)
 ## Iterate on

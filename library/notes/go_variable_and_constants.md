@@ -202,7 +202,7 @@ const (
 ### References
 - [OOP - Encapsulation]()
 - [OOP - Interfaces]()
-- [Go Functions]()
+- [Go Functions](go_functions.md)
 ## Flashcards
 Q: What are the three ways to declare variables in Go?  
 A: `var`, `:=`, and `const`.
