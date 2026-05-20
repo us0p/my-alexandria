@@ -12,6 +12,8 @@ RAG (Retrieval-Augmented Generation) enhances LLMs by retrieving relevant extern
 Core idea:
 LLM knowledge is static → retrieval makes it dynamic and grounded.
 # Retrieval-Augmented Generation - RAG
+Technique that combines information retrieval with language model generation to improve the accuracy and relevance of the generated text, and to better ground the model's response in evidence.This allows the model to access and utilize information beyond its training data, reducing the reliance on memorization and improving the factual accuracy of the generated text. RAG can be particularly useful for tasks that require up-to-date information, domain-specific knowledge, or explicit citation of sources. However, the effectiveness of RAG depends on the quality and relevance of the external knowledge base and the knowledge that is retrieved at runtime.
+
 Retrieval is the process of getting back information based on user request. The common workflow is to **load documents** and then **create semantic representations** of them, known as **knowledge base**, so that we can perform a **semantic search** based on user query to retrieve relevant documents or section of documents.
 
 RAG is the process of adding this extra context to an [LLM](large_language_models.md) so that it can produce more accurate responses.
