@@ -94,7 +94,13 @@ Because of this, hidden overhead eats into your limit. All custom prompt that gi
 
 Also, multimodal inputs add up quickly. Files (including images and audios) get converted into token equivalents before processing. A single high-resolution image can cost over 1K tokens.
 
->Important to know: More space doesn't guarantee better output. Models can struggle with accuracy over very long inputs. Information buried in the middle of a long context often gets recalled less reliably than content near the start or end.
+>Important to know: More space doesn't guarantee better output. Models can struggle with accuracy over very long inputs. Information buried in the middle of a long context often gets recalled less reliably than content near the start or end. This is known as *context rot*.
+### Context Awareness
+The model knows the remaining token capacity  for work which enables more effective execution on long-running tasks.
+### Server-side compaction
+Provides server-side summarization that automatically condenses parts of a conversation, enabling long running conversations beyond context limits.
+### Context editing
+When you select which messages are more relevant to a particular moment in a conversation history.
 ## Fine-tuning
 Fine-tuning is the process of further training a pretrained language model using additional data. This causes the model to start representing and mimicking the patterns and characteristics of the fine-tuning dataset.
 Fine-tuning can be useful for adapting a language model to a specific domain, task, or writing style, but it requires careful consideration of the fine-tuning data and the potential impact on the model's performance and biases.
@@ -111,12 +117,64 @@ These pretrained models are not inherently good at answering questions or follow
 Retrieval augmented generation (RAG) is a technique that combines information retrieval with language model generation to improve the accuracy and relevance of the generated text, and to better ground the model's response in evidence. In RAG, a language model is augmented with an external knowledge base or a set of documents that is passed into the context window. The data is retrieved at run time when a query is sent to the model, although the model itself does not necessarily retrieve the data (but can with tool use and a retrieval function). When generating text, relevant information first must be retrieved from the knowledge base based on the input prompt, and then passed to the model along with the original query. The model uses this information to guide the output it generates. This allows the model to access and utilize information beyond its training data, reducing the reliance on memorization and improving the factual accuracy of the generated text. RAG can be particularly useful for tasks that require up-to-date information, domain-specific knowledge, or explicit citation of sources. However, the effectiveness of RAG depends on the quality and relevance of the external knowledge base and the knowledge that is retrieved at runtime.
 ## RLHF
 Reinforcement Learning from Human Feedback (RLHF) is a technique used to train a pretrained language model to behave in ways that are consistent with human preferences. This can include helping the model follow instructions more effectively or act more like a chatbot. Human feedback consists of ranking a set of two or more example texts, and the reinforcement learning process encourages the model to prefer outputs that are similar to the higher-ranked ones.
-## Temperature
+## TTFT (Time to first token)
+Time to First Token (TTFT) is a performance metric that measures the time it takes for a language model to generate the first token of its output after receiving a prompt. It is an important indicator of the model's responsiveness and is particularly relevant for interactive applications, chatbots, and real-time systems where users expect quick initial feedback. A lower TTFT indicates that the model can start generating a response faster, providing a more seamless and engaging user experience. Factors that can influence TTFT include model size, hardware capabilities, network conditions, and the complexity of the prompt.
+## Hallucination
+When an LLM generate information that's not factually correct or consistent with the given context.
+One significant source of hallucination is input bias. If an AI model is trained on a dataset comprising biased or unrepresentative data, it may hallucinate patterns or features that reflect these biases.
+AI models often hallucinate because they lack constraints that limit possible outcomes. To prevent this issue and improve the overall consistency and accuracy of results, define boundaries for AI models.
+Hallucination is not always bad, it can prove it useful depending on the context, for example, art and design.
+### Anti-Hallucination techniques
+- Allow the model to say "I don't know". Explicitly giving permission to admit uncertainty drastically reduces false information.
+- Use direct quotes for factual grounding. For tasks involving long documents (>20k tokens), ask the model to extract quotes that are most relevant for the context first before performing its task. This grounds its response in the actual text, reducing hallucinations.
+- Verify with citations: Make the model response auditable by having it cite quotes and sources for each of its claims. You can also have the model verify each claim by finding a supporting quote after it generates a response. If it can't find a quote. It must retract the claim.
+- External knowledge restriction; Explicitly instruct the model to only use information from the provided documents and not its general knowledge.
+## Agents
+An agent is a LLM-powered system designed to take actions and solve complex tasks autonomously. They are equipped with:
+- Planning and reflection: Leverage LLM to analyze a problem, break it down into steps, and adjust their approach based on new information.
+- Tool access: They can interact with external sources, to gather information and execute actions.
+- Memory: Can learn from past experience and make more informed decisions.
+## Prompt Injection
+Prompt injection involves manipulating model responses through specific inputs to alter its behavior, which can include bypassing safety measures.
+Jailbreaking is a form of prompt injection where the attacker provides inputs that cuase the model to disregard its safety protocols entirely. For example asking it to act as an assistant that will do anything that's asked and ask it to write malware for you.
+Prompt injections do not need to be human-visible/readable, as long as the content is parsed by the model.
+Additional steps to strengthen your guardrails are:
+- Harmless screens: Use lightweight models to pre-screen user inputs. Use **structured outputs** to constrain the response to a simple classification.
+- Input validation: filter prompts for jailbreaking patterns. You can even use an LLM to create a generalized validation screen by providing known jailbreaking language patterns.
+- Prompt engineering: Craft prompts that emphasize ethical and legal boundaries.
+- Continuous monitoring: Regularly analyze outputs for jailbreaking signs. Use this monitoring to iteratively refine your prompts and validations strategies.
+- Constrain model behavior: Provide specific instructions about the model's role, capabilities, and limitations within the system prompt. Enforce strict context adherence, limit responses to specific tasks or topics, and instruct the model to ignore attempts to modify core instructions.
+- Enforce privilege controls and least privilege access: Handle actions in code rather than providing them to the model. Restrict the model's access privileges to the minimum necessary for its intended operations.
+
+Types of prompt injects are:
+- Direct prompt inject: User's prompt input directly alters the behavior of the model in unintended or unexpected ways. Can be intentional or not.
+- Indirect prompt inject: When an LLM access input form external sources, such as websites or files. Can also be intentional or not.
+- Multimodal prompt inject: Malicious actors could exploit interactions between modalities, such as hiding instructions in images that that accompany benign text.
+## LLM parameters
+Settings that control and optimize an LLM output and behavior. Trainable parameters include **Weights** and **Biases** and are configured as the model learns from its training dataset. **Hyperparameters** are external to the model, guiding its learning process, determining its structure and shaping its output.
+### Weights
+Numerical values that represent the importance that the model assigns to a specific input. It's used when generating responses and the higher an input's weight, the more relevant it's to the model's output.
+
+It's configured automatically by the model's learning algorithm during training. Changes to this value are attempts to minimize error from the **loss function**.
+
+Within neural network, weights are multipliers that determine the signal strength. Signals must meet the activation function's strength threshold to advance through the network.
+
+**Backpropagation** is used to calculate how a change to weight values affects model performance.
+### Biases
+Constant values added to a signal's value from the previous layer. It's used to allow neurons to activate under conditions where the weights alone might not be sufficient to pass through the activation function.
+
+Like weights, biases are also configured automatically during training and can use backpropagation.
+
+>During fine-tuning, the weights and biases are tweaked with domain specific training data.
+### Hyperparameters
+External settings that determine model's behavior, shape, size, resource use and other characteristics. The process of hyperparameter tuning uses algorithms to uncover the optimal combination of hyperparameters for better performance.
+
+Open source model's hyperparameters are visible.
+Hyperparameter tuning is very important for model customization.
+### Temperature
 Temperature is a parameter that controls the randomness of a model's predictions during text generation. Higher temperatures lead to more creative and diverse outputs, allowing for multiple variations in phrasing and, in the case of fiction, variation in answers as well. Lower temperatures result in more conservative and deterministic outputs that stick to the most probable phrasing and answers. Adjusting the temperature enables users to encourage a language model to explore rare, uncommon, or surprising word choices and sequences, rather than only selecting the most likely predictions.
 
 Users may encounter non-determinism in APIs. Even with temperature set to 0, the results will not be fully deterministic and identical inputs may produce different outputs across API calls.
-## TTFT (Time to first token)
-Time to First Token (TTFT) is a performance metric that measures the time it takes for a language model to generate the first token of its output after receiving a prompt. It is an important indicator of the model's responsiveness and is particularly relevant for interactive applications, chatbots, and real-time systems where users expect quick initial feedback. A lower TTFT indicates that the model can start generating a response faster, providing a more seamless and engaging user experience. Factors that can influence TTFT include model size, hardware capabilities, network conditions, and the complexity of the prompt.
 ## Understanding
 - explanation of the concept, using your own words.
 - Focus on cause and effect.
