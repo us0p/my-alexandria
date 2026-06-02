@@ -324,6 +324,7 @@
   },
   "active": "e754e8bb2c19024c",
   "lastOpenFiles": [
+    "Pasted image 20260601201740.png",
     "Pasted image 20260531220816.png",
     "notes/go_structs.md",
     "notes/vibe_coding.md",
@@ -361,7 +362,6 @@
     "images/sub_word_tokenization_example.png",
     "images/nlp_model_inference_workflow.png",
     "images/beam_search_workflow.png",
-    "images/token_selection_workflow.png",
     "images",
     "techniques"
   ]

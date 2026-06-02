@@ -212,6 +212,101 @@ Skills best practices:
 
 Start-to-finish feature building with Claude Code
 ![[Pasted image 20260531220816.png]]
+## Vibe Coding Mindset
+1. Don't use vague, vast prompts, you need to feed the model with enough context (functional requirements, design decisions, tests, constraints) so that a Junior developer would be able to implement the feature with only what you gave. You can also work alongside the model to iterate and improve this documentation before giving it to an coding agent.
+2. Do not ask for a full project from the start. Let the agent implement a working core and than add feature to it separately and iterate on edge cages, refactoring and security issues.
+3. Outsourcing all the implementation to the model can be fast but it also becomes unmanageable. It's hard to understand how a codebase with 5k+ lines works, imagine how hard would it be if you haven't even written a single line of code yourself? Always ask the model to add comments and create documentation of your code so that your future self won't be mad at you.
+## Vibe Planning
+The planning mode of your model can be used in two ways:
+1. Plan -> Build: You get the model to analyze the codebase, understand the problem, formulate a plan and then build the implementation direclty from that plan.
+2. Plan -> Spec -> Build: You add a intermediate step and then it writer a detailed specification (a natural language instruction that defines what should be built, a.k.a. meta-prompting). This approach should be used for more complex implementations.
+
+You can tell the agent what you are trying to build, ask it to help refine the idea, establish different phases, and once done, ask it to document everything so that you can refer to that when actually building the product.
+## Defining the "what" and the "how" (PRD & Plan)
+Product Requirement Doc (PRD) is just a detailed guide for how the app should look and behave with some guidelines of how it should be implemented.
+
+After generating the PRD, we ask the model to generate a setp-by-setp actionable plan that will implement the app in phases using a modified **vertical slice method** suitable for LLM-assisted development in full-stack frameworks.
+
+Vertical slices instructs the model to develop the app in full-stack "slices" (from DB to UI) in increasingly complexity.
+
+Rather than trying to define all your database models from the start, for example, this approach tackles the simplest form of a full-stack feature individually, and then builds upon them in later phases. This means, in an early phase, we might only define the database models needed for Authentication, then its related server-side functions, and the UI for it like Login forms and pages.
+
+![[Pasted image 20260601201740.png]]
+
+if you realize there is a feature set you want to add on later that didn't already exist in the plan, You can ask the LLM to review the plan and find the best time/phase within it to implement it.
+
+After completing a significant feature. You should make an habit of tasking the AI with documenting what was just built. You can even create a Skill for that:
+- Gather the key files related to the implementation feature.
+- Provide the relevant sections of the PRD and the Plan that described the feature.
+- Reference the rule file with the Doc creation task.
+- Have it review the Doc for breadth and clarity.
+
+The important is to to focus on the core logic, how the different parts connect and any key decisions made, referencing specific files where the implementation details can be found.
+
+The model would then generate a MD file in a particular directory which is nice because:
+- It create a clear decision document that humans can easily understand.
+- It builds a knowledge base within the project that could be fed back into the AI's context in later stages, helping maintain consistency and reducing context losses.
+## Spec-Driven Development
+Is much closer to traditional engineering practices. Instead of jumping straight into implementation, we start by doing the hard thinking ourselves: making architectural decisions, defining requirements, and documenting them in a structured markdown specification stored in the repository and updated alongside the project. This creates an important shift: we decouple the specification (what we are building and why) from the implementation (the actual code).
+
+SDD addresses many of the core issues of vibe coding by preserving context across sessions and different ai agents, while aligning both humans and agents around the project's main non-negotiables.
+### SDD Stages
+- Constitution: Agreement of key decisions for the project, it usually includes several documents: Mission (explains the why), tech stack (documents technical decisions as well as deployment), roadmap (outline project phases, planned features, this document is continuously updated with the project evolution).
+- Development: understand what we want to build and writing detailed specification. Implementing the changes. Validating that the implementation works as expected.
+- Replanning: dedicated phase for revisiting the constitution and reviewing previous feature decisions and plans to make sure they still align with the project goals.
+
+>You can use AI to generate all the documents in each specific phase.
+
+E.g.: Constitution documents:
+```markdown
+We are building Trainlytics, a personal fitness tracking web app built
+for people who want more control, flexibility, and insights than standard
+fitness apps provide. Find the full requirements in README.md.
+
+Let's create a "constitution" in a specs directory that consists of 
+the following parts:
+- mission.md - what and why we are building; the main mission of the product
+- tech-stack.md - core technical decisions
+- roadmap.md - project phases broken down in implementation order
+
+IMPORTANT: You must use your AskUserQuestion tool to get my feedback.
+```
+
+E.g.: Task planning phase
+```plaintext
+Find the next phase in specs/roadmap.md and create a new branch, 
+ask me about any steps in the specs that are not fully clear.
+
+Then create a new directory in the format YYYY-MM-DD-feature-name under specs/ 
+for this feature, with the following files:
+- plan.md - a structured list of numbered task groups
+- requirements.md - scope, key decisions, and context
+- validation.md - how we define success and confirm the implementation can 
+be merged
+
+Use specs/mission.md and specs/tech-stack.md as guidance.
+```
+
+E.g.: Development phase
+```markdown
+Take the next task group from 2026-05-04-phase-1-mvp/plan.md and implement it.
+Use requirements.md and validation.md for guidance.
+Once done, update the status in both the plan and validation documents.
+```
+
+>A good practice is to make all changes through the agent rather than patching documents yourself to maintain consistency across the project. For example, you might require a change and the agent might update more than one related document.
+
+There are evidences that placing the output of an agent in another and asking for critiques improves output quality.
+
+In theory, spec-driven development suggests that the feature phase ends with validation. In practice, it rarely works that cleanly. You will likely find that some parts of the implementation don’t work as expected. At that point, you have two options:
+- Add a couple more iterations to your `plan.md` and continue refining the feature (this works well for smaller changes), or
+- If the issues are more substantial, treat them as part of the next feature phase and handle them during replanning.
+
+>One important thing to watch out for: it can be tempting to simply explain the issue to the LLM agent and ask for fixes, instead of updating the specs and reworking the implementation. Try to resist that shortcut. Keeping the specification as the source of truth is what makes the approach robust.
+
+>In the current AI era, the main value of a human lies in thinking and architecture.
+
+[SDD GitHub Repo](https://github.com/github/spec-kit)
 ## Understanding
 - explanation of the concept, using your own words.
 - Focus on cause and effect.
