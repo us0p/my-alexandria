@@ -223,7 +223,7 @@ The planning mode of your model can be used in two ways:
 
 You can tell the agent what you are trying to build, ask it to help refine the idea, establish different phases, and once done, ask it to document everything so that you can refer to that when actually building the product.
 ## Defining the "what" and the "how" (PRD & Plan)
-Product Requirement Doc (PRD) is just a detailed guide for how the app should look and behave with some guidelines of how it should be implemented.
+**Product Requirement Doc (PRD)** is just a detailed guide for how the app should look and behave with some guidelines of how it should be implemented.
 
 After generating the PRD, we ask the model to generate a setp-by-setp actionable plan that will implement the app in phases using a modified **vertical slice method** suitable for LLM-assisted development in full-stack frameworks.
 
@@ -246,14 +246,28 @@ The important is to to focus on the core logic, how the different parts connect 
 The model would then generate a MD file in a particular directory which is nice because:
 - It create a clear decision document that humans can easily understand.
 - It builds a knowledge base within the project that could be fed back into the AI's context in later stages, helping maintain consistency and reducing context losses.
+
+**The six core areas:** GitHub’s analysis of [over 2,500 agent configuration files](https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/) revealed a clear pattern: the most effective specs cover six areas. Use this as a checklist for completeness:
+**1. Commands:** Put executable commands early - not just tool names, but full commands with flags: `npm test`, `pytest -v`, `npm run build`. The agent will reference these constantly.
+**2. Testing:** How to run tests, what framework you use, where test files live, and what coverage expectations exist.
+**3. Project structure:** Where source code lives, where tests go, where docs belong. Be explicit: “`src/` for application code, `tests/` for unit tests, `docs/` for documentation.”
+**4. Code style:** One real code snippet showing your style beats three paragraphs describing it. Include naming conventions, formatting rules, and examples of good output.
+**5. Git workflow:** Branch naming, commit message format, PR requirements. The agent can follow these if you spell them out.
+**6. Boundaries:** What the agent should never touch - secrets, vendor directories, production configs, specific folders. “Never commit secrets” was the single most common helpful constraint in the GitHub study.
+
+**Be specific about your stack:** Say “React 18 with TypeScript, Vite, and Tailwind CSS” not “React project.” Include versions and key dependencies. Vague specs produce vague code.
+
+**Use a consistent format:** Clarity is king. Many devs use Markdown headings or even XML-like tags in the spec to delineate sections, because AI models handle well-structured text better than free-form prose.
+
+remember, “minimal does not necessarily mean short” - don’t shy away from detail in the spec if it matters, but keep it focused.
 ## Spec-Driven Development
 Is much closer to traditional engineering practices. Instead of jumping straight into implementation, we start by doing the hard thinking ourselves: making architectural decisions, defining requirements, and documenting them in a structured markdown specification stored in the repository and updated alongside the project. This creates an important shift: we decouple the specification (what we are building and why) from the implementation (the actual code).
 
-SDD addresses many of the core issues of vibe coding by preserving context across sessions and different ai agents, while aligning both humans and agents around the project's main non-negotiables.
+SDD addresses many of the core issues of vibe coding by preserving context across sessions and different ai agents, while aligning both humans and agents around the project's main non-negotiable.
 ### SDD Stages
-- Constitution: Agreement of key decisions for the project, it usually includes several documents: Mission (explains the why), tech stack (documents technical decisions as well as deployment), roadmap (outline project phases, planned features, this document is continuously updated with the project evolution).
+- Constitution: Agreement of key decisions for the project, it usually includes several documents: Mission (explains the why), tech stack (documents technical decisions as well as deployment), road map (outline project phases, planned features, this document is continuously updated with the project evolution).
 - Development: understand what we want to build and writing detailed specification. Implementing the changes. Validating that the implementation works as expected.
-- Replanning: dedicated phase for revisiting the constitution and reviewing previous feature decisions and plans to make sure they still align with the project goals.
+- Re-planning: dedicated phase for revisiting the constitution and reviewing previous feature decisions and plans to make sure they still align with the project goals.
 
 >You can use AI to generate all the documents in each specific phase.
 
@@ -300,13 +314,209 @@ There are evidences that placing the output of an agent in another and asking fo
 
 In theory, spec-driven development suggests that the feature phase ends with validation. In practice, it rarely works that cleanly. You will likely find that some parts of the implementation don’t work as expected. At that point, you have two options:
 - Add a couple more iterations to your `plan.md` and continue refining the feature (this works well for smaller changes), or
-- If the issues are more substantial, treat them as part of the next feature phase and handle them during replanning.
+- If the issues are more substantial, treat them as part of the next feature phase and handle them during re-planning.
 
 >One important thing to watch out for: it can be tempting to simply explain the issue to the LLM agent and ask for fixes, instead of updating the specs and reworking the implementation. Try to resist that shortcut. Keeping the specification as the source of truth is what makes the approach robust.
 
 >In the current AI era, the main value of a human lies in thinking and architecture.
 
-[SDD GitHub Repo](https://github.com/github/spec-kit)
+**Demand Multiple Options**: Counter AI's tendency toward sophisticated solutions by explicitly requesting alternatives. Try "Give me three approaches to this problem; the simplest possible solution, a moderate approach, and a full-featured version. Explain the trade offs of each.". You can apply this for errors as well, ask for multiple causes of why a particular error is happening.
+
+The progression should be natural: establish expertise → get the plan → evaluate options → make informed decisions → implement with confidence. This approach transforms AI from an unpredictable code generator into a reliable development partner who understands both your technical needs and your constraints.
+
+AI models have knowledge cutoffs and may not be familiar with the latest versions of frameworks or your specific project requirements. Providing context prevents frustration and reduces iterations. You can even ask the AI what its knowledge cutoffs are, and supplement its data accordingly.
+
+A good safe net for you vibe coded application is to use pre-commit. Before any changes reaches a shared branch, you can run tests, linting, formatting and security checks to validate that the generated code meet your application standards.
+
+Traceability and provenance are crucial when models contribute code. Simple record keeping reduces uncertainty and eases audits.
+- Store prompt versions and AI outputs in the PR description or a linked artifact store.
+- Tag commits that include AI-generated text with a consistent marker, e.g., `AI:generated`.
+- Include the model version, prompt, and timestamp with any generated snippet.
+- Use a lightweight governance document that outlines acceptable uses and approval workflows.
+
+Traceability supports accountability and resolves disputes quickly when regressions occur. It also provides data for continuous improvement of prompts and validation steps.
+
+Teams that adopt provenance practices have an easier time demonstrating compliance and understanding root causes when incidents arise.
+
+>SDD is ideal for medium-sized features.
+
+>Always provide constraints about what the agent mustn't do, this helps the agent to be more focused and objective.
+
+A spec is a structured, behavior-oriented artifact - or set of related artifacts - written in natural language that expresses software functionality.
+
+Specs aren't the same as the general context documents in a codebase. That general context are things like rule files, or high level descriptions of the product and the codebase. Some times it's referenced as a **memory bank**. These files are relevant across all AI coding sessions in the codebase, whereas specs are only relevant to the task that actually create or change that particular functionality.
+![[Pasted image 20260608083657.png]]
+### SDD implementation levels
+- **Spec-first**: Spec is written first, and then used in the AI-assisted development workflow for the task at hand.
+- **Spec-anchored**: The spec is kept even after the task is complete, to continue using it for evolution and maintenance of the respective feature.
+- **Spec-as-source**: Spec is the main source file over time, and only the spec is edited by the human, the human never touches the code.
+
+The implementation levels are not required by each other. In fact, there seems to be no standard strategy about spec maintenance over time.
+### SDD Tools
+These tools are more focused on creating an application from scratch. If you need to fix a simple bug or add a new simple feature, these tools can feel "overkill" and considering the amount of context and files you'll need to review and validate it can make the progress even slower than a simple "plan" section with a coding agent.
+
+It's important to highlight that even with all of these requirements, the agent can still ignore them. The best way to stay in control of what we're building is to keep small, iterative steps instead of trying to build all at once.
+Adding a lot of up-front spec design might not be a good idea, especially when it's overly verbose.
+
+Because of all this upfront planning and design, SDD isn't reliable for problems that are large or that aren't clear. The amount of documents that would be necessary for a large problem isn't negligible and if a problem isn't clear enough, you can't do much planning.
+
+Model-Driven-Development (MDD) was a past initiative to cast specifications into code using a custom language. SDD seems to be going towards that same direction while leveraging AI to take the code implementation heavy work. It's worth to notice that even tough MDD added some flexibility it was, most of the time, inflexible and non-deterministic. This can also be a problem in SDD specially with AI assisted coding standards. We must be careful to keep this practice relevant without falling in the same pitfalls we experienced in the past.
+#### Kiro
+Lightweight, spec-first SDD tool. Used for tasks or a user story (there's no mention of it being used with spec-anchored strategies).
+##### Workflow
+###### Requirement
+Structured as a list of requirements, where each requirement represents a user story using [Gherkin Syntax](). 
+
+![[Pasted image 20260608090755.png]]- 
+###### Design
+Consists of sections  describing technical considerations of the task.
+
+![[Pasted image 20260608091100.png]]
+###### Tasks
+A list of the tasks that map to each requirement specification.
+
+Kiro's memory bank is called "steering" and it's composed of the following documents:
+- `product.md`
+- `teach.md`
+- `structure.md`
+
+Each workflow step is represented by one markdown document.
+
+This framework produces a lot less files for review but it can also be very verbose even for small tasks.
+#### Spec-kit
+GitHub's version of SDD. It's a CLI that can create workspace setups for a wide range of common coding assistants. Once that structure is set up, you interact with spec-kit via slash commands in your coding assistant. It's highly customizable.
+
+Spec-kit's memory bank is a prerequisite for the spec-driven approach. It's called **Constitution**. It's supposed to contain high level principles that are "immutable" and should always be applied, to every change.
+
+In each of the workflow steps (specify, plan, tasks), spec-kit instantiates a set of files and prompts with the help of a bash script and some templates. The workflow makes heavy use of checklists inside of the files, to track necessary user clarifications, constitution violations, research tasks, etc.
+
+Bellow is an overview that illustrates the topology in spec-kit. Note how one spec is made up of many files.
+
+![[Pasted image 20260608101629.png]]
+
+Spec-kit seems to be aspiring to a spec-anchored approach. However, spec-kit creates a branch for every spec that gets created, which seems to indicate that they see a spec as a living artifact for the lifetime for a change request, not the lifetime of a feature.
+
+Note that this framework can generate a LOT of files to review and they can be repetitive and redundant.
+#### Tessl Framework (beta)
+Distributed as a CLI. The CLI command also doubles as an MCP server. It's the only one of these three tools that explicitly aspires to a spec-anchored approach, and is even exploring the spec-as-source level os SDD.
+In this framework the spec maintainer can tag parts of the specification to make sure that more crucial parts of the generated component are fully under the control of the maintainer.
+Putting the specs for spec-as-source at a quite low abstraction level, per code file, probably reduces amount of steps and interpretations the LLM has to do, and therefore the chance of errors.
+![[Pasted image 20260608103323.png]]
+### How to write good specifications for SDD
+a good spec doesn’t just tell the AI what to build, it also helps it self-correct and stay within safe boundaries. By baking in verification steps, constraints, and your hard-earned knowledge, you drastically increase the odds that the agent’s output is correct on the first try (or at least much closer to correct).
+
+1. Kick off your project with a concise high-level spec, then have the AI expand it into a detailed plan. Instead of over-engineering upfront, begin with a clear goal statement and a few core requirements. Treat this as a “product brief” and let the agent generate a more elaborate spec from it. This leverages the AI’s strength in elaboration while you maintain control of the direction. This works well unless you already feel you have very specific technical requirements that must be met from the start. **Why this works:** LLM-based agents excel at fleshing out details when given a solid high-level directive, but they need a clear mission to avoid drifting off course. By providing a short outline or objective description and asking the AI to produce a full specification (e.g. a `spec.md`), you create a persistent reference for the agent. **Keep it goal-oriented:** A high-level spec for an AI agent should focus on what and why, more than the nitty-gritty how (at least initially).
+2. Design for Agent Experience (AX): Just as we design APIs for developer experience (DX), consider designing specs for “Agent Experience.” This means clean, parseable formats: OpenAPI schemas for any APIs the agent will consume, llms.txt files that summarize documentation for LLM consumption, and explicit type definitions. The Agentic AI Foundation (AAIF) is standardizing protocols like MCP (Model Context Protocol) for tool integration - specs that follow these patterns are easier for agents to consume and act on reliably.
+3. **Make the spec a “living document”:** Don’t write it and forget it. Update the spec as you and the agent make decisions or discover new info. If the AI had to change the data model or you decided to cut a feature, reflect that in the spec so it remains the ground truth.
+4. Avoid context overload: Don’t mix authentication tasks with database schema changes in one go, as the [DigitalOcean AI guide](https://docs.digitalocean.com/products/gradient-ai-platform/concepts/context-management/) warns. Keep each prompt tightly scoped to the current goal.
+5. have the agent build an extended Table of Contents with summaries for the spec. This is essentially a “spec summary” that condenses each section into a few key points or keywords, and references where details can be found. For example, if your full spec has a section on “Security Requirements” spanning 500 words, you might have the agent summarize it to: “Security: use HTTPS, protect API keys, implement input validation (see full spec §4.2)”. By creating a hierarchical summary in the planning phase, you get a bird’s-eye view that can stay in the prompt, while the fine details remain offloaded unless needed. This extended TOC acts as an index.
+6. Utilize sub-agents or “skills” for different spec parts. Each subagent is configured for a specific area of expertise and given the portion of the spec relevant to that area. The main agent (or an orchestrator) can route tasks to the appropriate subagent automatically. The benefit is each agent has a smaller context window to deal with and a more focused role, which can [boost accuracy and allow parallel work](https://10xdevelopers.dev/structured/claude-code-with-subagents/) on independent tasks. Each subagent has a specific purpose and expertise area, uses its own context window separate from the main conversation, and has a custom system prompt guiding its behavior,” as their docs describe. When a task comes up that matches a subagent’s domain, Claude can delegate that task to it, with the subagent returning results independently.
+7.  **Use three-tier boundaries:** The [GitHub analysis of 2,500+ agent files](https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/) found that the most effective specs use a three-tier boundary system rather than a simple list of don’ts. This gives the agent clearer guidance on when to proceed, when to pause, and when to stop. **Always do (proceed without asking)**: Run test, follow style guide, log errors. **Ask first (pause for human approval)**: Schema changes, new dependencies, CI config. **Never do (hard stop -no exceptions)**: Commit secrets, edit vendor, remove failing tests.
+8. **Encourage self-verification:** One powerful pattern is to have the agent verify its work against the spec automatically. e.g. “After implementing, compare the result with the spec and confirm all requirements are met. List any spec items that are not addressed.” This pushes the LLM to reflect on its output relative to the spec, catching omissions. It’s a form of self-audit built into the process.
+9. **Leverage testing in the spec:** If possible, incorporate a test plan or even actual tests in your spec and prompt flow. The agent can be prompted to run through those cases in its head or actually execute them if it has that capability. In an AI coding context, writing a bit of pseudocode for tests or expected outcomes in the spec can guide the agent’s implementation. Additionally, you can use a dedicated “[test agent](https://10xdevelopers.dev/structured/claude-code-with-subagents/)” in a subagent setup that takes the spec’s criteria and continuously verifies the “code agent’s” output.
+10. Bring your domain knowledge: Your spec should reflect insights that only an experienced developer or someone with context would know. For example, if you’re building an e-commerce agent and you know that “products” and “categories” have a many-to-many relationship, state that clearly (don’t assume the AI will infer it - it might not). Essentially, pour your mentorship into the spec. The spec can contain advice like “If using library X, watch out for memory leak issue in version Y (apply workaround Z).” This level of detail is what turns an average AI output into a truly robust solution, because you’ve steered the AI away from common traps.
+11. **Minimalism for simple tasks:** While we advocate thorough specs, part of expertise is knowing when to keep it simple. Don’t under-spec a hard problem (the agent will flail or go off-track), but don’t over-spec a trivial one (the agent might get tangled or use up context on unnecessary instructions).
+12. **Utilize context-management and memory tools**. For instance, [retrieval-augmented generation (RAG)](https://addyosmani.com/agentic-engineering/rag/) is a pattern where the agent can pull in relevant chunks of data from a knowledge base (like a vector database) on the fly. If your spec is huge, you could embed sections of it and let the agent retrieve the most relevant parts when needed, instead of always providing the whole thing. There are also frameworks implementing the Model Context Protocol (MCP), which automates feeding the right context to the model based on the current task.
+13. Commit the spec file itself to the repo. This not only preserves history, but the agent can even use git diff or blame to understand changes (LLMs are quite capable of reading diffs).
+14. use model selection and batching smartly. If using multiple agents, maybe not all need to be top-tier; a test-running agent or a linter agent could be a smaller model. Also consider throttling context size: don’t feed 20k tokens if 5k will do.
+
+### SDD pitfalls
+- **Vague prompts:** Be specific about inputs, outputs, and constraints. “You are a helpful coding assistant” doesn’t work. “You are a test engineer who writes tests for React components, follows these examples, and never modifies source code” does.
+- **Overlong contexts without summarization:** Use hierarchical summaries or RAG to surface only what’s relevant. Context length is not a substitute for context quality.
+- Ignoring the “lethal trifecta”: There are three properties that make AI agents dangerous: speed (they work faster than you can review), non-determinism (same input, different outputs), and cost (encouraging corner-cutting on verification). Your spec and review process must account for all three. Don’t let speed outpace your ability to verify.
+
+**Single vs. multi-agent: when to use each**
+
+| Aspect         | Single Agent                                                                | Parallel/Multi-Agent                                                               |
+| -------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Strengths**  | Simpler setup; lower overhead; easier to debug and follow                   | Higher throughput; handles complex interdependencies; specialists per domain       |
+| **Challenges** | Context overload on big projects; slower iteration; single point of failure | Coordination overhead; potential conflicts; needs shared memory (e.g., vector DBs) |
+| **Best For**   | Isolated modules; small-to-medium projects; early prototyping               | Large codebases; one codes + one tests + one reviews; independent features         |
+| **Tips**       | Use spec summaries; refresh context per task; start fresh sessions often    | Limit to 2-3 agents initially; use MCP for tool sharing; define clear boundaries   |
+## Task, Context, Elements, Behavior, Constraints (TC-EBC)
+It's a prompt structure designed to given the model only the information it needs in the most clear and explicit manner.
+- **Task** defines what you’re building.
+- **Context** frames why and for whom. It prevents drift.
+- **Constraints** set the guardrails, keeping the system controlled and consistent.
+
+Specially useful in UI design, it's clear that it sets the necessary constraints and goals clearly with the purpose of the feature. This clarity can drastically increase output quality.
+
+A well-structured prompt reads like a recipe card: short, direct, and instructive. Every “maybe,” “just,” or “please” dilutes intention and adds noise. The goal isn’t to be verbose or polite—it’s to be clear.
+### Examples
+```markdown
+Vague prompt with too much noise:
+
+"Please build a new app that allows home cooks to take a picture of their pantry or freezer to suggest recipes. Remember any allergies or preferences. Thanks"
+
+TC-EBC version:
+- `Task: Build an AI-powered meal suggestion app using pantry/fridge photo inputs`
+- `Context: Home cooking assistant for households with dietary restrictions`
+- `Elements: Camera input, pantry scanner, dietary settings form, meal suggestions list, recipe cards`
+- `Behavior: User uploads photos; app scans inventory, filters by diet prefs, suggests recipes`
+- `Constraints: Mobile-first, iOS/Android, accessible UI, supports multiple household profiles`
+```
+
+```markdown
+Vague prompt missing intent, constraints and adding noise with incertainty:
+"Write a description for this feature. Keep it simple but also exciting. Maybe like how Apple does it?"
+
+TC-EBC version:
+- `Task: Write a short product feature description.`
+- `Context: For a new “One-Click Export” feature in a design tool.`
+- `Elements: Headline (max 7 words), subheadline, single-sentence body copy.`
+- `Behavior: Body should imply speed, simplicity, and trust.`
+- `Constraints: No jargon. Match the brand tone of Duolingo or Notion. Total length: under 200 characters.`
+```
+
+>The more direct the language, the more efficient the exchange.
+
+It's important to define what belongs in your context or not. Curating what the model sees, remembers and weights is what we call **context engineering**. The goal is to keep context focused so that the intention is pure.
+
+>You can use a separate model to assist you building you prompts following the TC-EBC framework.
+## Show, don't tell
+In this prompt strategy, you're encouraging your generative AI model to create outputs that evoke emotion, build atmosphere, and reveal meaning in each specific task:
+
+```markdown
+## Scenario 1
+- Telling: "Write a story about a man whos very sad"
+- Showing: "Write a story about a man sitting alone in a dark room, turning a photograph over his hands while rain taps against the window"
+
+## Scenario 2 
+- Telling: "Describe a woman who is nervous about giving a speech"
+- Showing: "Describe a woman backstage, pacing in small circles, palms slick with sweat as she rehearses her opening line under her breath"
+```
+
+This technique is intended to guide the model to craft more emotionally resonant and compelling responses.
+
+By demonstrating what you want—rather than just explaining it—you give the machine learning model a clear template to follow, resulting in more accurate and consistent outputs.
+
+ Instead of simply instructing your language models to “write professionally” or “sound poetic,” you show it what that looks like by providing a sample. This technique of reinforcement learning is especially powerful when you’re aiming for consistency,
+## Prompting Frameworks
+- PRD
+- SDD
+- TC-EBC
+- Show, don't tell
+## Guardrails
+constraints you set up to limit what an AI agent can do wrong. They're not instructions - they're boundaries.
+In software, guardrails come in many forms: type checkers that catch incorrect data shapes, test suites that catch regressions, linters that enforce code style, file access restrictions that prevent agents from touching production configs, and mandatory human review before code gets merged.
+
+The key insight is that guardrails are _automated_. They don't require you to watch the agent constantly. They fire automatically when something goes wrong, giving the agent feedback in its observe phase or blocking a bad change before it lands.
+
+Without guardrails, you're doing vibe coding - letting the AI do whatever it wants and hoping for the best. Guardrails are what make agentic engineering a disciplined practice. They let you give agents more autonomy without proportionally increasing risk.
+## In practice
+- **Type systems**: TypeScript's compiler, Python's mypy, Rust's borrow checker - catch bugs at build time before they reach runtime
+- **Test suites**: If the agent's changes break existing tests, the agent knows immediately and can self-correct
+- **Linting**: Enforces code style and catches common mistakes (unused variables, missing error handling)
+- **File access restrictions**: Limit which directories the agent can read or write - keep it out of secrets, configs, and infrastructure code
+- **Iteration limits**: Cap the number of times an agent can retry before escalating to a human
+- **Sandboxing**: Run agents in isolated environments so mistakes don't affect production
+- **Code review**: The ultimate guardrail - a human reviews every change before it ships
+- **Scope limits**: Restrict agents to specific tasks rather than giving them free rein over the entire codebase
+
+The best guardrails are the ones you'd want in place anyway, even without AI.
+## Meaningful Links
+- [SDD GitHub Repo](https://github.com/github/spec-kit)
+- [GitHub Copilot VSCode Config Doc](https://code.visualstudio.com/docs/copilot/overview)
 ## Understanding
 - explanation of the concept, using your own words.
 - Focus on cause and effect.

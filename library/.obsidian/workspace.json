@@ -324,6 +324,11 @@
   },
   "active": "e754e8bb2c19024c",
   "lastOpenFiles": [
+    "Pasted image 20260608103323.png",
+    "Pasted image 20260608101629.png",
+    "Pasted image 20260608091100.png",
+    "Pasted image 20260608090755.png",
+    "Pasted image 20260608083657.png",
     "Pasted image 20260601201740.png",
     "Pasted image 20260531220816.png",
     "notes/go_structs.md",
@@ -357,11 +362,6 @@
     "images/typical_retrieval_pipeline_workflow.png",
     "drawings",
     "images/langchain_state_history_summarization_workflow.png",
-    "images/langchain_toolruntime_context.png",
-    "images/logit_penalty_workflow.png",
-    "images/sub_word_tokenization_example.png",
-    "images/nlp_model_inference_workflow.png",
-    "images/beam_search_workflow.png",
     "images",
     "techniques"
   ]
