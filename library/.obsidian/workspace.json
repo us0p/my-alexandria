@@ -161,8 +161,7 @@
               "title": "transformer_architecture"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -322,8 +321,10 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "e754e8bb2c19024c",
+  "active": "438bfac2b7682e0e",
   "lastOpenFiles": [
+    "notes/vibe_coding.md",
+    "notes/go_memory_model.md",
     "Pasted image 20260608103323.png",
     "Pasted image 20260608101629.png",
     "Pasted image 20260608091100.png",
@@ -332,11 +333,9 @@
     "Pasted image 20260601201740.png",
     "Pasted image 20260531220816.png",
     "notes/go_structs.md",
-    "notes/vibe_coding.md",
     "notes/Untitled.md",
     "notes/prompt_engineering.md",
     "notes/large_language_models.md",
-    "notes/go_memory_model.md",
     "Untitled.md",
     "notes/go_pointers.md",
     "notes/go_maps.md",
@@ -361,7 +360,6 @@
     "Pasted image 20260507073921.png",
     "images/typical_retrieval_pipeline_workflow.png",
     "drawings",
-    "images/langchain_state_history_summarization_workflow.png",
     "images",
     "techniques"
   ]

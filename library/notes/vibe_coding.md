@@ -503,7 +503,7 @@ In software, guardrails come in many forms: type checkers that catch incorrect d
 The key insight is that guardrails are _automated_. They don't require you to watch the agent constantly. They fire automatically when something goes wrong, giving the agent feedback in its observe phase or blocking a bad change before it lands.
 
 Without guardrails, you're doing vibe coding - letting the AI do whatever it wants and hoping for the best. Guardrails are what make agentic engineering a disciplined practice. They let you give agents more autonomy without proportionally increasing risk.
-## In practice
+### In practice
 - **Type systems**: TypeScript's compiler, Python's mypy, Rust's borrow checker - catch bugs at build time before they reach runtime
 - **Test suites**: If the agent's changes break existing tests, the agent knows immediately and can self-correct
 - **Linting**: Enforces code style and catches common mistakes (unused variables, missing error handling)
@@ -514,9 +514,391 @@ Without guardrails, you're doing vibe coding - letting the AI do whatever it wan
 - **Scope limits**: Restrict agents to specific tasks rather than giving them free rein over the entire codebase
 
 The best guardrails are the ones you'd want in place anyway, even without AI.
+## Coding Guidelines - Ground Rules
+There are a lot of best practices and methodologies that exists in software engineering that are taken as common knowledge. It can be a universal best practice or even something specific of your team. The thing is, you shouldn't take it for granted with agents. Coding guidelines for agents need to be more explicit, demonstrative or patterns, and obvious.
+### Guidelines to write code
+Your guidelines should indicate the decisions your team has made about which language constructs to use and why. Some examples are:
+- **Variable and method naming**: Must be explicit about the naming conventions of your code base, specially if you have mixed ones (Python with SQL, etc).
+- **Tabs x Spaces**: If your team has a specific consideration, you must let them know.
+- **Exceptions and logging**: You must be explicit on how your software is expected to behave under failures.
+- **Comments**: Specify how comments are written in your team, the amount of details, indentations, frameworks that rely on it, etc.
+
+As you noticed, anything that your team has personalized configuration or considerations must be explicit mentioned to the agent, with a certain level of detail and examples.
+### Guidelines to write documentation
+- **Documentation must be clear and consistent**: It should be dead obvious how to follow any guidelines. If you can find a way to misinterpret it, rewrite it. Write in a simple repeated style throughout the document.
+- **Don't confuse AI**: Don't use idiomatic language or other constructs that require interpretation. Be simple, explicit, and boring. The same goes for code examples. AI shouldn't make decisions.
+### Examples show patterns
+Provide explicit examples of both correct and incorrect implementations of code guidelines. You can consider giving an overall example of what code looks like when it follows all guidelines (a "gold standard") file.
+### Errors are feedback
+Use your agent failures as feedback and improve configuration and context files. Errors and failures might show you where your context files are too vague or where you were not explicit enough.
+
+You also need to pay attention to the human feedback. Keeping the context files open and having everyone contribute to it will make it more comprehensive.
+
+>Coding standards aren’t really about making the code pretty, but making the code predictable. Predictable for anyone who reads it, be it a colleague or an AI. **Predictability and consistency form the backbone of maintainable software**.
+## Claude Context Files
+`CLAUDE.md`: Used to store project details, standards, etc. It's applied to every session. You can place it in the root, in the `.claude/` directory, and, if you're not going to commit it, you can name `CLAUDE.local.md` and add it to`.gitignore`. `~/.claude/CLAUDE.md` is a user's defaults file and applies to all your projects.
+
+This file support importing other files with the `@path/to/file` syntax:
+```markdown
+See @README.md for project overview
+See @docs/api-patterns.md for API conventions
+See @package.json for available npm scripts
+```
+>You can reference files from anywhere, relative paths, absolute paths and even user-level files.
+
+This is powerful for keeping your main file lean, remember context tokens are precious. Claude will pull the content when it's relevant.
+Imports can be recursive. Use this sparingly to avoid creating a maze of references.
+
+If your project has many rules, you can split instructions into focused rule files in the `.claude/rules` directory.
+```markdown
+your-project/
+├── .claude/
+│   ├── CLAUDE.md           # Main project instructions
+│   └── rules/
+│       ├── code-style.md   # Code style guidelines
+│       ├── testing.md      # Testing conventions
+│       └── security.md     # Security requirements
+```
+All markdown files in this directory are automatically loaded with the same priority as your main `CLAUDE.md`. No imports needed.
+
+This works well if your project is large and you have many different people changing the `CLAUDE.md` file. Merge conflicts are less frequent.
+
+You can add `CLAUDE.md` files in sub-directories of your project. When Claude reads files in that directory, it automatically picks up the `CLAUDE.md` file there. These files are only loaded when Claude is actively working on that part of the codebase.
+
+Keep your `CLAUDE.md` file updated, ask Claude to updated it with notes on frequent errors or assumptions so that it's persistent. Review and refactor sporadically to avoid becoming redundant.
+
+For rules that absolutely must be followed, emphasis words can help draw attention. "IMPORTANT", "YOU MUST". Casing matters here. Be aware that Claude might still cross these lines, specially as conversations grow larger.
+
+Issues captured in code reviews catches a pattern violation. Add it to `CLAUDE.md`. The mistake won't repeat. You can add the Claude Code GitHub action with `/install-github-action` so that you can tag `@claude` directly in your PR comments to make these updates. 
+
+E.g.: `@claude add to CLAUDE.md: never use ...`
+
+Best practices for `CLAUDE.md` files:
+- Open with a one-liner explaining what the project is
+- Make code style preferences specific and actionable
+- Include key commands (test, build, lint, deploy)
+- Detail gotchas enough to actually prevent mistakes
+- Keep it under 300 lines, or make sure every line earns its place
+- Move detailed guidance to @imported files
+- Remove anything outdated or conflicting with newer instructions
+- Mark critical rules with emphasis, but only the truly critical ones
+- Add instructions as you work, not just upfront
+- Update from PR reviews when conventions surface
+- Review periodically for outdated or conflicting rules
+
+For larger projects:
+- Sub-directories with distinct conventions might need their own `CLAUDE.md`
+- Splitting rules into `.claude/rules/` files can make ownership clearer across teams
+## Modularity & Coupling Principles
+- **High Cohesion**: Elements withing a module should work together toward a single purpose. Avoid big files handling many things. Split it into specialized modules.
+- **Loose Coupling**: Modules should depend on each other as little as possible. Changes in one module don't imply changes in another. Modules can communicate. You should use abstractions to refer dependencies (Concepts: [Dependency Injection](), [Interfaces]()).
+- **Separation of Concerns**: Different aspects of functionality should be handled by different modules. Different modules shouldn't interfere with each other. Avoid adding validation, business rule and infra connections into a single module, split into separate modules and connect them on high level components.
+- **Encapsulation**: Hide implementation details and expose only what's necessary. This allow the enforcement of business rules and the maintenance of consistency. This gives clients a clearer interface, they're not overwhelmed with details.
+## Essential AI Refactoring Capabilities
+- Variable Renaming across scope without breaking dependencies.
+- Function extraction and decomposition.
+- Dead code elimination.
+- Documentation generation.
+- Code style consistency.
+
+For refactors, always set a strict, small scope. Keeping cope narrow limits blast radius if something breaks.
+## Agent Skills
+Reusable, file system based, modular capabilities that transform general-purpose agents into specialists. Each skill packages instructions, metadata, and optional resources (scripts, templates) that the Agent uses automatically when relevant.
+- Specialize Agent: Tailor capabilities for domain-specific tasks.
+- Reduce repetition: Create once, use automatically.
+- Compose capabilities: Combine Skills to build complex workflows.
+
+Claude comes with pre-built Skills for common document tasks (PowerPoint, Excel, Word, PDF), and you can create your own custom Skills.
+
+>If a section of your CLAUDE.md file has become a procedure rather than a fact, you should make it a Skill.
+### How they work
+Claude operates on a VM with file system access, allowing Skills to exist as directories containing instructions, executables, and reference materials, organized like an onboarding guide you'd create for a new team member.
+
+This filesystem-based architecture enables progressive disclosure: Claude loads information as needed, rather than consuming context upfront.
+### Skill content
+Skill can contain three types of content, each loaded at different times:
+
+**Metadata (always loaded)**: Provides discovery information. It's loaded at startup and it's included in the system prompt.
+```markdown
+---
+name: pdf-processing
+description: Extract text and tables from PDF files, fill forms, merge documents. Use when working with PDF files or when the user mentions PDFs, or document extraction.
+---
+```
+
+**Instructions (loaded when triggered)**: Main body of `SKILL.md`, contains procedural knowledge: workflows, best practices, and guidance. Only loaded when request matches skill description. It's read via bash and then loaded into context.
+```markdown
+# PDF Processing
+
+## Quick start
+
+Use pdfplumber to extract text from PDFs:
+
+``python
+import pdfplumber
+
+with pdfplumber.open("document.pdf") as pdf:
+    text = pdf.pages[0].extract_text()
+``
+
+For advanced form filling, see [FORMS.md](FORMS.md).
+```
+
+**Resources and code (loaded as needed)**
+Instructions, code and resources: Skills can bundle additional materials: 
+```markdown
+pdf-skill/
+├── SKILL.md (main instructions)
+├── FORMS.md (form-filling guide)
+├── REFERENCE.md (detailed API reference)
+└── scripts/
+    └── fill_form.py (utility script)
+```
+
+Instructions: Additional markdown files (`FORMS.md`, `REFERENCE.md`) containing specialized guidance and workflows.
+Code: Executable scripts (`fill_form.py`) that the Agent runs via bash; scripts provide deterministic operations without consuming context.
+Resources: Reference materials like database schemas, API documentation, templates, or examples.
+
+These files are accessed only when referenced.
+### How Claude accesses Skill content
+When a Skill is triggered, Claude uses bash to read `SKILL.md` from the filesystem, bringing its instructions into the context window. If those instructions reference other files (like `FORMS.md` or a database schema), Claude reads those files too using additional bash commands. When instructions mention executable scripts, Claude runs them via bash and receives only the output (the script code itself never enters context).
+### Example: Loading a PDF Skill
+1. **Startup**: System prompt includes: `PDF Processing - Extract text and tables from PDF files, fill forms, merge documents`
+2. **User request**: "Extract the text from this PDF and summarize it"
+3. **Claude invokes**: `bash: read pdf-skill/SKILL.md` → Instructions loaded into context
+4. **Claude determines**: Form filling is not needed, so `FORMS.md` is not read
+5. **Claude executes**: Uses instructions from `SKILL.md` to complete the task
+
+>Claude Code supports only Custom Skills.
+## Skill structure
+Every Skill requires a `SKILL.md` file with YAML frontmatter:
+```markdown
+---
+name: your-skill-name
+description: Brief description of what this Skill does and when to use it
+---
+
+# Your Skill Name
+
+## Instructions
+[Clear, step-by-step guidance for Claude to follow]
+
+## Examples
+[Concrete examples of using this Skill]
+```
+
+**Required fields**: `name` and `description`
+**Field requirements**:
+`name`:
+- Maximum 64 characters
+- Must contain only lowercase letters, numbers, and hyphens
+- Cannot contain XML tags
+- Cannot contain reserved words: "anthropic", "claude"
+`description`:
+- Must be non-empty
+- Maximum 1024 characters
+- Cannot contain XML tags
+
+The `description` should include both what the Skill does and when Claude should use it.
+## Limitations and constraints
+- **Custom Skills do not sync across surfaces**. Skills uploaded to one surface are not automatically available on others:
+	- Skills uploaded to `claude.ai` must be separately uploaded to the API
+	- Skills uploaded through the API are not available on `claude.ai`
+	- Claude Code Skills are filesystem-based and separate from both `claude.ai` and API
+- Skills have different sharing models depending on where you use them:
+	- `claude.ai`: Individual user only; each team member must upload separately
+	- **Claude API**: Workspace-wide; all workspace members can access uploaded Skills
+	- **Claude Code**: Personal (`~/.claude/skills/`) or project-based (`.claude/skills/`); can also be shared via Claude Code Plugins
+- The exact runtime environment available to your skill depends on the product surface where you use it.
+	- `claude.ai`:
+	    - **Varying network access**: Depending on user/admin settings, Skills may have full, partial, or no network access.
+	- **Claude API**:
+	    - **No network access**: Skills cannot make external API calls or access the internet
+	    - **No runtime package installation**: Only pre-installed packages are available. You cannot install new packages during execution.
+	    - **Pre-configured dependencies only**
+	- **Claude Code**:
+	    - **Full network access**: Skills have the same network access as any other program on the user's computer
+	    - **Global package installation discouraged**: Skills should only install packages locally in order to avoid interfering with the user's computer
+
+Plan your Skills to work within these constraints.
+
+## Security considerations
+Use Skills only from trusted sources: those you created yourself or obtained from Anthropic. Skills provide Claude with new capabilities through instructions and code, and while this makes them powerful, it also means a malicious Skill can direct Claude to invoke tools or execute code in ways that don't match the Skill's stated purpose.
+## Claude Code Built-in Skills
+Claude includes a set of bundled skills that are available in every session unless disabled with the `disableBundledSkills` setting, including `/code-review`, `/batch`, `/debug`, `/loop`, and `/claude-api`.
+
+| Skill                  | Purpose                                                                                                                                                      | Version  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `/run`                 | Launch and drive your app to see a change working.                                                                                                           | 2.1.145+ |
+| `/verify`              | Build and run your app to confirm a code change does what it should without failing back to tests or type checks.                                            | 2.1.145+ |
+| `/run-skill-generator` | Teach `/run` and `/verify` how to build and launch your project. Captures what worked and commits it as a per-project skill at `.claude/skills/run-<name>/`. | 2.1.145+ |
+Where you store a skill determines who can use it
+
+| Location   | Path                                                                            | Applies to                     |
+| ---------- | ------------------------------------------------------------------------------- | ------------------------------ |
+| Enterprise | See [managed settings](https://code.claude.com/docs/en/settings#settings-files) | All users in your organization |
+| Personal   | `~/.claude/skills/<skill-name>/SKILL.md`                                        | All your projects              |
+| Project    | `.claude/skills/<skill-name>/SKILL.md`                                          | This project only              |
+| Plugin     | `<plugin>/skills/<skill-name>/SKILL.md`                                         | Where plugin is enabled        |
+When skills share the same name across levels, enterprise overrides personal, and personal overrides project. Plugin skills use a `plugin-name:skill-name` namespace, so they cannot conflict.
+
+If a skill and a command share the same name, the skill takes precedence.
+### Live change detection
+Watches skill directories for file changes. Changes under `~/.claude/skills`, `.claude/skills`, or `.claude/skills` inside an `--add-dir` directory takes effect within the current session without restarting. Creating a top-level skills directory requires restarting Claude.
+
+Live change detection works for `SKILL.md` files only.
+### Automatic discovery from parent and nested directories
+Project skills load from `.claude/skills` in your starting directory and in every parent directory up to the repository root, so starting Claude in a subdirectory still picks up skills defined at the root. When you work with files in subdirectories below your starting directory, Claude Code also discovers skills from nested `.claude/skills/` directories on demand.
+
+>Skills are preferred over commands since they support additional features.
+### Types of skill content
+- Reference content: Adds knowledge Claude applies to your current work. Conventions, patterns, style guides, domain knowledge.
+- Task content: Gives step-by-step instructions for a specific action, like deployments, commits, or code generation. These are often actions you want to invoke directly with `/skill-name` rather than letting Claude decide. Add `disable-model-invocation: true` to the [frontmatter](https://code.claude.com/docs/en/skills#frontmatter-reference) to prevent Claude from triggering it automatically.
+
+>You need to think about how a skill is going to be invoked (by you, Claude, or both) and where you want it to run (inline or sub-agent), this helps guide what to include.
+
+>Once a skill loads, its contents stays in context across turns.
+### String substitutions
+Skills support string substitution for dynamic values in the skill content. [Check available string substitutions](https://code.claude.com/docs/en/skills#available-string-substitutions).
+
+Indexed arguments use shell-style quoting, so wrap multi-word values in quotes to pass them as single argument.
+
+To include a literal `$`, escape it with a backslash.
+### Supporting files
+Skills can include multiple files in their directory. Claude access detailed reference material only when needed.
+
+Reference supporting files from `SKILL.md` so the Agent knows what each file contains and when to load it:
+```markdown
+## Additional resources
+
+- For complete API details, see [reference.md](reference.md)
+- For usage examples, see [examples.md](examples.md)
+```
+
+>Keep `SKILL.md` under 500 lines.
+### Skill content life-cycle
+When the Agent invokes a skill, it enters the conversation as a single message and stays there for the rest of the session. You should write guidance that should apply throughout a task as standing instructions rather than one-time steps.
+
+When a conversation is summarized to free context (auto-compaction), Claude re-attaches the most recent invocations of each skill after the summary, keeping the first 5000 tokens of each. Re-attached skills share a combined budget of 25K tokens. Claude fills this budget from the most recently invoked skill, so older skills can be dropped entirely after compaction.
+
+If a skill seems to stop influencing behavior, the content is usually still present and the model is choosing other tools or approaches. Strengthen the skill's `description` and instructions so the model keeps preferring it, or use hooks to enforce behavior deterministically. If the skill is large or you invoked several others after it, re-invoke it after compaction.
+### Pass arguments to skills
+Both you and Claude can pass arguments when invoking a skill. Arguments are available via the `$ARGUMENTS` placeholder.
+
+Arguments are passed like this: `/<skill_name> argument`.
+
+If you invoke a skill with arguments but the skill doesn't include `$ARGUMENTS`, Claude appends `ARGUMENTS: <your input>` to the end of the skill content so Claude still sees what you typed.
+### Inject dynamic context
+You can add dynamic commands to a skill so that the content is populated before the skill is sent to claude.
+
+Example:
+```markdown
+---
+name: pr-summary
+description: Summarize changes in a pull request
+context: fork
+agent: Explore
+allowed-tools: Bash(gh *)
+---
+
+## Pull request context
+- PR diff: !`gh pr diff`
+- PR comments: !`gh pr view --comments`
+- Changed files: !`gh pr diff --name-only`
+
+## Your task
+Summarize this pull request...
+```
+
+This is pre-processing, Claude only sees the final result.
+
+Command output is inserted as plain text and is not re-scanned for further !`<command>` placeholders, so a command cannot emit a placeholder for a later pass to expand.
+
+The inline form is only recognized when ! appears at the start of a line or immediately after whitespace.
+
+For multi-line commands, use a fenced code block opened with \`\`\`! instead of the inline form:
+```markdown
+\```!
+node --version
+npm --version
+git status --short
+\```
+```
+### Run skills in a sub-agent
+Add `context: fork` to your frontmatter when you want a skill to run in isolation. The sub-agent don't have access to your conversation history.
+
+>`context: fork` only makes sense for skills with explicit instructions. If you don't provide a task, the agent receives the guidelines but not actionable prompt, and returns without meaningful output.
+
+With `context: fork`, you write the task in your skill and pick an agent type to execute it. The built-in Explore and Plan agents **skip `CLAUDE.md` and `git status`** to keep their context small, so a forked skill using `agent: Explore` sees only the `SKILL.md` content and the agent's own system prompt.
+
+Example
+```markdown
+---
+name: deep-research
+description: Research a topic thoroughly
+context: fork
+agent: Explore
+---
+
+Research $ARGUMENTS thoroughly:
+
+1. Find relevant files using Glob and Grep
+2. Read and analyze the code
+3. Summarize findings with specific file references
+```
+### Restrict Claude's skill access
+Your permission settings govern baseline approval behavior for all tools that aren't mentioned by `disable-model-invocation` and `allowed-tools` frontmatters.
+
+- You can disable all skill s in `/permissions`.
+- Allow or deny specific skills using [permission rules](https://code.claude.com/docs/en/permissions).
+- Hide individual skills with `disable-model-invocation: true` in their frontmatter.
+
+>The `user-invocable` field only controls menu visibility, not Skill tool access.
+### Override skill visibility from settings
+The `skillOverrides` setting controls skill visibility from your settings instead of the skill's on frontmatter. Use it for skills you don't want to edit, such as ones checked into a shared project repo or provided by MCP server. You can access it in the `/skills` menu.
+### Troubleshooting
+#### Skill not triggering
+If Claude doesn’t use your skill when expected:
+1. Check the description includes keywords users would naturally say
+2. Verify the skill appears in `What skills are available?`
+3. Try rephrasing your request to match the description more closely
+4. Invoke it directly with `/skill-name` if the skill is user-invocable
+#### Skill triggers too often
+If Claude uses your skill when you don’t want it:
+1. Make the description more specific
+2. Add `disable-model-invocation: true` if you only want manual invocation
+### Skill descriptions are cut short
+Skill descriptions are loaded into context so Claude knows what’s available. All skill names are always included, but if you have many skills, descriptions are shortened to fit the character budget, which can strip the keywords Claude needs to match your request. The budget scales at 1% of the model’s context window. When it overflows, descriptions for the skills you invoke least are dropped first, so the skills you actually use keep their full text. Run `/doctor` to see whether the budget is overflowing and which skills are affected.
+
+To raise the budget, set the [`skillListingBudgetFraction`](https://code.claude.com/docs/en/settings#available-settings) setting (e.g. `0.02` = 2%) or the `SLASH_COMMAND_TOOL_CHAR_BUDGET` environment variable to a fixed character count. To free budget for other skills, set low-priority entries to `"name-only"` in [`skillOverrides`](https://code.claude.com/docs/en/skills#override-skill-visibility-from-settings) so they list without a description. You can also trim the `description` and `when_to_use` text at the source: put the key use case first, since each entry’s combined text is capped at 1,536 characters regardless of budget. The cap is configurable with [`maxSkillDescriptionChars`](https://code.claude.com/docs/en/settings#available-settings).
+## Sub-agents
+Sub-agents are specialized agents that you can create and use for task-specific workflows. Sub-agents have a separate context window and are best utilized when you don't want to flood your main conversation with search result, logs, or file contents you won't reference again or when you keep spawning the same kind of worker with the same instructions.
+
+Claude can delegate tasks to specific sub-agents when the task matches the agent description.
+
+A sub-agent has a separate context window, system prompt, tool access, and permissions.
+### Built-in sub-agents
+- **Explore**: Skip `CLAUDE.md` and parent session `git status`. Fast, read-only agent optimized for searching and analyzing codebases. When invoking this agent, Claude specifies a thoroughness level: **quick** for targeted lookups, **medium** for balanced exploration, or **very thorough** for comprehensive analysis.
+	- **Model**: Haiku
+	- **Tools**: Read-only tools
+- **Plan:** Research agent used during plan mode to gather context before presenting a plan. Exploration output stays in a separate context window while the main conversation remains read-only.
+	- **Model**: Inherits from main conversation
+	- **Tools:** Read-only
+- **General-purpose:** Agent for complex, multi-step tasks that require both exploration and action. Spawned when task requires both exploration and modification, complex reasoning to interpret results, or multiple dependent steps.
+	- **Model:** Inherits from main conversation
+	- **Tools:** All tools
+
+Built-in sub-agents are always registered in interactive sessions.
+### Creating a sub-agent
+Defined in Markdown files with YAML frontmatter. You can create them manually or use the `/agents` command. When using the `/agents` command you can generate the agent using Claude itself, just pass in the agent description.
+
+>Setting a background color for an agent helps identify which sub-agent is running in the UI.
 ## Meaningful Links
 - [SDD GitHub Repo](https://github.com/github/spec-kit)
 - [GitHub Copilot VSCode Config Doc](https://code.visualstudio.com/docs/copilot/overview)
+- [Context Engineering: Bringing Engineering Discipline to Prompts](https://addyo.substack.com/p/context-engineering-bringing-engineering)
+- [Claude pre-built Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview#available-skills)
+- [Agent Skills Open Standard (ASOS)](https://agentskills.io/)
 ## Understanding
 - explanation of the concept, using your own words.
 - Focus on cause and effect.
@@ -539,7 +921,7 @@ Add link to relative notes
 - Add link to alternatives that tries to solve the same problem
 - Always add relation definition like "expands", "contrasts", "depends"
 ## Questions
-- Points that are still not clear.
+- `.claude/rules` don't require imports to be referenced. Do Claude reference this files when necessary or are they always in context? What's the impact of having many files in here?
 ## Iterate on
 - Sections of the document that can be iterated and have it's quality 
 improved but need more knowledge to do so.
