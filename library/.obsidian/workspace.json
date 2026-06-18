@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/go_memory_model.md",
+                "file": "notes/memory_locations.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "go_memory_model"
+              "title": "memory_locations"
             }
           },
           {
@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/vibe_coding.md",
+                "file": "notes/go_garbage_collector.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "vibe_coding"
+              "title": "go_garbage_collector"
             }
           },
           {
@@ -161,7 +161,8 @@
               "title": "transformer_architecture"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -184,7 +185,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "Explorador de arquivos"
             }
           },
           {
@@ -311,32 +312,36 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false,
+      "switcher:Abrir a troca rápida": false,
+      "graph:Abrir visualização em gráfico": false,
+      "canvas:Criar novo canvas": false,
+      "daily-notes:Abrir a nota de hoje": false,
+      "templates:Inserir modelo": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Criar nova base": false,
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "438bfac2b7682e0e",
+  "active": "e754e8bb2c19024c",
   "lastOpenFiles": [
+    "keywords.md",
+    "notes/go_garbage_collector.md",
+    "notes/memory_locations.md",
     "notes/vibe_coding.md",
+    "Sem título.md",
     "notes/go_memory_model.md",
-    "Pasted image 20260608103323.png",
-    "Pasted image 20260608101629.png",
-    "Pasted image 20260608091100.png",
-    "Pasted image 20260608090755.png",
-    "Pasted image 20260608083657.png",
-    "Pasted image 20260601201740.png",
-    "Pasted image 20260531220816.png",
+    "Untitled.md",
+    "images/Pasted image 20260608103323.png",
+    "images/Pasted image 20260608101629.png",
+    "images/Pasted image 20260608091100.png",
+    "images/Pasted image 20260608090755.png",
+    "images/Pasted image 20260608083657.png",
+    "images/Pasted image 20260601201740.png",
+    "images/Pasted image 20260531220816.png",
     "notes/go_structs.md",
     "notes/Untitled.md",
     "notes/prompt_engineering.md",
     "notes/large_language_models.md",
-    "Untitled.md",
     "notes/go_pointers.md",
     "notes/go_maps.md",
     "notes/go_functions.md",
@@ -352,9 +357,6 @@
     "notes/transformer_architecture.md",
     "notes/go_strings.md",
     "notes/go_docmentation_system.md",
-    "notes/go_data_types.md",
-    "notes/go_arrays_and_slices.md",
-    "notes/go_conditionals.md",
     "notes",
     "images/go_documentation_generation.png",
     "Pasted image 20260507073921.png",
