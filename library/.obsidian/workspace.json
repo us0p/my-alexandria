@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/artificial_inteligence/vibe_coding.md",
+                "file": "notes/artificial_inteligence/subagents.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "vibe_coding"
+              "title": "subagents"
             }
           }
         ]
@@ -183,26 +183,32 @@
   },
   "active": "7c2be545851482c3",
   "lastOpenFiles": [
+    "notes/artificial_inteligence/spec_driven_development.md",
+    "notes/artificial_inteligence/claude_context_files.md",
+    "notes/artificial_inteligence/ai_guardrails.md",
+    "notes/artificial_inteligence/agent_skills.md",
+    "notes/artificial_inteligence/subagents.md",
+    "notes/artificial_inteligence/subagents.md.tmp.21231.c440949014ef",
+    "notes/artificial_inteligence/vibe_coding.md",
+    "notes/artificial_inteligence/agent_skills.md.tmp.21231.409fd94953a5",
+    "notes/artificial_inteligence/claude_context_files.md.tmp.21231.a95a02a492e5",
+    "notes/artificial_inteligence/ai_guardrails.md.tmp.21231.e415536973f5",
+    "notes/artificial_inteligence/spec_driven_development.md.tmp.21231.4f82e3769556",
+    "notes/artificial_inteligence/vibe_coding.md.tmp.21231.ff3bfff2beb5",
     "notes/artificial_inteligence/llm_agent.md",
     "notes/artificial_inteligence/llm_fundamentals.md",
     "notes/artificial_inteligence/llm_fundamentals.md.tmp.18010.0a8fd35f80ae",
     "notes/artificial_inteligence/llm_fundamentals.md.tmp.17789.2bc6741549f0",
     "notes/artificial_inteligence/llm_fundamentals.md.tmp.17556.cac49e95936c",
     "notes/artificial_inteligence/llm_fundamentals.md.tmp.16685.b98758cf1494",
-    "notes/artificial_inteligence/vibe_coding.md",
-    "notes/artificial_inteligence/llm_fundamentals.md.tmp.16685.65284a79afab",
     "introductions/regexp_word_boundary.md",
     "drawings/typical_retrieval_pipeline.md",
     "notes/recursion.md",
     "notes/two_complement.md",
     "keywords.md",
-    "notes/artificial_inteligence",
-    "notes/golang",
     "notes/artificial_inteligence/retrieval_augmented_generation.md",
     "notes/linked_lists.md",
     "notes/large_language_models.md",
-    "notes/linked_lists.md.tmp.220693.edd5737e4b1d",
-    "introductions",
     "notes/golang/go_garbage_collector.md",
     "notes/memory_locations.md",
     "Sem título.md",
@@ -220,11 +226,6 @@
     "notes/golang/go_pointers.md",
     "notes/golang/go_maps.md",
     "notes/golang/go_functions.md",
-    "notes/golang/go_loops.md",
-    "notes/golang/go_variable_and_constants.md",
-    "notes/training_models.md",
-    "notes/tokenization.md",
-    "notes",
     "images/go_documentation_generation.png",
     "Pasted image 20260507073921.png",
     "images/typical_retrieval_pipeline_workflow.png"
