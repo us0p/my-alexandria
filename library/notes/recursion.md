@@ -35,12 +35,14 @@ We broke the problem in a single repeatable step and executed it until the probl
 
 Note that the result of each call depends on the next until the base case is reached.
 
->It's often clearer to think about recursive calls as functional abstractions. That is, we should not care about how the function is implemented, we should simply **trust** that it computer the output correctly. This has been called a *recursive leap of faith*.
+>It's often clearer to think about recursive calls as functional abstractions. That is, we should not care about how the function is implemented, we should simply **trust** that it computes the output correctly. This has been called a *recursive leap of faith*.
 ## Base Case
 It's the simplest non-reducible case in which the function should simply return. Basically, it's what impedes the function of going on indefinitely.
 In the example above, the base case was `n < 10`, this is obvious since we can't extract the last digit of a number when the number has a single digit on it.
 
 The base case is the most important point of a recursive function and it often makes a good start point to creating one, since it makes it simpler to reason about how the function is executed.
+
+The base case can be used to verify the correctness of a recursive function as well. Since for any *N* step in the function recursive step we must assume that the recursive call is going to work correctly (*leap of faith*), then it all comes down to whether the base case is implemented correctly or not.
 ## Mutual Recursion
 When a recursive procedure is divided among two functions that call each other.
 
@@ -80,6 +82,43 @@ func fib(n int) int {
 }
 
 fmt.Printf("Fib(6): %d\n", fib(6))
+```
+## Converting Recursion to Iteration
+*Iteration is a special case of recursion*.
+
+To convert a recursive function to an iterative version we must discover **what state must be maintained by the iterative function**. This state is going to become the control variables the iterative version is going to use to walk through the solution.
+
+When converting a iterative function to a recursive one it's often simpler. **The state of an iteration can be passed as arguments to the recursive function**.
+
+Example: sum digits of a number.
+```go
+// notice that recursive parameters becomes iterative state through variables
+func sumDigitsIter(n int) int {
+	var sum int
+	
+	for n > 0 {
+		n, last := int(math.Floor(n / 10)), n % 10
+		sum += last
+	}
+	
+	return sum
+}
+
+// state becomes parameters to the recursive call
+func sumDigitsRec(n, sum int) int {
+	if n == 0:
+		return sum
+	n, last := int(math.Floor(n / 10)), n % 10	
+	return sum_digits(n, sum + last)
+}
+
+// can also be represented as a compound change to the recursive step output
+func sumDigitsVariation(n int) int {
+	if n == 0:
+		return n
+	n, last := int(math.Floor(n / 10)), n % 10
+	return sumDigitsVariation(n) + last 
+}
 ```
 ## Understanding
 - explanation of the concept, using your own words.

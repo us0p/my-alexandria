@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "c5adaed32cac7465",
+        "id": "f29786d05fda7bfe",
         "type": "tabs",
         "children": [
           {
-            "id": "589918b37f4a09be",
+            "id": "7c2be545851482c3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/llm_fundamentals_for_developers.md",
+                "file": "notes/artificial_inteligence/vibe_coding.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "llm_fundamentals_for_developers"
+              "title": "vibe_coding"
             }
           }
         ]
@@ -44,7 +44,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Explorador de arquivos"
+              "title": "Files"
             }
           },
           {
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#AI  ",
+                "query": "tag:",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -61,7 +61,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Procurar"
+              "title": "Search"
             }
           },
           {
@@ -171,41 +171,42 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Abrir a troca rápida": false,
-      "graph:Abrir visualização em gráfico": false,
-      "canvas:Criar novo canvas": false,
-      "daily-notes:Abrir a nota de hoje": false,
-      "templates:Inserir modelo": false,
-      "command-palette:Abrir paleta de comandos": false,
-      "bases:Criar nova base": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "589918b37f4a09be",
+  "active": "7c2be545851482c3",
   "lastOpenFiles": [
-    "notes/tokenization.md",
-    "notes/llm_fundamentals_for_developers.md",
-    "notes/llm_agent.md",
-    "notes/natural_language_processing.md",
-    "notes/retrieval_augmented_generation.md",
-    "notes/large_language_models.md",
-    "notes/transformer_architecture.md",
-    "notes/decoding_strategies.md",
-    "notes/prompt_engineering.md",
-    "notes/llm_fundamentals_for_developers.md.tmp.6276.b5ea0fd379a5",
-    "notes/text_generation_inference.md",
-    "notes/training_models.md",
-    "notes/vibe_coding.md",
-    "recursion.md",
-    "notes/go_garbage_collector.md",
-    "notes/memory_locations.md",
-    "notes/linked_lists.md",
-    "notes/linked_lists.md.tmp.220693.edd5737e4b1d",
+    "notes/artificial_inteligence/llm_agent.md",
+    "notes/artificial_inteligence/llm_fundamentals.md",
+    "notes/artificial_inteligence/llm_fundamentals.md.tmp.18010.0a8fd35f80ae",
+    "notes/artificial_inteligence/llm_fundamentals.md.tmp.17789.2bc6741549f0",
+    "notes/artificial_inteligence/llm_fundamentals.md.tmp.17556.cac49e95936c",
+    "notes/artificial_inteligence/llm_fundamentals.md.tmp.16685.b98758cf1494",
+    "notes/artificial_inteligence/vibe_coding.md",
+    "notes/artificial_inteligence/llm_fundamentals.md.tmp.16685.65284a79afab",
     "introductions/regexp_word_boundary.md",
-    "introductions",
+    "drawings/typical_retrieval_pipeline.md",
+    "notes/recursion.md",
+    "notes/two_complement.md",
     "keywords.md",
+    "notes/artificial_inteligence",
+    "notes/golang",
+    "notes/artificial_inteligence/retrieval_augmented_generation.md",
+    "notes/linked_lists.md",
+    "notes/large_language_models.md",
+    "notes/linked_lists.md.tmp.220693.edd5737e4b1d",
+    "introductions",
+    "notes/golang/go_garbage_collector.md",
+    "notes/memory_locations.md",
     "Sem título.md",
-    "notes/go_memory_model.md",
+    "notes/golang/go_memory_model.md",
     "Untitled.md",
     "images/Pasted image 20260608103323.png",
     "images/Pasted image 20260608101629.png",
@@ -214,17 +215,18 @@
     "images/Pasted image 20260608083657.png",
     "images/Pasted image 20260601201740.png",
     "images/Pasted image 20260531220816.png",
-    "notes/go_structs.md",
-    "notes/go_pointers.md",
-    "notes/go_maps.md",
-    "notes/go_functions.md",
-    "notes/go_loops.md",
+    "notes/golang/go_structs.md",
+    "notes/artificial_inteligence/prompt_engineering.md",
+    "notes/golang/go_pointers.md",
+    "notes/golang/go_maps.md",
+    "notes/golang/go_functions.md",
+    "notes/golang/go_loops.md",
+    "notes/golang/go_variable_and_constants.md",
+    "notes/training_models.md",
+    "notes/tokenization.md",
     "notes",
     "images/go_documentation_generation.png",
     "Pasted image 20260507073921.png",
-    "images/typical_retrieval_pipeline_workflow.png",
-    "drawings",
-    "images",
-    "techniques"
+    "images/typical_retrieval_pipeline_workflow.png"
   ]
 }
