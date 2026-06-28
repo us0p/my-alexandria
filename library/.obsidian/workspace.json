@@ -4,165 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "739cd8836d9b2874",
+        "id": "c5adaed32cac7465",
         "type": "tabs",
         "children": [
           {
-            "id": "438bfac2b7682e0e",
+            "id": "589918b37f4a09be",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/memory_locations.md",
+                "file": "notes/llm_fundamentals_for_developers.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "memory_locations"
-            }
-          },
-          {
-            "id": "e754e8bb2c19024c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/go_garbage_collector.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "go_garbage_collector"
-            }
-          },
-          {
-            "id": "5e81897b88284e81",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "recursion.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "recursion"
-            }
-          },
-          {
-            "id": "d28a17a7442ad035",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/decoding_strategies.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "decoding_strategies"
-            }
-          },
-          {
-            "id": "9b602dec0cd17831",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/llm_agent.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "llm_agent"
-            }
-          },
-          {
-            "id": "f711bbf7046a2a86",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/natural_language_processing.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "natural_language_processing"
-            }
-          },
-          {
-            "id": "a1fa1d74fe01a44a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/retrieval_augmented_generation.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "retrieval_augmented_generation"
-            }
-          },
-          {
-            "id": "1e6e47ed804aea8f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/text_generation_inference.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "text_generation_inference"
-            }
-          },
-          {
-            "id": "8fe00de91c39d5db",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/tokenization.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "tokenization"
-            }
-          },
-          {
-            "id": "d6881fbdc6417b25",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/training_models.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "training_models"
-            }
-          },
-          {
-            "id": "705affcd511b4a2f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/transformer_architecture.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "transformer_architecture"
+              "title": "llm_fundamentals_for_developers"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -185,7 +44,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "Explorador de arquivos"
             }
           },
           {
@@ -194,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:",
+                "query": "tag:#AI  ",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -202,7 +61,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Search"
+              "title": "Procurar"
             }
           },
           {
@@ -312,28 +171,39 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false,
+      "switcher:Abrir a troca rápida": false,
+      "graph:Abrir visualização em gráfico": false,
+      "canvas:Criar novo canvas": false,
+      "daily-notes:Abrir a nota de hoje": false,
+      "templates:Inserir modelo": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Criar nova base": false,
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "5e81897b88284e81",
+  "active": "589918b37f4a09be",
   "lastOpenFiles": [
-    "notes/linked_lists.md",
-    "recursion.md",
+    "notes/tokenization.md",
+    "notes/llm_fundamentals_for_developers.md",
+    "notes/llm_agent.md",
+    "notes/natural_language_processing.md",
+    "notes/retrieval_augmented_generation.md",
     "notes/large_language_models.md",
-    "notes/linked_lists.md.tmp.220693.edd5737e4b1d",
+    "notes/transformer_architecture.md",
+    "notes/decoding_strategies.md",
+    "notes/prompt_engineering.md",
+    "notes/llm_fundamentals_for_developers.md.tmp.6276.b5ea0fd379a5",
+    "notes/text_generation_inference.md",
+    "notes/training_models.md",
     "notes/vibe_coding.md",
+    "recursion.md",
+    "notes/go_garbage_collector.md",
+    "notes/memory_locations.md",
+    "notes/linked_lists.md",
+    "notes/linked_lists.md.tmp.220693.edd5737e4b1d",
     "introductions/regexp_word_boundary.md",
     "introductions",
-    "notes/go_garbage_collector.md",
     "keywords.md",
-    "notes/memory_locations.md",
     "Sem título.md",
     "notes/go_memory_model.md",
     "Untitled.md",
@@ -345,20 +215,10 @@
     "images/Pasted image 20260601201740.png",
     "images/Pasted image 20260531220816.png",
     "notes/go_structs.md",
-    "notes/prompt_engineering.md",
     "notes/go_pointers.md",
     "notes/go_maps.md",
     "notes/go_functions.md",
     "notes/go_loops.md",
-    "notes/go_variable_and_constants.md",
-    "notes/retrieval_augmented_generation.md",
-    "notes/training_models.md",
-    "notes/tokenization.md",
-    "notes/text_generation_inference.md",
-    "notes/natural_language_processing.md",
-    "notes/llm_agent.md",
-    "notes/decoding_strategies.md",
-    "notes/transformer_architecture.md",
     "notes",
     "images/go_documentation_generation.png",
     "Pasted image 20260507073921.png",
