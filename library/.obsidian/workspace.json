@@ -134,7 +134,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Explorador de arquivos"
+              "title": "Files"
             }
           },
           {
@@ -262,18 +262,20 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Abrir a troca rápida": false,
-      "graph:Abrir visualização em gráfico": false,
-      "canvas:Criar novo canvas": false,
-      "daily-notes:Abrir a nota de hoje": false,
-      "templates:Inserir modelo": false,
-      "command-palette:Abrir paleta de comandos": false,
-      "bases:Criar nova base": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
   "active": "7c2be545851482c3",
   "lastOpenFiles": [
+    "notes/artificial_inteligence/agent_skills.md.tmp.122707.bf215dcde703",
+    "notes/artificial_inteligence/agent_skills.md.tmp.122707.e34fba22917d",
     "notes/artificial_inteligence/original_vibe_coding.md",
     "notes/artificial_inteligence/agent_skills.md",
     "notes/artificial_inteligence/vibe_coding.md",
@@ -292,7 +294,6 @@
     "notes/artificial_inteligence/llm_fundamentals.md.tmp.18010.0a8fd35f80ae",
     "notes/artificial_inteligence/llm_fundamentals.md.tmp.17789.2bc6741549f0",
     "notes/artificial_inteligence/llm_fundamentals.md.tmp.17556.cac49e95936c",
-    "notes/artificial_inteligence/llm_fundamentals.md.tmp.16685.b98758cf1494",
     "introductions/regexp_word_boundary.md",
     "drawings/typical_retrieval_pipeline.md",
     "notes/recursion.md",
@@ -316,7 +317,6 @@
     "notes/golang/go_structs.md",
     "notes/artificial_inteligence/prompt_engineering.md",
     "notes/golang/go_pointers.md",
-    "notes/golang/go_maps.md",
     "images/go_documentation_generation.png",
     "Pasted image 20260507073921.png",
     "images/typical_retrieval_pipeline_workflow.png"
