@@ -1,0 +1,1101 @@
+---
+id: 20260531-vibe_coding
+type: concept
+status: draft
+tags:
+  - AI
+  - vibe_coding
+created: 2026-05-31
+---
+## TL;DR
+Very short resume with only the essential information needed.
+# Vibe Coding
+It's a term used for when a person create an application by providing natural language instructions and letting the AI model generating the code.
+
+It's a good idea to start with git early because Claude uses your git history and .gitignore as part of the project context.
+
+The `CLAUDE.md` file is a document that Claude reads at the start of every session. It tells Claude what the project is about, how it works, and what rules to follow while generating code. Without it, every session starts from scratch. The file works similarly to a briefing document you would give a new team member on their first day.
+
+>You can use Claude's `/init` command to automatically setup a `CLAUDE.md` file based on your current project conventions, build commands and project structure.
+
+Example `CLAUDE.md` file:
+```markdown
+# task-manager
+
+## Description
+Short explanation of what this project does.
+
+## Tech stack
+...
+
+## Run commands
+...
+
+## Conventions
+Include things like:
+- Coding Style
+- Folder Structure
+- Naming Conventions
+- Testing Expectatios
+- Architectural Patterns
+
+## Guardrails
+Include things like:
+- Files that should never be deleted
+- Rules about adding new dependencies
+- Requirements like input validation for API handlers.
+```
+
+Use plan mode before every feature. By doing this you can catch gaps before implementation and iterate on the plan until you think it's good enough. It saves time by reducing rewrites and incorrect implementations while keeping the agent focused on what matters (it's common for an agent to get lost after many rewrites).
+
+You can enter plan mode in Claude with `/claude`.
+
+Plan mode can also help by catching errors on AI assumptions after vague prompts.
+
+For a good plan describe the feature and ask Claude to outline:
+1. What files it will create or edit.
+2. Function signatures it will introduce.
+3. Any edge cases or error handling.
+4. List any assumptions.
+
+Every plan should include a goal, a list of constraints, and instructions for verifying success. Avoid open-ended prompts. It's fundamental that you define the scope of the prompt and it becomes even more important in complex projects where Claude's output can cascade across multiple files.
+## Vibe Code guidelines
+Good prompts define the expected behavior, the files involved, and the constraints. The more specific you are, the fewer corrections you'll need.
+
+```plaintext
+Implement the add command handler in a task.ts.
+It should accept a task title as a string argument.
+Append a new task to tasks.json with these fields:
+id (auto-incremented), title, done: false, createdAt (ISO timestamp).
+If tasks.json doesn't exist, create it with an empty array first.
+```
+
+How to fix Claude mistakes:
+- Interrupt mid-run: If you notice that the model is heading in the wrong direction like touching files you didn't asked for or by running a command you did not intend, you can stop by pressing the `esc` key. It halts the process, shows what it has done so far, and wait for next instructions. It's easier to correct things from that point than wait for it to finish and undo a larger set of changes.
+- Undo with `/rewind`: If Claude changed several interconnected files, you can use this command to restore the project to a previous state so you can try a different approach.
+- Give corrective prompts: When the just a small part of the output is not exactly what you wanted. It's usually faster to give clear instructions to what to improve and what not to change than rewind.
+
+Managing context in Claude:
+- `/clear`: Use it when you finish one feature and want to start another without older context influencing the next task. Do not assume Claude remembers anything from the previous session. Re-feed with goal current file state, and constraints only.
+- `/compact`: Use when Claude warns against long context or when responses start to drift. It summarizes conversation, while keeping decisions and context. Use when context is almost full but you need to continue working. After running, skim the summary before you continue and look for anything that is off or missing
+.
+>`/rewind` Is not a substitute for `/clear`. The first undoes actions, while the former resets context.
+## Vibe coding best practices
+Use it before and during you vibe coding sessions.
+
+|        | **Best practice**                               | **What to do**                                                                             |
+| ------ | ----------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **1**  | Keep your context config file lean and current. | Remove outdated content from **CLAUDE.md**, **GEMINI.md**, **.cursorrules**, or equivalent |
+| **2**  | Reset context between features.                 | Have one feature per session. Use your tool’s reset command.                               |
+| **3**  | Plan before every feature.                      | Ask for a plan before any code is written.                                                 |
+| **4**  | Write scoped, constrained prompts.              | Name the goal, list constraints, specify what not to touch.                                |
+| **5**  | Give the AI an example file.                    | Provide code examples instead of abstract descriptions.                                    |
+| **6**  | Review every diff before accepting.             | Check deletions, API changes, new deps, and off-limits files.                              |
+| **7**  | Run tests after every accepted change.          | Do a typecheck + test + lint every time.                                                   |
+| **8**  | Declare off-limits zones.                       | Document where sensitive data resides in your config file and related prompts.             |
+| **9**  | Require migration plans.                        | Read summary of schema changes, rollback, before generating code.                          |
+| **10** | Build skills for repetitive tasks.              | Save best prompt patterns, reuse, remove variance.                                         |
+Most AI-generated code failures come from stale or overloaded context.
+
+A common mistake on config files (`CLAUDE.md`, `GEMINI.md`, etc) is treating the config file like documentation. It shouldn't contain instructions for every possible decision; rather, it should contain instructions relevant to that particular session.
+
+| **Keep in your config file**           | **Remove from your config file**             |
+| -------------------------------------- | -------------------------------------------- |
+| Build and run commands                 | Bug context from a session last week         |
+| Folder structure overview              | Temporary deadline or sprint notes           |
+| Naming and style conventions           | Experiments you’re about to remove           |
+| Off-limits files and folders           | Decisions that were reversed                 |
+| Testing framework and how to run tests | Long explanations of why decisions were made |
+Not following these rules means the AI starts with stale or contradictory context, leading to incorrect implementations.
+
+A good rule of thumb is to keep the file under 50 lines if possible.
+
+The best claude.md
+What - project context
+- High-level architecture (brief, non-obvious structure only)
+- tech stack and key libraries
+- code style and standards
+How - Commands and workflows
+- Build / dev/ typecheck commands
+- Test commands and rules
+- Lint / format commands
+- Review checklists / pre-PR steps
+Behave - behavioral instructions
+- workflow preferences
+- what claude should never do in this repo
+
+Context bleed, occurs when you work on multiple features in a single long sessions. The model carries context from earlier conversations into subsequent ones and tends to follow previous patterns and references files that have been worked on before. Output looks correct but contain incorrect assumptions.
+
+> Giving an example file to show the patterns your code base follows is effective, specially in Front-End applications where consistent styling classes (Tailwind CSS) usage and component structure matter throughout the code base.
+
+>Accepting AI's output without reviewing the diff means you’re relying on the AI’s judgment over your own, which is risky.
+
+>After implementation, prompt for an explicit risk review before you accept.
+
+For security sensitive areas in your code base, always add them in the "off-limits" section in your configuration file. This must also be repeated in every relevant prompt, specially when working near those files.
+```markdown
+## Off-limits 
+- /src/auth/**
+- /src/payments/**
+- /src/middleware/rbac.ts
+- Any file ending in .migration.ts
+- .env and any file that handles environment variables
+
+## For off-limits areas, always:
+- Propose a plan and get explicit approval before touching
+- Include a rollback strategy in the plan
+- Require test coverage for any change
+```
+
+Require a migration plan before any schema change. Avoid letting the model write a schema migration without first producing a written plan that includes the migration itself, a rollback path, and the tests.
+
+Typically, the plan should define:
+- The forward change (up SQL)
+- The reversal path (down SQL)
+- The application code updates required to support the new schema
+- A rollback strategy, if something fails in production
+Start-to-finish feature building with Claude Code
+![[Pasted image 20260531220816.png]]
+## Vibe Coding Mindset
+1. Don't use vague, vast prompts, you need to feed the model with enough context (functional requirements, design decisions, tests, constraints) so that a Junior developer would be able to implement the feature with only what you gave. You can also work alongside the model to iterate and improve this documentation before giving it to an coding agent.
+2. Do not ask for a full project from the start. Let the agent implement a working core and than add feature to it separately and iterate on edge cages, refactoring and security issues.
+3. Outsourcing all the implementation to the model can be fast but it also becomes unmanageable. It's hard to understand how a codebase with 5k+ lines works, imagine how hard would it be if you haven't even written a single line of code yourself? Always ask the model to add comments and create documentation of your code so that your future self won't be mad at you.
+## Vibe Planning
+The planning mode of your model can be used in two ways:
+1. Plan -> Build: You get the model to analyze the codebase, understand the problem, formulate a plan and then build the implementation direclty from that plan.
+2. Plan -> Spec -> Build: You add a intermediate step and then it writer a detailed specification (a natural language instruction that defines what should be built, a.k.a. meta-prompting). This approach should be used for more complex implementations.
+
+You can tell the agent what you are trying to build, ask it to help refine the idea, establish different phases, and once done, ask it to document everything so that you can refer to that when actually building the product.
+## Defining the "what" and the "how" (PRD & Plan)
+**Product Requirement Doc (PRD)** is just a detailed guide for how the app should look and behave with some guidelines of how it should be implemented.
+
+After generating the PRD, we ask the model to generate a setp-by-setp actionable plan that will implement the app in phases using a modified **vertical slice method** suitable for LLM-assisted development in full-stack frameworks.
+
+Vertical slices instructs the model to develop the app in full-stack "slices" (from DB to UI) in increasingly complexity.
+
+Rather than trying to define all your database models from the start, for example, this approach tackles the simplest form of a full-stack feature individually, and then builds upon them in later phases. This means, in an early phase, we might only define the database models needed for Authentication, then its related server-side functions, and the UI for it like Login forms and pages.
+
+![[Pasted image 20260601201740.png]]
+
+if you realize there is a feature set you want to add on later that didn't already exist in the plan, You can ask the LLM to review the plan and find the best time/phase within it to implement it.
+
+After completing a significant feature. You should make an habit of tasking the AI with documenting what was just built. You can even create a Skill for that:
+- Gather the key files related to the implementation feature.
+- Provide the relevant sections of the PRD and the Plan that described the feature.
+- Reference the rule file with the Doc creation task.
+- Have it review the Doc for breadth and clarity.
+
+The important is to to focus on the core logic, how the different parts connect and any key decisions made, referencing specific files where the implementation details can be found.
+
+The model would then generate a MD file in a particular directory which is nice because:
+- It create a clear decision document that humans can easily understand.
+- It builds a knowledge base within the project that could be fed back into the AI's context in later stages, helping maintain consistency and reducing context losses.
+
+**The six core areas:** GitHub’s analysis of [over 2,500 agent configuration files](https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/) revealed a clear pattern: the most effective specs cover six areas. Use this as a checklist for completeness:
+**1. Commands:** Put executable commands early - not just tool names, but full commands with flags: `npm test`, `pytest -v`, `npm run build`. The agent will reference these constantly.
+**2. Testing:** How to run tests, what framework you use, where test files live, and what coverage expectations exist.
+**3. Project structure:** Where source code lives, where tests go, where docs belong. Be explicit: “`src/` for application code, `tests/` for unit tests, `docs/` for documentation.”
+**4. Code style:** One real code snippet showing your style beats three paragraphs describing it. Include naming conventions, formatting rules, and examples of good output.
+**5. Git workflow:** Branch naming, commit message format, PR requirements. The agent can follow these if you spell them out.
+**6. Boundaries:** What the agent should never touch - secrets, vendor directories, production configs, specific folders. “Never commit secrets” was the single most common helpful constraint in the GitHub study.
+
+**Be specific about your stack:** Say “React 18 with TypeScript, Vite, and Tailwind CSS” not “React project.” Include versions and key dependencies. Vague specs produce vague code.
+
+**Use a consistent format:** Clarity is king. Many devs use Markdown headings or even XML-like tags in the spec to delineate sections, because AI models handle well-structured text better than free-form prose.
+
+remember, “minimal does not necessarily mean short” - don’t shy away from detail in the spec if it matters, but keep it focused.
+## Spec-Driven Development
+Is much closer to traditional engineering practices. Instead of jumping straight into implementation, we start by doing the hard thinking ourselves: making architectural decisions, defining requirements, and documenting them in a structured markdown specification stored in the repository and updated alongside the project. This creates an important shift: we decouple the specification (what we are building and why) from the implementation (the actual code).
+
+SDD addresses many of the core issues of vibe coding by preserving context across sessions and different ai agents, while aligning both humans and agents around the project's main non-negotiable.
+### SDD Stages
+- Constitution: Agreement of key decisions for the project, it usually includes several documents: Mission (explains the why), tech stack (documents technical decisions as well as deployment), road map (outline project phases, planned features, this document is continuously updated with the project evolution).
+- Development: understand what we want to build and writing detailed specification. Implementing the changes. Validating that the implementation works as expected.
+- Re-planning: dedicated phase for revisiting the constitution and reviewing previous feature decisions and plans to make sure they still align with the project goals.
+
+>You can use AI to generate all the documents in each specific phase.
+
+E.g.: Constitution documents:
+```markdown
+We are building Trainlytics, a personal fitness tracking web app built
+for people who want more control, flexibility, and insights than standard
+fitness apps provide. Find the full requirements in README.md.
+
+Let's create a "constitution" in a specs directory that consists of 
+the following parts:
+- mission.md - what and why we are building; the main mission of the product
+- tech-stack.md - core technical decisions
+- roadmap.md - project phases broken down in implementation order
+
+IMPORTANT: You must use your AskUserQuestion tool to get my feedback.
+```
+
+E.g.: Task planning phase
+```plaintext
+Find the next phase in specs/roadmap.md and create a new branch, 
+ask me about any steps in the specs that are not fully clear.
+
+Then create a new directory in the format YYYY-MM-DD-feature-name under specs/ 
+for this feature, with the following files:
+- plan.md - a structured list of numbered task groups
+- requirements.md - scope, key decisions, and context
+- validation.md - how we define success and confirm the implementation can 
+be merged
+
+Use specs/mission.md and specs/tech-stack.md as guidance.
+```
+
+E.g.: Development phase
+```markdown
+Take the next task group from 2026-05-04-phase-1-mvp/plan.md and implement it.
+Use requirements.md and validation.md for guidance.
+Once done, update the status in both the plan and validation documents.
+```
+
+>A good practice is to make all changes through the agent rather than patching documents yourself to maintain consistency across the project. For example, you might require a change and the agent might update more than one related document.
+
+There are evidences that placing the output of an agent in another and asking for critiques improves output quality.
+
+In theory, spec-driven development suggests that the feature phase ends with validation. In practice, it rarely works that cleanly. You will likely find that some parts of the implementation don’t work as expected. At that point, you have two options:
+- Add a couple more iterations to your `plan.md` and continue refining the feature (this works well for smaller changes), or
+- If the issues are more substantial, treat them as part of the next feature phase and handle them during re-planning.
+
+>One important thing to watch out for: it can be tempting to simply explain the issue to the LLM agent and ask for fixes, instead of updating the specs and reworking the implementation. Try to resist that shortcut. Keeping the specification as the source of truth is what makes the approach robust.
+
+>In the current AI era, the main value of a human lies in thinking and architecture.
+
+**Demand Multiple Options**: Counter AI's tendency toward sophisticated solutions by explicitly requesting alternatives. Try "Give me three approaches to this problem; the simplest possible solution, a moderate approach, and a full-featured version. Explain the trade offs of each.". You can apply this for errors as well, ask for multiple causes of why a particular error is happening.
+
+The progression should be natural: establish expertise → get the plan → evaluate options → make informed decisions → implement with confidence. This approach transforms AI from an unpredictable code generator into a reliable development partner who understands both your technical needs and your constraints.
+
+AI models have knowledge cutoffs and may not be familiar with the latest versions of frameworks or your specific project requirements. Providing context prevents frustration and reduces iterations. You can even ask the AI what its knowledge cutoffs are, and supplement its data accordingly.
+
+A good safe net for you vibe coded application is to use pre-commit. Before any changes reaches a shared branch, you can run tests, linting, formatting and security checks to validate that the generated code meet your application standards.
+
+Traceability and provenance are crucial when models contribute code. Simple record keeping reduces uncertainty and eases audits.
+- Store prompt versions and AI outputs in the PR description or a linked artifact store.
+- Tag commits that include AI-generated text with a consistent marker, e.g., `AI:generated`.
+- Include the model version, prompt, and timestamp with any generated snippet.
+- Use a lightweight governance document that outlines acceptable uses and approval workflows.
+
+Traceability supports accountability and resolves disputes quickly when regressions occur. It also provides data for continuous improvement of prompts and validation steps.
+
+Teams that adopt provenance practices have an easier time demonstrating compliance and understanding root causes when incidents arise.
+
+>SDD is ideal for medium-sized features.
+
+>Always provide constraints about what the agent mustn't do, this helps the agent to be more focused and objective.
+
+A spec is a structured, behavior-oriented artifact - or set of related artifacts - written in natural language that expresses software functionality.
+
+Specs aren't the same as the general context documents in a codebase. That general context are things like rule files, or high level descriptions of the product and the codebase. Some times it's referenced as a **memory bank**. These files are relevant across all AI coding sessions in the codebase, whereas specs are only relevant to the task that actually create or change that particular functionality.
+![[Pasted image 20260608083657.png]]
+### SDD implementation levels
+- **Spec-first**: Spec is written first, and then used in the AI-assisted development workflow for the task at hand.
+- **Spec-anchored**: The spec is kept even after the task is complete, to continue using it for evolution and maintenance of the respective feature.
+- **Spec-as-source**: Spec is the main source file over time, and only the spec is edited by the human, the human never touches the code.
+
+The implementation levels are not required by each other. In fact, there seems to be no standard strategy about spec maintenance over time.
+### SDD Tools
+These tools are more focused on creating an application from scratch. If you need to fix a simple bug or add a new simple feature, these tools can feel "overkill" and considering the amount of context and files you'll need to review and validate it can make the progress even slower than a simple "plan" section with a coding agent.
+
+It's important to highlight that even with all of these requirements, the agent can still ignore them. The best way to stay in control of what we're building is to keep small, iterative steps instead of trying to build all at once.
+Adding a lot of up-front spec design might not be a good idea, especially when it's overly verbose.
+
+Because of all this upfront planning and design, SDD isn't reliable for problems that are large or that aren't clear. The amount of documents that would be necessary for a large problem isn't negligible and if a problem isn't clear enough, you can't do much planning.
+
+Model-Driven-Development (MDD) was a past initiative to cast specifications into code using a custom language. SDD seems to be going towards that same direction while leveraging AI to take the code implementation heavy work. It's worth to notice that even tough MDD added some flexibility it was, most of the time, inflexible and non-deterministic. This can also be a problem in SDD specially with AI assisted coding standards. We must be careful to keep this practice relevant without falling in the same pitfalls we experienced in the past.
+#### Kiro
+Lightweight, spec-first SDD tool. Used for tasks or a user story (there's no mention of it being used with spec-anchored strategies).
+##### Workflow
+###### Requirement
+Structured as a list of requirements, where each requirement represents a user story using [Gherkin Syntax](). 
+
+![[Pasted image 20260608090755.png]]- 
+###### Design
+Consists of sections  describing technical considerations of the task.
+
+![[Pasted image 20260608091100.png]]
+###### Tasks
+A list of the tasks that map to each requirement specification.
+
+Kiro's memory bank is called "steering" and it's composed of the following documents:
+- `product.md`
+- `teach.md`
+- `structure.md`
+
+Each workflow step is represented by one markdown document.
+
+This framework produces a lot less files for review but it can also be very verbose even for small tasks.
+#### Spec-kit
+GitHub's version of SDD. It's a CLI that can create workspace setups for a wide range of common coding assistants. Once that structure is set up, you interact with spec-kit via slash commands in your coding assistant. It's highly customizable.
+
+Spec-kit's memory bank is a prerequisite for the spec-driven approach. It's called **Constitution**. It's supposed to contain high level principles that are "immutable" and should always be applied, to every change.
+
+In each of the workflow steps (specify, plan, tasks), spec-kit instantiates a set of files and prompts with the help of a bash script and some templates. The workflow makes heavy use of checklists inside of the files, to track necessary user clarifications, constitution violations, research tasks, etc.
+
+Bellow is an overview that illustrates the topology in spec-kit. Note how one spec is made up of many files.
+
+![[Pasted image 20260608101629.png]]
+
+Spec-kit seems to be aspiring to a spec-anchored approach. However, spec-kit creates a branch for every spec that gets created, which seems to indicate that they see a spec as a living artifact for the lifetime for a change request, not the lifetime of a feature.
+
+Note that this framework can generate a LOT of files to review and they can be repetitive and redundant.
+#### Tessl Framework (beta)
+Distributed as a CLI. The CLI command also doubles as an MCP server. It's the only one of these three tools that explicitly aspires to a spec-anchored approach, and is even exploring the spec-as-source level os SDD.
+In this framework the spec maintainer can tag parts of the specification to make sure that more crucial parts of the generated component are fully under the control of the maintainer.
+Putting the specs for spec-as-source at a quite low abstraction level, per code file, probably reduces amount of steps and interpretations the LLM has to do, and therefore the chance of errors.
+![[Pasted image 20260608103323.png]]
+### How to write good specifications for SDD
+a good spec doesn’t just tell the AI what to build, it also helps it self-correct and stay within safe boundaries. By baking in verification steps, constraints, and your hard-earned knowledge, you drastically increase the odds that the agent’s output is correct on the first try (or at least much closer to correct).
+
+1. Kick off your project with a concise high-level spec, then have the AI expand it into a detailed plan. Instead of over-engineering upfront, begin with a clear goal statement and a few core requirements. Treat this as a “product brief” and let the agent generate a more elaborate spec from it. This leverages the AI’s strength in elaboration while you maintain control of the direction. This works well unless you already feel you have very specific technical requirements that must be met from the start. **Why this works:** LLM-based agents excel at fleshing out details when given a solid high-level directive, but they need a clear mission to avoid drifting off course. By providing a short outline or objective description and asking the AI to produce a full specification (e.g. a `spec.md`), you create a persistent reference for the agent. **Keep it goal-oriented:** A high-level spec for an AI agent should focus on what and why, more than the nitty-gritty how (at least initially).
+2. Design for Agent Experience (AX): Just as we design APIs for developer experience (DX), consider designing specs for “Agent Experience.” This means clean, parseable formats: OpenAPI schemas for any APIs the agent will consume, llms.txt files that summarize documentation for LLM consumption, and explicit type definitions. The Agentic AI Foundation (AAIF) is standardizing protocols like MCP (Model Context Protocol) for tool integration - specs that follow these patterns are easier for agents to consume and act on reliably.
+3. **Make the spec a “living document”:** Don’t write it and forget it. Update the spec as you and the agent make decisions or discover new info. If the AI had to change the data model or you decided to cut a feature, reflect that in the spec so it remains the ground truth.
+4. Avoid context overload: Don’t mix authentication tasks with database schema changes in one go, as the [DigitalOcean AI guide](https://docs.digitalocean.com/products/gradient-ai-platform/concepts/context-management/) warns. Keep each prompt tightly scoped to the current goal.
+5. have the agent build an extended Table of Contents with summaries for the spec. This is essentially a “spec summary” that condenses each section into a few key points or keywords, and references where details can be found. For example, if your full spec has a section on “Security Requirements” spanning 500 words, you might have the agent summarize it to: “Security: use HTTPS, protect API keys, implement input validation (see full spec §4.2)”. By creating a hierarchical summary in the planning phase, you get a bird’s-eye view that can stay in the prompt, while the fine details remain offloaded unless needed. This extended TOC acts as an index.
+6. Utilize sub-agents or “skills” for different spec parts. Each subagent is configured for a specific area of expertise and given the portion of the spec relevant to that area. The main agent (or an orchestrator) can route tasks to the appropriate subagent automatically. The benefit is each agent has a smaller context window to deal with and a more focused role, which can [boost accuracy and allow parallel work](https://10xdevelopers.dev/structured/claude-code-with-subagents/) on independent tasks. Each subagent has a specific purpose and expertise area, uses its own context window separate from the main conversation, and has a custom system prompt guiding its behavior,” as their docs describe. When a task comes up that matches a subagent’s domain, Claude can delegate that task to it, with the subagent returning results independently.
+7.  **Use three-tier boundaries:** The [GitHub analysis of 2,500+ agent files](https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/) found that the most effective specs use a three-tier boundary system rather than a simple list of don’ts. This gives the agent clearer guidance on when to proceed, when to pause, and when to stop. **Always do (proceed without asking)**: Run test, follow style guide, log errors. **Ask first (pause for human approval)**: Schema changes, new dependencies, CI config. **Never do (hard stop -no exceptions)**: Commit secrets, edit vendor, remove failing tests.
+8. **Encourage self-verification:** One powerful pattern is to have the agent verify its work against the spec automatically. e.g. “After implementing, compare the result with the spec and confirm all requirements are met. List any spec items that are not addressed.” This pushes the LLM to reflect on its output relative to the spec, catching omissions. It’s a form of self-audit built into the process.
+9. **Leverage testing in the spec:** If possible, incorporate a test plan or even actual tests in your spec and prompt flow. The agent can be prompted to run through those cases in its head or actually execute them if it has that capability. In an AI coding context, writing a bit of pseudocode for tests or expected outcomes in the spec can guide the agent’s implementation. Additionally, you can use a dedicated “[test agent](https://10xdevelopers.dev/structured/claude-code-with-subagents/)” in a subagent setup that takes the spec’s criteria and continuously verifies the “code agent’s” output.
+10. Bring your domain knowledge: Your spec should reflect insights that only an experienced developer or someone with context would know. For example, if you’re building an e-commerce agent and you know that “products” and “categories” have a many-to-many relationship, state that clearly (don’t assume the AI will infer it - it might not). Essentially, pour your mentorship into the spec. The spec can contain advice like “If using library X, watch out for memory leak issue in version Y (apply workaround Z).” This level of detail is what turns an average AI output into a truly robust solution, because you’ve steered the AI away from common traps.
+11. **Minimalism for simple tasks:** While we advocate thorough specs, part of expertise is knowing when to keep it simple. Don’t under-spec a hard problem (the agent will flail or go off-track), but don’t over-spec a trivial one (the agent might get tangled or use up context on unnecessary instructions).
+12. **Utilize context-management and memory tools**. For instance, [retrieval-augmented generation (RAG)](https://addyosmani.com/agentic-engineering/rag/) is a pattern where the agent can pull in relevant chunks of data from a knowledge base (like a vector database) on the fly. If your spec is huge, you could embed sections of it and let the agent retrieve the most relevant parts when needed, instead of always providing the whole thing. There are also frameworks implementing the Model Context Protocol (MCP), which automates feeding the right context to the model based on the current task.
+13. Commit the spec file itself to the repo. This not only preserves history, but the agent can even use git diff or blame to understand changes (LLMs are quite capable of reading diffs).
+14. use model selection and batching smartly. If using multiple agents, maybe not all need to be top-tier; a test-running agent or a linter agent could be a smaller model. Also consider throttling context size: don’t feed 20k tokens if 5k will do.
+
+### SDD pitfalls
+- **Vague prompts:** Be specific about inputs, outputs, and constraints. “You are a helpful coding assistant” doesn’t work. “You are a test engineer who writes tests for React components, follows these examples, and never modifies source code” does.
+- **Overlong contexts without summarization:** Use hierarchical summaries or RAG to surface only what’s relevant. Context length is not a substitute for context quality.
+- Ignoring the “lethal trifecta”: There are three properties that make AI agents dangerous: speed (they work faster than you can review), non-determinism (same input, different outputs), and cost (encouraging corner-cutting on verification). Your spec and review process must account for all three. Don’t let speed outpace your ability to verify.
+
+**Single vs. multi-agent: when to use each**
+
+| Aspect         | Single Agent                                                                | Parallel/Multi-Agent                                                               |
+| -------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Strengths**  | Simpler setup; lower overhead; easier to debug and follow                   | Higher throughput; handles complex interdependencies; specialists per domain       |
+| **Challenges** | Context overload on big projects; slower iteration; single point of failure | Coordination overhead; potential conflicts; needs shared memory (e.g., vector DBs) |
+| **Best For**   | Isolated modules; small-to-medium projects; early prototyping               | Large codebases; one codes + one tests + one reviews; independent features         |
+| **Tips**       | Use spec summaries; refresh context per task; start fresh sessions often    | Limit to 2-3 agents initially; use MCP for tool sharing; define clear boundaries   |
+## Task, Context, Elements, Behavior, Constraints (TC-EBC)
+It's a prompt structure designed to given the model only the information it needs in the most clear and explicit manner.
+- **Task** defines what you’re building.
+- **Context** frames why and for whom. It prevents drift.
+- **Constraints** set the guardrails, keeping the system controlled and consistent.
+
+Specially useful in UI design, it's clear that it sets the necessary constraints and goals clearly with the purpose of the feature. This clarity can drastically increase output quality.
+
+A well-structured prompt reads like a recipe card: short, direct, and instructive. Every “maybe,” “just,” or “please” dilutes intention and adds noise. The goal isn’t to be verbose or polite—it’s to be clear.
+### Examples
+```markdown
+Vague prompt with too much noise:
+
+"Please build a new app that allows home cooks to take a picture of their pantry or freezer to suggest recipes. Remember any allergies or preferences. Thanks"
+
+TC-EBC version:
+- `Task: Build an AI-powered meal suggestion app using pantry/fridge photo inputs`
+- `Context: Home cooking assistant for households with dietary restrictions`
+- `Elements: Camera input, pantry scanner, dietary settings form, meal suggestions list, recipe cards`
+- `Behavior: User uploads photos; app scans inventory, filters by diet prefs, suggests recipes`
+- `Constraints: Mobile-first, iOS/Android, accessible UI, supports multiple household profiles`
+```
+
+```markdown
+Vague prompt missing intent, constraints and adding noise with incertainty:
+"Write a description for this feature. Keep it simple but also exciting. Maybe like how Apple does it?"
+
+TC-EBC version:
+- `Task: Write a short product feature description.`
+- `Context: For a new “One-Click Export” feature in a design tool.`
+- `Elements: Headline (max 7 words), subheadline, single-sentence body copy.`
+- `Behavior: Body should imply speed, simplicity, and trust.`
+- `Constraints: No jargon. Match the brand tone of Duolingo or Notion. Total length: under 200 characters.`
+```
+
+>The more direct the language, the more efficient the exchange.
+
+It's important to define what belongs in your context or not. Curating what the model sees, remembers and weights is what we call **context engineering**. The goal is to keep context focused so that the intention is pure.
+
+>You can use a separate model to assist you building you prompts following the TC-EBC framework.
+## Show, don't tell
+In this prompt strategy, you're encouraging your generative AI model to create outputs that evoke emotion, build atmosphere, and reveal meaning in each specific task:
+
+```markdown
+## Scenario 1
+- Telling: "Write a story about a man whos very sad"
+- Showing: "Write a story about a man sitting alone in a dark room, turning a photograph over his hands while rain taps against the window"
+
+## Scenario 2 
+- Telling: "Describe a woman who is nervous about giving a speech"
+- Showing: "Describe a woman backstage, pacing in small circles, palms slick with sweat as she rehearses her opening line under her breath"
+```
+
+This technique is intended to guide the model to craft more emotionally resonant and compelling responses.
+
+By demonstrating what you want—rather than just explaining it—you give the machine learning model a clear template to follow, resulting in more accurate and consistent outputs.
+
+ Instead of simply instructing your language models to “write professionally” or “sound poetic,” you show it what that looks like by providing a sample. This technique of reinforcement learning is especially powerful when you’re aiming for consistency,
+## Prompting Frameworks
+- PRD
+- SDD
+- TC-EBC
+- Show, don't tell
+## Guardrails
+constraints you set up to limit what an AI agent can do wrong. They're not instructions - they're boundaries.
+In software, guardrails come in many forms: type checkers that catch incorrect data shapes, test suites that catch regressions, linters that enforce code style, file access restrictions that prevent agents from touching production configs, and mandatory human review before code gets merged.
+
+The key insight is that guardrails are _automated_. They don't require you to watch the agent constantly. They fire automatically when something goes wrong, giving the agent feedback in its observe phase or blocking a bad change before it lands.
+
+Without guardrails, you're doing vibe coding - letting the AI do whatever it wants and hoping for the best. Guardrails are what make agentic engineering a disciplined practice. They let you give agents more autonomy without proportionally increasing risk.
+### In practice
+- **Type systems**: TypeScript's compiler, Python's mypy, Rust's borrow checker - catch bugs at build time before they reach runtime
+- **Test suites**: If the agent's changes break existing tests, the agent knows immediately and can self-correct
+- **Linting**: Enforces code style and catches common mistakes (unused variables, missing error handling)
+- **File access restrictions**: Limit which directories the agent can read or write - keep it out of secrets, configs, and infrastructure code
+- **Iteration limits**: Cap the number of times an agent can retry before escalating to a human
+- **Sandboxing**: Run agents in isolated environments so mistakes don't affect production
+- **Code review**: The ultimate guardrail - a human reviews every change before it ships
+- **Scope limits**: Restrict agents to specific tasks rather than giving them free rein over the entire codebase
+
+The best guardrails are the ones you'd want in place anyway, even without AI.
+## Coding Guidelines - Ground Rules
+There are a lot of best practices and methodologies that exists in software engineering that are taken as common knowledge. It can be a universal best practice or even something specific of your team. The thing is, you shouldn't take it for granted with agents. Coding guidelines for agents need to be more explicit, demonstrative or patterns, and obvious.
+### Guidelines to write code
+Your guidelines should indicate the decisions your team has made about which language constructs to use and why. Some examples are:
+- **Variable and method naming**: Must be explicit about the naming conventions of your code base, specially if you have mixed ones (Python with SQL, etc).
+- **Tabs x Spaces**: If your team has a specific consideration, you must let them know.
+- **Exceptions and logging**: You must be explicit on how your software is expected to behave under failures.
+- **Comments**: Specify how comments are written in your team, the amount of details, indentations, frameworks that rely on it, etc.
+
+As you noticed, anything that your team has personalized configuration or considerations must be explicit mentioned to the agent, with a certain level of detail and examples.
+### Guidelines to write documentation
+- **Documentation must be clear and consistent**: It should be dead obvious how to follow any guidelines. If you can find a way to misinterpret it, rewrite it. Write in a simple repeated style throughout the document.
+- **Don't confuse AI**: Don't use idiomatic language or other constructs that require interpretation. Be simple, explicit, and boring. The same goes for code examples. AI shouldn't make decisions.
+### Examples show patterns
+Provide explicit examples of both correct and incorrect implementations of code guidelines. You can consider giving an overall example of what code looks like when it follows all guidelines (a "gold standard") file.
+### Errors are feedback
+Use your agent failures as feedback and improve configuration and context files. Errors and failures might show you where your context files are too vague or where you were not explicit enough.
+
+You also need to pay attention to the human feedback. Keeping the context files open and having everyone contribute to it will make it more comprehensive.
+
+>Coding standards aren’t really about making the code pretty, but making the code predictable. Predictable for anyone who reads it, be it a colleague or an AI. **Predictability and consistency form the backbone of maintainable software**.
+## Claude Context Files
+`CLAUDE.md`: Used to store project details, standards, etc. It's applied to every session. You can place it in the root, in the `.claude/` directory, and, if you're not going to commit it, you can name `CLAUDE.local.md` and add it to`.gitignore`. `~/.claude/CLAUDE.md` is a user's defaults file and applies to all your projects.
+
+This file support importing other files with the `@path/to/file` syntax:
+```markdown
+See @README.md for project overview
+See @docs/api-patterns.md for API conventions
+See @package.json for available npm scripts
+```
+>You can reference files from anywhere, relative paths, absolute paths and even user-level files.
+
+This is powerful for keeping your main file lean, remember context tokens are precious. Claude will pull the content when it's relevant.
+Imports can be recursive. Use this sparingly to avoid creating a maze of references.
+
+If your project has many rules, you can split instructions into focused rule files in the `.claude/rules` directory.
+```markdown
+your-project/
+├── .claude/
+│   ├── CLAUDE.md           # Main project instructions
+│   └── rules/
+│       ├── code-style.md   # Code style guidelines
+│       ├── testing.md      # Testing conventions
+│       └── security.md     # Security requirements
+```
+All markdown files in this directory are automatically loaded with the same priority as your main `CLAUDE.md`. No imports needed.
+
+This works well if your project is large and you have many different people changing the `CLAUDE.md` file. Merge conflicts are less frequent.
+
+You can add `CLAUDE.md` files in sub-directories of your project. When Claude reads files in that directory, it automatically picks up the `CLAUDE.md` file there. These files are only loaded when Claude is actively working on that part of the codebase.
+
+Keep your `CLAUDE.md` file updated, ask Claude to updated it with notes on frequent errors or assumptions so that it's persistent. Review and refactor sporadically to avoid becoming redundant.
+
+For rules that absolutely must be followed, emphasis words can help draw attention. "IMPORTANT", "YOU MUST". Casing matters here. Be aware that Claude might still cross these lines, specially as conversations grow larger.
+
+Issues captured in code reviews catches a pattern violation. Add it to `CLAUDE.md`. The mistake won't repeat. You can add the Claude Code GitHub action with `/install-github-action` so that you can tag `@claude` directly in your PR comments to make these updates. 
+
+E.g.: `@claude add to CLAUDE.md: never use ...`
+
+Best practices for `CLAUDE.md` files:
+- Open with a one-liner explaining what the project is
+- Make code style preferences specific and actionable
+- Include key commands (test, build, lint, deploy)
+- Detail gotchas enough to actually prevent mistakes
+- Keep it under 300 lines, or make sure every line earns its place
+- Move detailed guidance to @imported files
+- Remove anything outdated or conflicting with newer instructions
+- Mark critical rules with emphasis, but only the truly critical ones
+- Add instructions as you work, not just upfront
+- Update from PR reviews when conventions surface
+- Review periodically for outdated or conflicting rules
+
+For larger projects:
+- Sub-directories with distinct conventions might need their own `CLAUDE.md`
+- Splitting rules into `.claude/rules/` files can make ownership clearer across teams
+## Modularity & Coupling Principles
+- **High Cohesion**: Elements withing a module should work together toward a single purpose. Avoid big files handling many things. Split it into specialized modules.
+- **Loose Coupling**: Modules should depend on each other as little as possible. Changes in one module don't imply changes in another. Modules can communicate. You should use abstractions to refer dependencies (Concepts: [Dependency Injection](), [Interfaces]()).
+- **Separation of Concerns**: Different aspects of functionality should be handled by different modules. Different modules shouldn't interfere with each other. Avoid adding validation, business rule and infra connections into a single module, split into separate modules and connect them on high level components.
+- **Encapsulation**: Hide implementation details and expose only what's necessary. This allow the enforcement of business rules and the maintenance of consistency. This gives clients a clearer interface, they're not overwhelmed with details.
+## Essential AI Refactoring Capabilities
+- Variable Renaming across scope without breaking dependencies.
+- Function extraction and decomposition.
+- Dead code elimination.
+- Documentation generation.
+- Code style consistency.
+
+For refactors, always set a strict, small scope. Keeping cope narrow limits blast radius if something breaks.
+## skill_section
+## Security considerations
+Use Skills only from trusted sources: those you created yourself or obtained from Anthropic. Skills provide Claude with new capabilities through instructions and code, and while this makes them powerful, it also means a malicious Skill can direct Claude to invoke tools or execute code in ways that don't match the Skill's stated purpose.
+## Claude Code Built-in Skills
+Claude includes a set of bundled skills that are available in every session unless disabled with the `disableBundledSkills` setting, including `/code-review`, `/batch`, `/debug`, `/loop`, and `/claude-api`.
+
+| Skill                  | Purpose                                                                                                                                                      | Version  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `/run`                 | Launch and drive your app to see a change working.                                                                                                           | 2.1.145+ |
+| `/verify`              | Build and run your app to confirm a code change does what it should without failing back to tests or type checks.                                            | 2.1.145+ |
+| `/run-skill-generator` | Teach `/run` and `/verify` how to build and launch your project. Captures what worked and commits it as a per-project skill at `.claude/skills/run-<name>/`. | 2.1.145+ |
+Where you store a skill determines who can use it
+
+| Location   | Path                                                                            | Applies to                     |
+| ---------- | ------------------------------------------------------------------------------- | ------------------------------ |
+| Enterprise | See [managed settings](https://code.claude.com/docs/en/settings#settings-files) | All users in your organization |
+| Personal   | `~/.claude/skills/<skill-name>/SKILL.md`                                        | All your projects              |
+| Project    | `.claude/skills/<skill-name>/SKILL.md`                                          | This project only              |
+| Plugin     | `<plugin>/skills/<skill-name>/SKILL.md`                                         | Where plugin is enabled        |
+When skills share the same name across levels, enterprise overrides personal, and personal overrides project. Plugin skills use a `plugin-name:skill-name` namespace, so they cannot conflict.
+
+If a skill and a command share the same name, the skill takes precedence.
+### Live change detection
+Watches skill directories for file changes. Changes under `~/.claude/skills`, `.claude/skills`, or `.claude/skills` inside an `--add-dir` directory takes effect within the current session without restarting. Creating a top-level skills directory requires restarting Claude.
+
+Live change detection works for `SKILL.md` files only.
+### Automatic discovery from parent and nested directories
+Project skills load from `.claude/skills` in your starting directory and in every parent directory up to the repository root, so starting Claude in a subdirectory still picks up skills defined at the root. When you work with files in subdirectories below your starting directory, Claude Code also discovers skills from nested `.claude/skills/` directories on demand.
+
+>Skills are preferred over commands since they support additional features.
+### Types of skill content
+- Reference content: Adds knowledge Claude applies to your current work. Conventions, patterns, style guides, domain knowledge.
+- Task content: Gives step-by-step instructions for a specific action, like deployments, commits, or code generation. These are often actions you want to invoke directly with `/skill-name` rather than letting Claude decide. Add `disable-model-invocation: true` to the [frontmatter](https://code.claude.com/docs/en/skills#frontmatter-reference) to prevent Claude from triggering it automatically.
+
+>You need to think about how a skill is going to be invoked (by you, Claude, or both) and where you want it to run (inline or sub-agent), this helps guide what to include.
+
+>Once a skill loads, its contents stays in context across turns.
+### String substitutions
+Skills support string substitution for dynamic values in the skill content. [Check available string substitutions](https://code.claude.com/docs/en/skills#available-string-substitutions).
+
+Indexed arguments use shell-style quoting, so wrap multi-word values in quotes to pass them as single argument.
+
+To include a literal `$`, escape it with a backslash.
+### Supporting files
+Skills can include multiple files in their directory. Claude access detailed reference material only when needed.
+
+Reference supporting files from `SKILL.md` so the Agent knows what each file contains and when to load it:
+```markdown
+## Additional resources
+
+- For complete API details, see [reference.md](reference.md)
+- For usage examples, see [examples.md](examples.md)
+```
+
+>Keep `SKILL.md` under 500 lines.
+### Skill content life-cycle
+When the Agent invokes a skill, it enters the conversation as a single message and stays there for the rest of the session. You should write guidance that should apply throughout a task as standing instructions rather than one-time steps.
+
+When a conversation is summarized to free context (auto-compaction), Claude re-attaches the most recent invocations of each skill after the summary, keeping the first 5000 tokens of each. Re-attached skills share a combined budget of 25K tokens. Claude fills this budget from the most recently invoked skill, so older skills can be dropped entirely after compaction.
+
+If a skill seems to stop influencing behavior, the content is usually still present and the model is choosing other tools or approaches. Strengthen the skill's `description` and instructions so the model keeps preferring it, or use hooks to enforce behavior deterministically. If the skill is large or you invoked several others after it, re-invoke it after compaction.
+### Pass arguments to skills
+Both you and Claude can pass arguments when invoking a skill. Arguments are available via the `$ARGUMENTS` placeholder.
+
+Arguments are passed like this: `/<skill_name> argument`.
+
+If you invoke a skill with arguments but the skill doesn't include `$ARGUMENTS`, Claude appends `ARGUMENTS: <your input>` to the end of the skill content so Claude still sees what you typed.
+### Inject dynamic context
+You can add dynamic commands to a skill so that the content is populated before the skill is sent to claude.
+
+Example:
+```markdown
+---
+name: pr-summary
+description: Summarize changes in a pull request
+context: fork
+agent: Explore
+allowed-tools: Bash(gh *)
+---
+
+## Pull request context
+- PR diff: !`gh pr diff`
+- PR comments: !`gh pr view --comments`
+- Changed files: !`gh pr diff --name-only`
+
+## Your task
+Summarize this pull request...
+```
+
+This is pre-processing, Claude only sees the final result.
+
+Command output is inserted as plain text and is not re-scanned for further !`<command>` placeholders, so a command cannot emit a placeholder for a later pass to expand.
+
+The inline form is only recognized when ! appears at the start of a line or immediately after whitespace.
+
+For multi-line commands, use a fenced code block opened with \`\`\`! instead of the inline form:
+```markdown
+\```!
+node --version
+npm --version
+git status --short
+\```
+```
+### Run skills in a sub-agent
+Add `context: fork` to your frontmatter when you want a skill to run in isolation. The sub-agent don't have access to your conversation history.
+
+>`context: fork` only makes sense for skills with explicit instructions. If you don't provide a task, the agent receives the guidelines but not actionable prompt, and returns without meaningful output.
+
+With `context: fork`, you write the task in your skill and pick an agent type to execute it. The built-in Explore and Plan agents **skip `CLAUDE.md` and `git status`** to keep their context small, so a forked skill using `agent: Explore` sees only the `SKILL.md` content and the agent's own system prompt.
+
+Example
+```markdown
+---
+name: deep-research
+description: Research a topic thoroughly
+context: fork
+agent: Explore
+---
+
+Research $ARGUMENTS thoroughly:
+
+1. Find relevant files using Glob and Grep
+2. Read and analyze the code
+3. Summarize findings with specific file references
+```
+### Restrict Claude's skill access
+Your permission settings govern baseline approval behavior for all tools that aren't mentioned by `disable-model-invocation` and `allowed-tools` frontmatters.
+
+- You can disable all skill s in `/permissions`.
+- Allow or deny specific skills using [permission rules](https://code.claude.com/docs/en/permissions).
+- Hide individual skills with `disable-model-invocation: true` in their frontmatter.
+
+>The `user-invocable` field only controls menu visibility, not Skill tool access.
+### Override skill visibility from settings
+The `skillOverrides` setting controls skill visibility from your settings instead of the skill's on frontmatter. Use it for skills you don't want to edit, such as ones checked into a shared project repo or provided by MCP server. You can access it in the `/skills` menu.
+### Troubleshooting
+#### Skill not triggering
+If Claude doesn’t use your skill when expected:
+1. Check the description includes keywords users would naturally say
+2. Verify the skill appears in `What skills are available?`
+3. Try rephrasing your request to match the description more closely
+4. Invoke it directly with `/skill-name` if the skill is user-invocable
+#### Skill triggers too often
+If Claude uses your skill when you don’t want it:
+1. Make the description more specific
+2. Add `disable-model-invocation: true` if you only want manual invocation
+### Skill descriptions are cut short
+Skill descriptions are loaded into context so Claude knows what’s available. All skill names are always included, but if you have many skills, descriptions are shortened to fit the character budget, which can strip the keywords Claude needs to match your request. The budget scales at 1% of the model’s context window. When it overflows, descriptions for the skills you invoke least are dropped first, so the skills you actually use keep their full text. Run `/doctor` to see whether the budget is overflowing and which skills are affected.
+
+To raise the budget, set the [`skillListingBudgetFraction`](https://code.claude.com/docs/en/settings#available-settings) setting (e.g. `0.02` = 2%) or the `SLASH_COMMAND_TOOL_CHAR_BUDGET` environment variable to a fixed character count. To free budget for other skills, set low-priority entries to `"name-only"` in [`skillOverrides`](https://code.claude.com/docs/en/skills#override-skill-visibility-from-settings) so they list without a description. You can also trim the `description` and `when_to_use` text at the source: put the key use case first, since each entry’s combined text is capped at 1,536 characters regardless of budget. The cap is configurable with [`maxSkillDescriptionChars`](https://code.claude.com/docs/en/settings#available-settings).
+## Sub-agents
+Sub-agents are specialized agents that you can create and use for task-specific workflows. Sub-agents have a separate context window and are best utilized when you don't want to flood your main conversation with search result, logs, or file contents you won't reference again or when you keep spawning the same kind of worker with the same instructions.
+
+Claude can delegate tasks to specific sub-agents when the task matches the agent description.
+
+A sub-agent has a separate context window, system prompt, tool access, and permissions.
+## sub_agent_section
+### Built-in sub-agents
+- **Explore**: Skip `CLAUDE.md` and parent session `git status`. Fast, read-only agent optimized for searching and analyzing codebases. When invoking this agent, Claude specifies a thoroughness level: **quick** for targeted lookups, **medium** for balanced exploration, or **very thorough** for comprehensive analysis.
+	- **Model**: Haiku
+	- **Tools**: Read-only tools
+- **Plan:** Research agent used during plan mode to gather context before presenting a plan. Exploration output stays in a separate context window while the main conversation remains read-only.
+	- **Model**: Inherits from main conversation
+	- **Tools:** Read-only
+- **General-purpose:** Agent for complex, multi-step tasks that require both exploration and action. Spawned when task requires both exploration and modification, complex reasoning to interpret results, or multiple dependent steps.
+	- **Model:** Inherits from main conversation
+	- **Tools:** All tools
+
+Built-in sub-agents are always registered in interactive sessions.
+### Creating a sub-agent
+Defined in Markdown files with YAML frontmatter. You can create them manually or use the `/agents` command. When using the `/agents` command you can generate the agent using Claude itself, just pass in the agent description.
+
+>Setting a background color for an agent helps identify which sub-agent is running in the UI.
+#### Choose sub-agent scope
+Store agent definition files in different locations to assign higher priority. When multiple sub-agents share the same name, the higher-priority location wins.
+
+| Location                     | Scope                   | Priority    | How to create                        |
+| ---------------------------- | ----------------------- | ----------- | ------------------------------------ |
+| Managed settings             | Organization-wide       | 1 (highest) | Deployed via managed settings        |
+| `--agents` CLI flag          | Current session         | 2           | Pass JSON when launching Claude Code |
+| `.claude/agents/`            | Current project         | 3           | Interactive or manual                |
+| `~/.claude/agents/`          | All your projects       | 4           | Interactive or manual                |
+| Plugin’s `agents/` directory | Where plugin is enabled | 5 (lowest)  | Installed with plugins               |
+Project sub-agents are discovered by walking up from the current working directory, so every `.claude/agents/` between there and the repository root is scanned. When more than one of these nested directories defines the same `name`, Claude uses the definition closes to the working directory.
+
+Claude scans `~/.claude/agents` and `.claude/agents` recursively, so you can organize definitions into sub-folders such as `agents/review` or `agents/research`. The sub-directory path does not affect how a sub-agent is identified or invoked, because identity comes only from the `name` frontmatter.
+
+Unlike project and user scopes, a sub-folder inside a plugin's `agents/` directory becomes part of the `scoped identifier`: a file at `agents/review/security.md` in plugin `my-plugin` registers as `my-plugin:review:security`.
+
+>Sub-agents are loaded at session start. If you add or edit a sub-agent, restart your session to load it. Sub-agents created through the `/agents` interface take effect immediately.
+
+```markdown
+---
+name: code-reviewer
+description: Reviews code for quality and best practices
+tools: Read, Glob, Grep
+model: sonnet
+---
+
+You are a code reviewer. When invoked, analyze the code and provide specific, actionable feedback on quality, security, and best practices.
+```
+
+Sub-agents receive only the body as the system prompt (plus basic environment details like working directory), not the full Claude system prompt.
+### Available tools
+sub-agents inherit the internal tools and MCP tools available in the main conversation by default. The following tools are not available to sub-agents, even when listed in the `tools` field:
+- `AskUserQuestion`
+- `EnterPlanMode`
+- `ExitPlanMode`
+- `WaitForMcpServers`
+- `ScheduleWakeup`
+
+To restrict tools use either the `tools` field (allow list, has access only to the provided tools and don't inherit from main conversation) or the `disallowedTools` field (deny list, inherits all tools from main conversation except the specified in this list). `disallowedTools` is applied first. A tool listed in both is removed.
+
+Both fields accept MCP server-level patterns in addition to exact tool names: `mcp__<server>` or `mcp__<server>__*` grants or remove every tool from the named server. In `disallowedTools`, `mcp__*` also removes every MCP tool from any server.
+#### Restrict which subagents can be spawned
+When an agent runs as the main thread with `claude --agent`, it can spawn subagents using the Agent tool. To restrict it, use `Agent(agent_type)` syntax in the `tools` field.
+
+```markdown
+---
+name: coordinator
+description: Coordinates work across specialized agents
+tools: Agent(worker, researcher), Read, Bash
+---
+```
+
+To allow spawning any subagent, use `Agent` without parentheses:
+```markdown
+tools: Agent, Read, Bash
+```
+
+If `Agent` is omitted from the `tools` list entirely, the agent cannot spawn any subagents.
+The `Agent(agent_type)` allowlist syntax applies only to an agent running as the main thread. In a subagent definition, listing `Agent` in `tools` lets the subagent spawn nested subagents, but any type list is ignored.
+#### Scope MCP servers to subagents
+Use the `mcpServers` field to give a subagent access to MCP servers that aren't available in the main conversation.
+
+Each entry in the list is either an inline server definition or a string referencing an MCP server already configured in your session:
+
+```markdown
+mcpServers:
+	# Inline definition: scoped to this subagent only
+	- playwright:
+		  type: stdio
+		  command: npx
+		  args: ["-y", "@playwright/mcp@latest"]
+	# Reference by name: reuses an already-configured server
+	- github
+```
+
+MCP restrictions that apply to the main session also cover servers declared in subagent frontmatter.
+#### Permission modes
+control how the subagent handles permission prompts. Subagents inherit the permission context from the main conversation and can override the mode, except when the parent mode takes precedence as described in [here](https://code.claude.com/docs/en/sub-agents#permission-modes)
+#### Preload skills into subagents
+Use the `skills` field to inject skill content into a subagent's context at startup. This gives the subagent domain knowledge without requiring it to discover and load skills during execution.
+
+```markdown
+skills:
+	- api-conventions
+	- error-handling-patterns
+```
+
+**The full content of each skill is injected into the subagent's context at startup**. This field controls which skills are preloaded, not which skills the subagent can access. To prevent a subagent from invoking skills entirely, omit `Skill` from the `tools` list or add it to `disallowedTools`.
+
+>This is the inverse of running a skill in a subagent. With `skills` in a subagent, the subagent controls the system prompt and loads skill content. With `context: fork` in a skill, the skill content is injected into the agent you specify. Both use the same underlying system.
+#### Enable persistent memory
+The `memory` field gives the subagent a persistent directory that survives across conversations. The agent uses this directory to build up knowledge over time.
+
+```markdown
+---
+name: code-reviewer
+description: Reviews code for quality and best practices
+memory: user
+---
+```
+
+Choose a scope based on how broadly the memory should apply:
+
+| Scope     | Location                                      | Use when                                                                                    |
+| --------- | --------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `user`    | `~/.claude/agent-memory/<name-of-agent>/`     | the subagent should remember learnings across all projects                                  |
+| `project` | `.claude/agent-memory/<name-of-agent>/`       | the subagent’s knowledge is project-specific and shareable via version control              |
+| `local`   | `.claude/agent-memory-local/<name-of-agent>/` | the subagent’s knowledge is project-specific but should not be checked into version control |
+When memory is enabled:
+- Subagent's system prompt includes instructions for reading and writing to the memory directory.
+- The subagent's system prompt also includes the first 200 lines or `25KB` of `MEMORY.md` in the memory directory, with instructions to curate `MEMORY.md` if it exceeds that limit.
+- Read, Write, and Edit tools are automatically enabled so the subagent can manage its memory files.
+
+Tips:
+- Ask the subagent to consult its memory before starting work.
+- Ask the subagent to update its memory after completing a task. Over time, this builds a knowledge base that makes the subagent more effective.
+- Include memory instructions directly in the agent's markdown file so it proactively maintains its own knowledge base.
+
+```markdown
+Update your agent memory as you discover codepaths, patterns, library
+locations, and key architectural decisions. This builds up institutional
+knowledge across conversations. Write concise notes about what you found
+and where.
+```
+#### Conditional rules with hooks
+Use `PreToolUse` hooks to validate operations before they execute.
+
+This example creates a subagent that only allows read-only database queries. The `PreToolUse` hook runs the script specified in `command` before each Bash command executes:
+
+```markdown
+name: db-reader
+description: Execute read-only database queires
+tools: Bash
+hooks:
+	PreToolUse:
+		- matches: "Bash"
+		  hooks:
+			  - type: command
+			    command; "./scripts/validate-readonly-query.sh"
+```
+
+Claude passes hook input as JSON via STDIN. The validation script reads this JSON:
+```bash
+#!/bin/bash
+# ./scripts/validate-readonly-query.sh
+
+INPUT=$(cat)
+COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
+
+# Block SQL write operations (case-insensitive)
+if echo "$COMMAND" | grep -iE '\b(INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|TRUNCATE)\b' > /dev/null; then
+	echo "Blocked: Only SELECT queires are allowed" >&2
+	exit 2
+fi
+
+exit 0
+```
+
+See [Hook input](https://code.claude.com/docs/en/hooks#pretooluse-input) for the complete input schema and [exit codes](https://code.claude.com/docs/en/hooks#exit-code-output) for how exit codes affect behavior.
+####  Disable specific subagents
+You can prevent Claude from using specific subagents by adding them to the `deny` array in your [settings](https://code.claude.com/docs/en/settings#permission-settings). Use the format `Agent(subagent-name)` where `subagent-name` matches the subagent’s name field.
+#### Define hooks for subagents
+There are two ways to configure hooks:
+1. In the subagent's frontmatter: Define hooks that run only while that subagent is active and are cleared up when it finishes.
+2. In `settings.json`: Define hooks that run in the main session when subagents start or stop.
+
+All [hook events](https://code.claude.com/docs/en/hooks#hook-events) are supported. The most common events for subagents are:
+
+| Event         | Matcher input | When it fires                                                                                   |
+| ------------- | ------------- | ----------------------------------------------------------------------------------------------- |
+| `PreToolUse`  | Tool name     | Before the subagent uses a tool                                                                 |
+| `PostToolUse` | Tool name     | After the subagent uses a tool                                                                  |
+| `Stop`        | (none)<br>    | When the subagent finishes (converted to `SubagentStop` at runtime when invoked as a subagent). |
+#### Project-level hooks for subagent events
+Configure hooks in `settings.json` that respond to subagent lifecycle events in the main session.
+
+| Event           | Matcher input   | When it fires                    |
+| --------------- | --------------- | -------------------------------- |
+| `SubagentStart` | Agent type name | When a subagent begins execution |
+| `SubagentStop`  | Agent type name | When a subagent completes        |
+
+Both events support matchers to target specific agent types by name. This example runs a setup script only when the `db-agent` subagent starts, and a cleanup script when any subagent stops:
+
+```markdown
+{
+  "hooks": {
+    "SubagentStart": [
+      {
+        "matcher": "db-agent",
+        "hooks": [
+          { "type": "command", "command": "./scripts/setup-db-connection.sh" }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "./scripts/cleanup-db-connection.sh" }
+        ]
+      }
+    ]
+  }
+}
+```
+### Work with subagents
+Claude automatically delegates tasks based on the task description in your request, the `description` field in subagent configurations, and current context. To encourage proactive delegation, include phrases like "use proactively" in your subagents **description** field.
+#### Invoke subagents explicitly
+There are three patterns for subagent invoking:
+- **Natural Language**: Name the subagent in your prompt; Claude decides whether to delegate.
+- **@-mention**: Guarantees the subagent runs for one task. In this execution, your full message still goes to Claude, which writes the subagent's task prompt based on what you requested.
+- **Session-wide**: The whole session uses the subagent's system prompt, tool restrictions, and model via the `--agent` flag or `agent` setting.
+
+Run the whole session as a subagent:
+```bash
+claude --agent code-reviewer
+```
+
+This works with built-in and custom subagents, and the choice persists when you resume the session.
+
+For a plugin-provided subagent:
+```bash
+claude --agent my-plugin:security-reviewer
+```
+#### Run subagents in foreground or background
+- **Foreground subagents** block the main conversation until complete. Permission prompts are passed through to you as they come up.
+- **Background subagents** run concurrently while you continue working. They run with the permissions already granted in the session and auto-deny any tool call that would otherwise prompt. If a background agent need to ask clarifying questions, that tool call fails but the subagent continues.
+
+Claude decides whether to run subagents in the foreground or background based on the task. You can also:
+- Ask Claude to "run this in the background"
+- Press `CTRL+B` to background a running task.
+#### Common patterns
+##### Isolate high-volume operations
+Running tests, fetching documentation, or processing log files can consume significant context. By delegating to a subagent, the verbose output stays in the subagent's context while only the relevant summary returns to your main conversation.
+
+```markdown
+Use a subagent to run the test suite and report only the failing tests with their error message.
+```
+##### Run parallel research
+For independent investigations, spawn multiple subagents to work simultaneously. Claude will synthesize the findings.
+
+```markdown
+Research the authentication, database, and API modules in parallel using separate subagents.
+```
+
+For tasks that need sustained parallelism or exceed your context window, agent teams give each worker its own independent context.
+##### Chain subagents
+For multi-step workflows, ask Claude to use subagents in sequence. Each subagent completes its task and returns results to Claude, which then passes relevant context to the next subagents.
+
+```markdown
+Use the code-reviewer subagent to find performance issues, then use the optimizer subagent to fix them
+```
+###  Choose between subagents and main conversation
+Use the **main conversation** when:
+- The task needs frequent back-and-forth or iterative refinement
+- Multiple phases share significant context (planning → implementation → testing)
+- You’re making a quick, targeted change
+- Latency matters. Subagents start fresh and may need time to gather context
+
+Use **subagents** when:
+- The task produces verbose output you don’t need in your main context
+- You want to enforce specific tool restrictions or permissions
+- The work is self-contained and can return a summary
+
+Consider Skills instead when you want reusable prompts or workflows that run in the main conversation context rather than isolated subagent context.
+
+>For a quick question about something already in your conversation, use `/btw` instead. It sees your full context but has no tool access, and the answer is discarded rather than added to history.
+##### Spawn nested subagents
+A subagent can spawn its own subagents. Use this when a delegated task itself splits into parallel subtasks, such as a reviewer subagent that dispatches a verifier per finding, so the intermediate output never reaches your main conversation. Only the top-level subagent's summary returns to you.
+
+Depth is counted as the number of subagents levels below the main conversation, regardless of whether each level runs in the foreground or background. A subagent at depth five does not receive the Agent tool and cannot spawn further. The limit is fixed and non configurable.
+
+To prevent a specific subagent from spawning other, omit `Agent` from its `tools` list or add it to `disallowedTools`.
+
+A fork cannot spawn another fork. It can spawn other subagent types, and those count toward the depth limit.
+#### Manage subagent context
+Each subagent starts with a fresh, isolated context window. It does not see your conversation history, the skills you’ve already invoked, or the files Claude has already read. Claude composes a delegation message that summarizes the task, and the subagent works from there. The exception is a fork, which inherits the parent conversation instead of starting fresh.
+
+A non-fork subagent’s initial context contains:
+
+- **System prompt**: the agent’s own prompt plus environment details that Claude Code appends, not the full Claude Code system prompt. Custom subagents define theirs in the markdown body or `prompt` field. Built-in agents have predefined prompts.
+- **Task message**: the delegation prompt Claude writes when it hands off the work.
+- `CLAUDE.md` and memory: every level of the memory hierarchy the main conversation loads, including `~/.claude/CLAUDE.md`, project rules, `CLAUDE.local.md`, and managed policy files. The built-in Explore and Plan agents skip this.
+- **Git status**: a snapshot taken at the start of the parent session. Absent when the working directory isn’t a Git repository or when `includeGitInstructions` is `false`. Explore and Plan skip it regardless.
+- **Preloaded skills**: full content of any skill named in the agent’s `skills` field. Built-in agents don’t preload skills.
+#### Resume subagents
+Each subagent invocation creates a new instance with fresh context. To continue an existing subagent’s work instead of starting over, ask Claude to resume it. Resumed subagents retain their full conversation history, including all previous tool calls, results, and reasoning. The subagent picks up exactly where it stopped rather than starting fresh. When a subagent completes, Claude receives its agent ID. The built-in Explore and Plan agents are one-shot and return no agent ID, so they can’t be resumed; use `general-purpose` or a custom subagent when you need to continue the work.
+
+```markdown
+Use the code-reviewer subagent to review the authentication module
+[Agent completes]
+
+Continue that code review and now analyze the authorization logic
+[Claude resumes the subagent with full context from previous conversation]
+```
+
+You can also ask Claude for the agent ID if you want to reference it explicitly, or find IDs in the transcript files at `~/.claude/projects/{project}/{sessionId}/subagents/`. Each transcript is stored as `agent-{agentId}.jsonl`. Subagent transcripts persist independently of the main conversation:
+
+- **Main conversation compaction**: When the main conversation compacts, subagent transcripts are unaffected. They’re stored in separate files.
+- **Session persistence**: Subagent transcripts persist within their session. You can resume a subagent after restarting Claude Code by resuming the same session.
+- **Automatic cleanup**: Transcripts are cleaned up based on the `cleanupPeriodDays` setting (default: 30 days).
+#### Auto-compaction
+Subagents support automatic compaction using the same logic as the main conversation. Compaction triggers under the same conditions
+
+Compaction events are logged in subagent transcript files:
+
+```json
+{
+  "type": "system",
+  "subtype": "compact_boundary",
+  "compactMetadata": {
+    "trigger": "auto",
+    "preTokens": 167189
+  }
+}
+```
+
+The `preTokens` value shows how many tokens were used before compaction occurred.
+#### Fork the current conversation
+A fork is a subagent that inherits the entire conversation so far instead of starting fresh. This drops the input isolation that subagents otherwise provide: a fork sees the same system prompt, tools, model, and message history as the main session, so you can hand it a side task without re-explaining the situation. The fork’s own tool calls still stay out of your conversation and only its final result comes back, so your main context window stays clean. Use a fork when a named subagent would need too much background to be useful, or when you want to try several approaches in parallel from the same starting point.
+
+You can start a fork yourself with `/fork` followed by a directive, with or without the variable set. Claude Code names the fork from the first words of the directive. The following example forks the conversation to draft test cases while you continue with the implementation in the main session:
+
+```markdown
+/fork draft unit tests for the parser changes so far
+```
+
+The fork appears in a panel below your prompt and runs in the background while you keep working. When it finishes, its result arrives as a message in your main conversation.
+
+When Claude spawns a fork through the Agent tool, it can pass `isolation: "worktree"` so the fork’s file edits are written to a separate git worktree instead of your checkout.
+### Observe and steer running forks
+Running forks appear in a panel below the prompt input, with one row for the main session and one for each fork. Use these keys to interact with the panel:
+
+| Key       | Action                                                             |
+| --------- | ------------------------------------------------------------------ |
+| `↑` / `↓` | Move between rows                                                  |
+| `Enter`   | Open the selected fork’s transcript and send it follow-up messages |
+| `x`       | Dismiss a finished fork or stop a running one                      |
+| `Esc`<br> | Return focus to the prompt input                                   |
+### Subagents best practices
+- **Design focused subagents:** each subagent should excel at one specific task
+- **Write detailed descriptions:** Claude uses the description to decide when to delegate
+- **Limit tool access:** grant only necessary permissions for security and focus
+- **Check into version control:** share project subagents with your team
+## Meaningful Links
+- [SDD GitHub Repo](https://github.com/github/spec-kit)
+- [GitHub Copilot VSCode Config Doc](https://code.visualstudio.com/docs/copilot/overview)
+- [Context Engineering: Bringing Engineering Discipline to Prompts](https://addyo.substack.com/p/context-engineering-bringing-engineering)
+- [Claude pre-built Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview#available-skills)
+- [Agent Skills Open Standard (ASOS)](https://agentskills.io/)
+- [Claude Sub-Agent Supported Frontmatter Fields](https://code.claude.com/docs/en/sub-agents#supported-frontmatter-fields)
+- [Subagents examples](https://code.claude.com/docs/en/sub-agents#example-subagents)
+## Understanding
+- explanation of the concept, using your own words.
+- Focus on cause and effect.
+Ex:
+- This pattern exists because systems are likely to couple business rules and external details...
+- The separation allows changing interfaces without having to rewrite central rules...
+## When to Use
+- Situations where this is useful
+## When NOT to Use
+- Situations where this is overkill or harmful
+## Trade-offs
+- Limitations
+- Costs
+- Complexity 
+## Examples
+## References
+### Connects with
+Add link to relative notes
+### Contrasts with
+- Add link to alternatives that tries to solve the same problem
+- Always add relation definition like "expands", "contrasts", "depends"
+## Questions
+- `.claude/rules` don't require imports to be referenced. Do Claude reference this files when necessary or are they always in context? What's the impact of having many files in here?
+## Iterate on
+- Sections of the document that can be iterated and have it's quality 
+improved but need more knowledge to do so.
+## Flashcards
+- Q: Some question about the notes.
+- A: The answer for the question above.

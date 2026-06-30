@@ -13,12 +13,102 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "notes/artificial_inteligence/agent_skills.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "agent_skills"
+            }
+          },
+          {
+            "id": "8b1514197e7e5cfd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/artificial_inteligence/ai_guardrails.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ai_guardrails"
+            }
+          },
+          {
+            "id": "0b6cf403e68e29d7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/artificial_inteligence/claude_context_files.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "claude_context_files"
+            }
+          },
+          {
+            "id": "571791319c05c987",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/artificial_inteligence/spec_driven_development.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "spec_driven_development"
+            }
+          },
+          {
+            "id": "43a5b2aaffdec565",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "notes/artificial_inteligence/subagents.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "subagents"
+            }
+          },
+          {
+            "id": "5f3e89d20b40a5d3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/artificial_inteligence/vibe_coding.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "vibe_coding"
+            }
+          }
+        ]
+      },
+      {
+        "id": "13a5d2240c968495",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "456b41dc7ed02185",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/artificial_inteligence/original_vibe_coding.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "original_vibe_coding"
             }
           }
         ]
@@ -44,7 +134,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "Explorador de arquivos"
             }
           },
           {
@@ -78,7 +168,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 326.5
+    "width": 326.5,
+    "collapsed": true
   },
   "right": {
     "id": "1b1356eab0d51a67",
@@ -171,25 +262,26 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false,
+      "switcher:Abrir a troca rápida": false,
+      "graph:Abrir visualização em gráfico": false,
+      "canvas:Criar novo canvas": false,
+      "daily-notes:Abrir a nota de hoje": false,
+      "templates:Inserir modelo": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Criar nova base": false,
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
   "active": "7c2be545851482c3",
   "lastOpenFiles": [
+    "notes/artificial_inteligence/original_vibe_coding.md",
+    "notes/artificial_inteligence/agent_skills.md",
+    "notes/artificial_inteligence/vibe_coding.md",
+    "notes/artificial_inteligence/subagents.md",
     "notes/artificial_inteligence/spec_driven_development.md",
     "notes/artificial_inteligence/claude_context_files.md",
     "notes/artificial_inteligence/ai_guardrails.md",
-    "notes/artificial_inteligence/agent_skills.md",
-    "notes/artificial_inteligence/subagents.md",
     "notes/artificial_inteligence/subagents.md.tmp.21231.c440949014ef",
-    "notes/artificial_inteligence/vibe_coding.md",
     "notes/artificial_inteligence/agent_skills.md.tmp.21231.409fd94953a5",
     "notes/artificial_inteligence/claude_context_files.md.tmp.21231.a95a02a492e5",
     "notes/artificial_inteligence/ai_guardrails.md.tmp.21231.e415536973f5",
@@ -225,7 +317,6 @@
     "notes/artificial_inteligence/prompt_engineering.md",
     "notes/golang/go_pointers.md",
     "notes/golang/go_maps.md",
-    "notes/golang/go_functions.md",
     "images/go_documentation_generation.png",
     "Pasted image 20260507073921.png",
     "images/typical_retrieval_pipeline_workflow.png"
