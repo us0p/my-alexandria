@@ -146,7 +146,7 @@ The exact runtime environment available to your skill depends on the product sur
 	- **Full network access**: Skills have the same network access as any other program on the computer.
 ## Invocation and scope
 Run with `/skill-name`, or let the model auto-trigger from the description; 
-### Restrict skill access
+### Restricting skill access
 Your permission settings govern approval behavior for all tools that aren't mentioned by `disable-model-invocation` and `allowed-tools` frontmatters.
 
 - You can disable all skills in `/permissions`.
@@ -157,32 +157,29 @@ Your permission settings govern approval behavior for all tools that aren't ment
 ### Override skill visibility from settings
 The `skillOverrides` setting controls skill visibility from your settings instead of the skill's on frontmatter. Use it for skills you don't want to edit, such as ones checked into a shared project repo or provided by MCP server. You can access it in the `/skills` menu.
 ## Understanding
-- explanation of the concept, using your own words.
-- Focus on cause and effect.
-Ex:
-- This pattern exists because systems are likely to couple business rules and external details...
-- The separation allows changing interfaces without having to rewrite central rules...
+Skills are a useful way to package repetitive tasks or input sensitive prompts so that they are repeatable and reusable. Can produce deterministic output by using scripts and can be shared which creates standard practices across ai coding agents in a particular team.
 ## When to Use
-- Situations where this is useful
+- When you keep repeating the same prompt over and over.
+- When you have tasks in which slight differences in prompt can produce a very different output.
+- When your context file contains a lot of procedural instructions instead of facts. Those are better represented as skills.
 ## When NOT to Use
-- Situations where this is overkill or harmful
+- When you don't have a repetitive task or prompt.
+- When you wan't to enforce guidelines and consistent behavior across a session. This is better represented in a [Context file](claude_context_files.md) or [Agent](subagents.md).
 ## Trade-offs
-- Limitations
-- Costs
-- Complexity 
+- **Context Window**: Adding too much information to a skill can give more background but can also make it less accurate as the skill content is loaded in your conversation history.
+- **Quality x Quantity**: Having too many skills in your agent can confuse the agent as it tries to determine which skill to use. Skills that do the same task but have different name/description can cause the agent to invoke different skill on the same problem which can produce non-deterministic output.
 ## Examples
 ## References
+- [Context Files](claude_context_files.md)
+- [Agent](subagents.md)
+- [Hooks](agent_hooks.md)
+### External Links
 - [Claude Bundled Commands and Skills](https://code.claude.com/docs/en/commands)
-### Connects with
-Add link to relative notes
-### Contrasts with
-- Add link to alternatives that tries to solve the same problem
-- Always add relation definition like "expands", "contrasts", "depends"
+- [Permission Rules](https://code.claude.com/docs/en/permissions)
+- [String Substitution](https://code.claude.com/docs/en/skills#available-string-substitutions)
+- [Settings File](https://code.claude.com/docs/en/settings#settings-files)
 ## Questions
-- Points that are still not clear.
-## Iterate on
-- Sections of the document that can be iterated and have it's quality 
-improved but need more knowledge to do so.
+- What's the difference between agent skills and coding agents skills?
 ## Flashcards
 - Q: What are agent skills?
 - A: Modular, file-based packages of instructions, metadata, and optional resources that an agent loads automatically when relevant to specialize its behavior.

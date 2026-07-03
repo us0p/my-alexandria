@@ -43,6 +43,8 @@ In the example above, the base case was `n < 10`, this is obvious since we can't
 The base case is the most important point of a recursive function and it often makes a good start point to creating one, since it makes it simpler to reason about how the function is executed.
 
 The base case can be used to verify the correctness of a recursive function as well. Since for any *N* step in the function recursive step we must assume that the recursive call is going to work correctly (*leap of faith*), then it all comes down to whether the base case is implemented correctly or not.
+## Recursive Case
+Set of rules that reduce all cases toward base cases. In other words, the recursive step should always make the problem smaller or simpler in some way always toward the base case.
 ## Mutual Recursion
 When a recursive procedure is divided among two functions that call each other.
 
