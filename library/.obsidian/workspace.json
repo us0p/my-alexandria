@@ -105,7 +105,8 @@
               "title": "vibe_coding"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       },
       {
         "id": "13a5d2240c968495",
@@ -196,8 +197,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 326.5,
-    "collapsed": true
+    "width": 326.5
   },
   "right": {
     "id": "1b1356eab0d51a67",
@@ -301,10 +301,12 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "776cf94c95ea9106",
+  "active": "43a5b2aaffdec565",
   "lastOpenFiles": [
-    "notes/artificial_inteligence/agent_skills.md",
+    "notes/golang/go_iterators.md.tmp.73094.206f5585da13",
+    "notes/golang/go_iterators.md.tmp.73094.c34081b9000f",
     "notes/artificial_inteligence/subagents.md",
+    "notes/artificial_inteligence/agent_skills.md",
     "notes/artificial_inteligence/original_vibe_coding.md",
     "notes/golang/go_iterators.md",
     "notes/artificial_inteligence/ai_guardrails.md",
@@ -326,7 +328,6 @@
     "notes/artificial_inteligence/llm_agent.md",
     "notes/artificial_inteligence/llm_fundamentals.md",
     "notes/artificial_inteligence/llm_fundamentals.md.tmp.18010.0a8fd35f80ae",
-    "notes/artificial_inteligence/llm_fundamentals.md.tmp.17789.2bc6741549f0",
     "introductions/regexp_word_boundary.md",
     "drawings/typical_retrieval_pipeline.md",
     "notes/two_complement.md",
@@ -338,7 +339,6 @@
     "notes/memory_locations.md",
     "Sem título.md",
     "notes/golang/go_memory_model.md",
-    "Untitled.md",
     "images/Pasted image 20260608103323.png",
     "images/Pasted image 20260608101629.png",
     "images/Pasted image 20260608091100.png",
