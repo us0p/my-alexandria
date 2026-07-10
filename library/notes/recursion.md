@@ -14,6 +14,8 @@ It happens when a function call itself directly or indirectly.
 
 A recursive function breaks a problem in simple steps that when repeated over and over again, will reach a solution.
 
+The core idea of recursion and also its contrast with iteration is that all the intermediate states that would be stored in variables on a iterative solution, are stored on the function runtime environment, as function parameters or function return values, this way the environment itself takes care of the state management, the function only cares about the computation.
+
 Example: sum all digits of a number.
 
 The sum of all digits of a number can be represented by the sum of the last digit with the sum of all other digits. This can be broken into a simple step: Summing the last digit to the sum of all the digits previous to it.
@@ -120,6 +122,70 @@ func sumDigitsVariation(n int) int {
 		return n
 	n, last := int(math.Floor(n / 10)), n % 10
 	return sumDigitsVariation(n) + last 
+}
+```
+## When to use recursion instead of iteration
+Any recursive function can be written iteratively. But some problems lend themselves *naturally* to a recursive solution. When we try to solve those kinds of problems iteratively instead, we find ourselves simulating recursion anyway.
+
+There are two reasons that need considering when choosing between a recursive and a iterative implementation:
+1. **Performance**: Using recursion instead of iteration will lead to a better or worst performance? Is there a lot of difference between each?
+2. **Simplicity**: Even if the iterative solution is faster, if the performance doesn't makes a big difference and there's a lot of complexity involved. It's better to use a straightforward recursive solution, even if the performance is a little worst.
+
+>In many programming languages, recursion is limited by a maximum call-stack. When a function tries to call deeper than that, the runtime usually produces an error. In Go, there's no [call-stack limit inside a goroutine](go_goroutine_infinite_call_stack.md)
+## Converting a recursive implementation to an iterative one
+Usually, to convert a recursive function that perform branching to an iterative one we must implement a [Stack](stack.md) data structure, that will hold the parameters of each recursive call so that the loop can pick them up and execute it in order.
+## Recursion on different data structures
+### Lists
+- **First/Rest decomposition**: Decomposes the list into it's first and rest elements at each iteration and them process them individually on each step. Has a characteristic of performing the action backwards as it recombines the values. The drawback of this implementation is that each recursive call needs to copy the rest of the list which means that `O(n²)` time is spent copying, also, the amount of space that needs to be consumed is a lot more than keeping a single instance of the list in memory.
+- **Helper function**: If you need the computation to be performed in order as the recursive step goes down the list, you can add a helper function that carries the local variables that would be needed in the iterative solution on each iteration as parameters.
+### Tree-Like
+[Tree-shaped data](trees.md) have a straightforward recursive decomposition that mirrors the tree structure. Recursive calls are made to all children until we reach the leaves.
+## Optimizations
+### First-Rest List Copying
+Since in each call we only care about the first element and the rest is only used to walk to the end of the list.
+
+We walk the list one element at the time (like a [Linked-List](linked_lists.md)) and consume only the first element by implementing an index.
+
+```go
+func sum_list(x []int) int {
+	func sum_helper(i, sum_so_far int) int {
+		if i >= len(x) {
+			return sum_so_far
+		}
+		return sum_helper(i + 1, sum_so_far + x[i])
+	}
+	return sum_helper(0, 0)
+}
+```
+### Tail-Call
+> Not available in [Go](https://en.wikipedia.org/wiki/Tail_call#Language_support).
+
+When the runtime system encounters a tail-call (the last thing in the function's body is the recursive call), it deduces that it will no longer need the frame for the current call and can simply *reuse* it for the new recursive call, rather than creating a new frame.
+
+With this optimization, the recursion depth never exceeds 1, and the performance is essentially like a loop.
+
+Tail-Call only works when the recursive function is called and there's no dangling reference to the previous call stack, for example:
+
+```go
+// Tail-Call optimized, recursion is the last step in the function and there's no dangling reference to the previous stack.
+func sum_list(x []int) int {
+	func sum_helper(sum_so_far int, lst []int) int {
+		if len(lst) == 0 {
+			return sum_so_far
+		}
+		
+		num, rest := lst[0], lst[1:]
+		return sum_helper(sum_so_far + num, rest)
+	}
+	return sum_helper(0, x)
+}
+
+// Not tail-call optimized, the recursion is part of the last step but it keeps a reference to the previous stack in each iteration.
+func sum_list(x []int) int {
+	if len(x) == 0 {
+		return 0
+	}
+	return x[0] + sum_list(x[1:])
 }
 ```
 ## Understanding

@@ -8,7 +8,21 @@
         "type": "tabs",
         "children": [
           {
-            "id": "7c2be545851482c3",
+            "id": "776cf94c95ea9106",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/artificial_inteligence/subagents.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "subagents"
+            }
+          },
+          {
+            "id": "6e4724c3fd0dcbee",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -19,6 +33,20 @@
               },
               "icon": "lucide-file",
               "title": "agent_skills"
+            }
+          },
+          {
+            "id": "43a5b2aaffdec565",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/golang/go_iterators.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "go_iterators"
             }
           },
           {
@@ -61,20 +89,6 @@
               },
               "icon": "lucide-file",
               "title": "spec_driven_development"
-            }
-          },
-          {
-            "id": "43a5b2aaffdec565",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/artificial_inteligence/subagents.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "subagents"
             }
           },
           {
@@ -124,23 +138,8 @@
               "icon": "lucide-file",
               "title": "recursion"
             }
-          },
-          {
-            "id": "121089ecca273c58",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/golang/go_arrays_and_slices.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "go_arrays_and_slices"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -197,7 +196,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 326.5
+    "width": 326.5,
+    "collapsed": true
   },
   "right": {
     "id": "1b1356eab0d51a67",
@@ -213,6 +213,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "notes/golang/go_iterators.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -222,7 +223,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for go_iterators"
             }
           },
           {
@@ -300,19 +301,22 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "f05ed0e2a3d72962",
+  "active": "776cf94c95ea9106",
   "lastOpenFiles": [
-    "notes/golang/go_arrays_and_slices.md",
-    "notes/recursion.md",
     "notes/artificial_inteligence/agent_skills.md",
+    "notes/artificial_inteligence/subagents.md",
+    "notes/artificial_inteligence/original_vibe_coding.md",
+    "notes/golang/go_iterators.md",
+    "notes/artificial_inteligence/ai_guardrails.md",
+    "notes/golang/go_loops.md",
+    "notes/recursion.md",
+    "notes/golang/go_arrays_and_slices.md",
+    "notes/golang/go_functions.md",
     "notes/artificial_inteligence/agent_skills.md.tmp.122707.bf215dcde703",
     "notes/artificial_inteligence/agent_skills.md.tmp.122707.e34fba22917d",
-    "notes/artificial_inteligence/original_vibe_coding.md",
     "notes/artificial_inteligence/vibe_coding.md",
-    "notes/artificial_inteligence/subagents.md",
     "notes/artificial_inteligence/spec_driven_development.md",
     "notes/artificial_inteligence/claude_context_files.md",
-    "notes/artificial_inteligence/ai_guardrails.md",
     "notes/artificial_inteligence/subagents.md.tmp.21231.c440949014ef",
     "notes/artificial_inteligence/agent_skills.md.tmp.21231.409fd94953a5",
     "notes/artificial_inteligence/claude_context_files.md.tmp.21231.a95a02a492e5",
@@ -342,9 +346,6 @@
     "images/Pasted image 20260608083657.png",
     "images/Pasted image 20260601201740.png",
     "images/Pasted image 20260531220816.png",
-    "notes/golang/go_structs.md",
-    "notes/artificial_inteligence/prompt_engineering.md",
-    "notes/golang/go_pointers.md",
     "images/go_documentation_generation.png",
     "Pasted image 20260507073921.png",
     "images/typical_retrieval_pipeline_workflow.png"

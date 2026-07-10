@@ -169,6 +169,15 @@ Skills are a useful way to package repetitive tasks or input sensitive prompts s
 - **Context Window**: Adding too much information to a skill can give more background but can also make it less accurate as the skill content is loaded in your conversation history.
 - **Quality x Quantity**: Having too many skills in your agent can confuse the agent as it tries to determine which skill to use. Skills that do the same task but have different name/description can cause the agent to invoke different skill on the same problem which can produce non-deterministic output.
 ## Examples
+```markdown
+---
+name: sample-skill
+description: demonstrate how a skill is created, use it when user requests an explanation of what is a skill
+---
+
+# Sample Skill
+Give explanations on what is an Agent Skill, how to use it and when to create one.
+```
 ## References
 - [Context Files](claude_context_files.md)
 - [Agent](subagents.md)
@@ -178,8 +187,6 @@ Skills are a useful way to package repetitive tasks or input sensitive prompts s
 - [Permission Rules](https://code.claude.com/docs/en/permissions)
 - [String Substitution](https://code.claude.com/docs/en/skills#available-string-substitutions)
 - [Settings File](https://code.claude.com/docs/en/settings#settings-files)
-## Questions
-- What's the difference between agent skills and coding agents skills?
 ## Flashcards
 - Q: What are agent skills?
 - A: Modular, file-based packages of instructions, metadata, and optional resources that an agent loads automatically when relevant to specialize its behavior.
