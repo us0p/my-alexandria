@@ -36,20 +36,6 @@
             }
           },
           {
-            "id": "43a5b2aaffdec565",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/golang/go_iterators.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "go_iterators"
-            }
-          },
-          {
             "id": "8b1514197e7e5cfd",
             "type": "leaf",
             "state": {
@@ -105,15 +91,14 @@
               "title": "vibe_coding"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       },
       {
-        "id": "13a5d2240c968495",
+        "id": "fcbf376151a31f36",
         "type": "tabs",
         "children": [
           {
-            "id": "456b41dc7ed02185",
+            "id": "8b37cf9e0eef8803",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -124,20 +109,6 @@
               },
               "icon": "lucide-file",
               "title": "original_vibe_coding"
-            }
-          },
-          {
-            "id": "f05ed0e2a3d72962",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/recursion.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "recursion"
             }
           }
         ]
@@ -301,19 +272,27 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "43a5b2aaffdec565",
+  "active": "776cf94c95ea9106",
   "lastOpenFiles": [
+    "notes/artificial_inteligence/original_vibe_coding.md",
+    "notes/artificial_inteligence/ai_guardrails.md",
+    "notes/golang/go_functions.md",
+    "go_array_and_slices.md",
+    "notes/linked_lists.md",
+    "notes/recursion.md",
+    "notes/recursion.md.tmp.13782.cd1c33338795",
+    "notes/recursion.md.tmp.13782.60ae6a351340",
+    "notes/golang/goroutine_infinite_stack.md",
+    "notes/golang/goroutine_infinite_stack.md.tmp.13782.9911f6ad6426",
+    "notes/golang/goroutine_infinite_stack.md.tmp.13782.a0403743be0b",
+    "go_goroutine_infinite_call_stack.md",
+    "notes/golang/go_iterators.md",
     "notes/golang/go_iterators.md.tmp.73094.206f5585da13",
     "notes/golang/go_iterators.md.tmp.73094.c34081b9000f",
     "notes/artificial_inteligence/subagents.md",
     "notes/artificial_inteligence/agent_skills.md",
-    "notes/artificial_inteligence/original_vibe_coding.md",
-    "notes/golang/go_iterators.md",
-    "notes/artificial_inteligence/ai_guardrails.md",
     "notes/golang/go_loops.md",
-    "notes/recursion.md",
     "notes/golang/go_arrays_and_slices.md",
-    "notes/golang/go_functions.md",
     "notes/artificial_inteligence/agent_skills.md.tmp.122707.bf215dcde703",
     "notes/artificial_inteligence/agent_skills.md.tmp.122707.e34fba22917d",
     "notes/artificial_inteligence/vibe_coding.md",
@@ -321,24 +300,16 @@
     "notes/artificial_inteligence/claude_context_files.md",
     "notes/artificial_inteligence/subagents.md.tmp.21231.c440949014ef",
     "notes/artificial_inteligence/agent_skills.md.tmp.21231.409fd94953a5",
-    "notes/artificial_inteligence/claude_context_files.md.tmp.21231.a95a02a492e5",
-    "notes/artificial_inteligence/ai_guardrails.md.tmp.21231.e415536973f5",
-    "notes/artificial_inteligence/spec_driven_development.md.tmp.21231.4f82e3769556",
-    "notes/artificial_inteligence/vibe_coding.md.tmp.21231.ff3bfff2beb5",
     "notes/artificial_inteligence/llm_agent.md",
     "notes/artificial_inteligence/llm_fundamentals.md",
-    "notes/artificial_inteligence/llm_fundamentals.md.tmp.18010.0a8fd35f80ae",
     "introductions/regexp_word_boundary.md",
     "drawings/typical_retrieval_pipeline.md",
     "notes/two_complement.md",
     "keywords.md",
     "notes/artificial_inteligence/retrieval_augmented_generation.md",
-    "notes/linked_lists.md",
     "notes/large_language_models.md",
     "notes/golang/go_garbage_collector.md",
     "notes/memory_locations.md",
-    "Sem título.md",
-    "notes/golang/go_memory_model.md",
     "images/Pasted image 20260608103323.png",
     "images/Pasted image 20260608101629.png",
     "images/Pasted image 20260608091100.png",

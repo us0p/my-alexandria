@@ -101,7 +101,7 @@ In Go, this is the default and whenever you call a function you need to remember
 
 Since [maps](go_maps.md) are a **pointer to a runtime hash table structure**. When we pass a map to a function, the pointer is copied, and thus, changes to the underlying value are reflected in the original variable.
 
-For [slices](go_array_and_slices.md) we must remember that changes to the function argument **may or may not** be reflected in the original variable.
+For [slices](go_arrays_and_slices.md) we must remember that changes to the function argument **may or may not** be reflected in the original variable.
 
 This happens because a Slice is a descriptor that defines:
 - A pointer to an array.
@@ -143,7 +143,7 @@ func logItems(prefix string, items ...any) {
 ## References
 - [Variables](go_variable_and_constants.md)
 - [Maps](go_maps.md)
-- [Slices](go_array_and_slices.md)
+- [Slices](go_arrays_and_slices.md)
 - [Closures]()
 - [Go concurrency model]()
 - [Table driven tests]()
