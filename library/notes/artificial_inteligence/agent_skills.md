@@ -120,9 +120,9 @@ Output is inserted as plain text. Output will not be scanned for command invocat
 
 For multi-line commands, use a fenced code block \`\`\`! instead of the inline form.
 ### Run skills in sub-agents
-A skill with a `context: fork` frontmatter is executed in isolation in a [separate agent](subagents.md) and don't have access to your conversation history.
+A skill with a `context: fork` frontmatter is executed in isolation in a [separate agent](subagents.md#Forks) and don't have access to your conversation history.
 
-A forked skill using `agent: Explore` skip `CLAUDE.md and git status` to keep their context small, so this agent sees only the `SKILL.md` content and the agent's own system prompt.
+>Forking a skill essentially converts it to an Agent. The skill's content become the task prompt for a spawned subagent (defaulting to `general-purpose`) agent, or other agent specified.
 
 ```plaintext
 ---

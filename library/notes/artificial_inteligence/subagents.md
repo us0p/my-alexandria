@@ -92,20 +92,16 @@ There are two ways to configure [hooks](agent_hooks.md):
 2. In `settings.json`: Define hooks that run in the main session when subagents start or stop.
 
 All [hook events](https://code.claude.com/docs/en/hooks#hook-events) are supported.
-## Built-in sub-agents
-- **Explore**: Haiku, read-only, skips CLAUDE.md and git status; thoroughness levels quick / medium / very thorough.
-- **Plan**: read-only research during plan mode.
-- **General-purpose**: all tools, for multi-step explore-and-act work.
-## Definition and scope
-Defined in Markdown with YAML frontmatter (`name`, `description`, optional `tools`/`disallowedTools`, `model`, `mcpServers`, `skills`, `memory`, `hooks`); create manually or via `/agents`. The body is the system prompt. Precedence: managed > `--agents` flag > project `.claude/agents/` > user `~/.claude/agents/` > plugin.
-## Tools and permissions
-Inherit the main conversation's tools by default; `tools` is an allowlist and `disallowedTools` a denylist (applied first). `AskUserQuestion`, plan-mode tools, `WaitForMcpServers`, and `ScheduleWakeup` are never available. `skills` preloads skill content (see [[agent_skills]]); `memory` (user/project/local) gives a persistent directory.
-## Invocation and execution
-Invoke via natural language (Claude decides), `@-mention` (guaranteed once), or session-wide with `claude --agent name`. Run in the foreground (blocks; prompts pass through) or background (concurrent; auto-denies prompts).
-## Patterns
-Isolate high-volume operations, run parallel research, or chain sub-agents in sequence. Nesting is allowed up to depth 5. Resume a general-purpose or custom sub-agent to continue with full history (Explore and Plan are one-shot and can't be resumed).
 ## Forks
-A fork inherits the entire conversation (system prompt, tools, model, and history) instead of starting fresh; its own tool calls stay out of your context and only the result returns. Start one with `/fork <directive>`; Claude can pass `isolation: "worktree"` to write the fork's edits to a separate git worktree.
+A fork is just a full copy of the current conversation which is operated as a sub agent with specific instructions and **always run as a separate instance**.
+
+You should fork the conversation when you want to share the existing context with the next task. The spawned agent will continue the work with the existing context and once finished will report back only the final output to the main conversation.
+
+You can use `/fork <directive>` to specify what needs to be done by the new agent in a separate context, but you cannot specify what agent is going to be used and there's no way spawn a agent with the context default to fork. **This is a capability of [skills](agent_skills.md#Run%20skills%20in%20sub-agents) only**.
+
+>There's a default subagent used for fork workflows which is used when you fork a conversation.
+
+Since a subagent always runs within its own context, using a subagent in a fork is creating a subagent within another.
 ## When to use vs. main conversation
 Use a sub-agent for verbose output you won't reference, to enforce tool restrictions, or for self-contained work that returns a summary. Stay in the main conversation for frequent back-and-forth, shared multi-phase context, quick targeted changes, or latency-sensitive work (and use `/btw` for a quick question over existing context). Best practices: design focused sub-agents, write detailed descriptions, limit tool access, and check project sub-agents into version control. Used heavily in [[spec_driven_development]] to parallelize and specialize.
 ## Understanding
@@ -144,7 +140,6 @@ Add link to relative notes
 - What's the ground distinction between skills, forks and agents?
 - When should a skill become an agent?
 - How to determine if a prompt is better suited as a skill or as an agent?
-- When to fork and when to use a subagent?
 ## Iterate on
 - Sections of the document that can be iterated and have it's quality 
 improved but need more knowledge to do so.
