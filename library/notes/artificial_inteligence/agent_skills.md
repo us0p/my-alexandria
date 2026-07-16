@@ -134,6 +134,16 @@ agent: Explore
 
 Research $ARGUMENTS thoroughly
 ```
+### When should a skill become an agent?
+Skills work best for specific, repeatable procedures, where the work is small, the steps are known, and you want it to happen the same way every time.
+
+If the same expertise is needed by more than one agent or conversation, it belongs in a Skill.
+
+**When to make it an [agent](subagents.md)***:
+- **Needs isolation**: Benefits from fresh eyes, you don't want the main conversation context biasing the output.
+- **Generates noise**: The task is a multi-step job that will generate a lot of intermediate noise that's not meaningful to your main conversation context.
+- **Requires Parallelism**: Multiple evaluations or analysis that don't depend on each other.
+- **Don't need interaction**: It's a job where you ask it and get an output, you don't need to iterate on the steps while it's working (agents run in a separate, isolated context, without user intervention, you can't interact with them even if you want it to).
 ## Limitations and constraints
 The exact runtime environment available to your skill depends on the product surface where you use it.
 - **Web Interface**:

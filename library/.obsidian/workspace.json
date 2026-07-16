@@ -8,45 +8,13 @@
         "type": "tabs",
         "children": [
           {
-            "id": "776cf94c95ea9106",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/artificial_inteligence/subagents.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "subagents"
-            }
-          },
-          {
-            "id": "6e4724c3fd0dcbee",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/artificial_inteligence/agent_skills.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "agent_skills"
-            }
-          },
-          {
             "id": "8b1514197e7e5cfd",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/artificial_inteligence/ai_guardrails.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "ai_guardrails"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           },
           {
@@ -184,7 +152,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/golang/go_iterators.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -194,7 +161,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for go_iterators"
+              "title": "Backlinks"
             }
           },
           {
@@ -272,13 +239,15 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "776cf94c95ea9106",
+  "active": "8b1514197e7e5cfd",
   "lastOpenFiles": [
+    "notes/artificial_inteligence/ai_guardrails.md",
     "notes/artificial_inteligence/agent_skills.md",
     "notes/artificial_inteligence/subagents.md",
+    "notes/artificial_inteligence/subagents.md.tmp.169563.fd633400fde3",
+    "notes/artificial_inteligence/subagents.md.tmp.169563.288b9d76a246",
     "notes/artificial_inteligence/original_vibe_coding.md",
     "notes/recursion.md",
-    "notes/artificial_inteligence/ai_guardrails.md",
     "notes/golang/go_functions.md",
     "go_array_and_slices.md",
     "notes/linked_lists.md",
@@ -298,8 +267,6 @@
     "notes/artificial_inteligence/vibe_coding.md",
     "notes/artificial_inteligence/spec_driven_development.md",
     "notes/artificial_inteligence/claude_context_files.md",
-    "notes/artificial_inteligence/subagents.md.tmp.21231.c440949014ef",
-    "notes/artificial_inteligence/agent_skills.md.tmp.21231.409fd94953a5",
     "notes/artificial_inteligence/llm_agent.md",
     "notes/artificial_inteligence/llm_fundamentals.md",
     "introductions/regexp_word_boundary.md",
@@ -309,7 +276,6 @@
     "notes/artificial_inteligence/retrieval_augmented_generation.md",
     "notes/large_language_models.md",
     "notes/golang/go_garbage_collector.md",
-    "notes/memory_locations.md",
     "images/Pasted image 20260608103323.png",
     "images/Pasted image 20260608101629.png",
     "images/Pasted image 20260608091100.png",

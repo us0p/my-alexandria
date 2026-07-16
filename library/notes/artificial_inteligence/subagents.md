@@ -9,7 +9,7 @@ tags:
 created: 2026-06-28
 ---
 ## TL;DR
-Sub-agents are specialized agents with their own context window, system prompt, tools, and permissions. Use them to keep verbose output (tests, logs, searches) out of your main context, to enforce tool restrictions, or to parallelize independent work. They start fresh with no conversation history — except a fork, which inherits the full conversation.
+Subagents run in an isolated context window with their own system prompt, tools, and permissions, invoked via natural language, mention, or as the session's main agent. They can spawn nested subagents up to a fixed max depth of 5, and forks (full conversation copies run as separate instances) cannot spawn other forks. Each subagent session persists a transcript file, resumable via its sessionId. Subagents are created via /agents or manual frontmatter files in project, user, or plugin directories with defined priority, inheriting available tools and permission modes. They support scoped memory, preloaded skills, and configurable hooks.
 # Sub-agents
 Specialized agents that can be used for task-specific workflows.
 
@@ -102,22 +102,35 @@ You can use `/fork <directive>` to specify what needs to be done by the new agen
 >There's a default subagent used for fork workflows which is used when you fork a conversation.
 
 Since a subagent always runs within its own context, using a subagent in a fork is creating a subagent within another.
-## When to use vs. main conversation
-Use a sub-agent for verbose output you won't reference, to enforce tool restrictions, or for self-contained work that returns a summary. Stay in the main conversation for frequent back-and-forth, shared multi-phase context, quick targeted changes, or latency-sensitive work (and use `/btw` for a quick question over existing context). Best practices: design focused sub-agents, write detailed descriptions, limit tool access, and check project sub-agents into version control. Used heavily in [[spec_driven_development]] to parallelize and specialize.
 ## Understanding
-- explanation of the concept, using your own words.
-- Focus on cause and effect.
-Ex:
-- This pattern exists because systems are likely to couple business rules and external details...
-- The separation allows changing interfaces without having to rewrite central rules...
+Agents are specialized, isolated actors which don't have access to the main conversation context. They receive a task and work until completion, returning back only the final output.
+
+Even though an agent don't have access to the main context, it can produce **memory files** that allows the agent to learn and evolve as it gains more knowledge on the task at hand. Memory files are scoped differently, allowing you to create specific memories for specific scopes.
+
+Since each agent runs in isolation, this means that you can run several agents in parallel.
+
+Each agent can be configured with the different models, accessible tools, permissions and hooks that it has access to.
 ## When to Use
-- Situations where this is useful
+- You're not interested in the middle output, only with the resulting operation.
+- Tasks that require a structured approach or a specific expertise, like code review.
+- Want to span several actors to work on the task simultaneously.
 ## When NOT to Use
-- Situations where this is overkill or harmful
+- You want the middle output of an operation.
+- You want to interact with the agent as it works through a solution.
+- The necessary expertise is needed by more than one agent or conversation, it's best suited as a skill.
 ## Trade-offs
-- Limitations
-- Costs
-- Complexity 
+### Positive points
+- **Specialization**: Each subagents can be optimized for a specific task rather than a generalist trying to do everything.
+- **Scalability**: Can paralelize independent tasks across multiple agents running simultaneously.
+- **Modularity**: Swap out agents without rebuilding the entire system.
+- **Cost reduction (When done Right)**: Each subagent works on a smaller context window using focused cheaper models instead of big generalist models for the entire problem.
+- **Flexibility**: Can dynamically route tasks to different agents based on context.
+### Negative points
+- **Coordination**: Managing communication between agents, synchronization, message passing, and orchestration adds significant complexity.
+- **Error Propagation/Compounding**: Error from one subagent can propagate to dependent agents. Debugging becomes exponentially harder, you need to trace failures across multiple agents to find the root cause.
+- **Inconsistencies**: Multiple agents working on the same problem may reach contradictory conclusions.
+- **Cost**: Can be significantly more expensive than a single unified agent for the same task.
+- **State management**: Race conditions, stale data, and synchronization issues become real concerns.
 ## Examples
 ### Creating a subagent
 ```markdown
@@ -131,18 +144,75 @@ model: sonnet
 You are a code reviewer. When invoked, analyze the code and provide specific, actionable feedback on quality, security, and best practices.
 ```
 ## References
-### Connects with
-Add link to relative notes
-### Contrasts with
-- Add link to alternatives that tries to solve the same problem
-- Always add relation definition like "expands", "contrasts", "depends"
-## Questions
-- What's the ground distinction between skills, forks and agents?
-- When should a skill become an agent?
-- How to determine if a prompt is better suited as a skill or as an agent?
-## Iterate on
-- Sections of the document that can be iterated and have it's quality 
-improved but need more knowledge to do so.
+- [Skills](agent_skills.md)
+- [Hooks](agent_hooks.md)
+### External References
+- [Agent Frontmatter Support](https://code.claude.com/docs/en/sub-agents#supported-frontmatter-fields)
+- [Built-in Tools](https://code.claude.com/docs/en/tools-reference)
+- [Agent tool access control and list of available tools](https://code.claude.com/docs/en/sub-agents#available-tools)
+- [List of hook events](https://code.claude.com/docs/en/hooks#hook-events)
 ## Flashcards
-- Q: Some question about the notes.
-- A: The answer for the question above.
+- Q: What isolated components does a subagent have compared to the main conversation?
+- A: Its own context window, system prompt, tool access, and permissions.
+- Q: What are good use cases for delegating work to a subagent?
+- A: Running tests, searching the codebase, reading log files, and repetitive workflows.
+- Q: What happens to the main conversation's context after a subagent completes its task?
+- A: Only the subagent's output is returned to the main session, so the main context stays clean and small.
+- Q: What are the three patterns for invoking subagents?
+- A: Natural Language, where the main agent delegates when a task matches an agent's description, Mention, which guarantees a specific subagent runs for one task, and Session-Wide, where the agent is used as the main agent for the whole session.
+- Q: How do you invoke a subagent as the main agent for a session?
+- A: With claude --agent code-reviewer.
+- Q: How can you manually push a running task to the background?
+- A: With CTRL+B.
+- Q: Why would a subagent spawn its own nested subagents?
+- A: When a delegated task splits into parallel subtasks, such as a reviewer dispatching a verifier per finding, so the intermediate output never reaches the main conversation.
+- Q: What is the maximum depth of nested subagents?
+- A: 5, and this limit is fixed and non-configurable.
+- Q: How is subagent depth counted?
+- A: As the number of subagent levels below the main conversation, regardless of whether each level runs in the foreground or background.
+- Q: Can a fork spawn another fork?
+- A: No, a fork cannot spawn another fork, though it can spawn other subagent types, which count toward the depth limit.
+- Q: What does a subagent see from the main conversation when it starts?
+- A: Nothing by default, it starts with a fresh isolated context window with no conversation history, invoked skills, or previously read files.
+- Q: How does a subagent know what task to perform if it has no conversation history?
+- A: Claude composes a delegation message that summarizes the task, and the subagent works from that.
+- Q: Which type of subagent is the exception that inherits the parent conversation instead of starting fresh?
+- A: A fork.
+- Q: What does a transcript file capture?
+- A: The entire interaction of a subagent session.
+- Q: Where are subagent transcript files stored?
+- A: At ~/.claude/projects/{project}/{sessionId}/subagents/
+- Q: Why can't the built-in Explore and Plan agents be resumed?
+- A: Because they are one-shot and return no agent ID.
+- Q: How long are subagent transcript files kept by default?
+- A: 30 days, based on settings.
+- Q: How do you resume a previous subagent interaction?
+- A: By providing the main agent with the subagent's sessionId, after which the subagent continues with all its previous interactions in context instead of starting fresh.
+- Q: What are the two ways to create a subagent?
+- A: Through the /agents interface, or by manually adding a markdown file with YAML frontmatter in a designated agents directory.
+- Q: What is the priority order of subagent definition locations, from highest to lowest?
+- A: Project level directories such as .claude/agents have priority 3, user level directories such as ~/.claude/agents have priority 4, and a plugin's agents directory has priority 5, the lowest.
+- Q: When do manually created or edited subagents take effect?
+- A: Only after restarting the session, unless they were created through the /agents interface, which takes effect immediately.
+- Q: What tools does a subagent have access to by default?
+- A: It inherits the internal tools and MCP tools available in the main conversation.
+- Q: How do the disallowedTools and tools frontmatter fields interact?
+- A: disallowedTools is applied first, then tools is resolved against the remaining pool, and a tool listed in both is removed.
+- Q: What do permission modes control for a subagent?
+- A: How the subagent handles permission prompts. Subagents inherit the permission context from the main conversation but can override the mode.
+- Q: What are the three scopes for agent memory files?
+- A: user scope at ~/.claude/agent-memory/name/ for learnings across all projects, project scope at .claude/agent-memory/name/ for project specific knowledge shareable via version control, and local scope at .claude/agent-memory-local/name/ for project specific knowledge not checked into version control.
+- Q: What does the skills frontmatter field control for a subagent?
+- A: Which skills are preloaded into the agent's context, not which skills the subagent is allowed to invoke.
+- Q: How do you prevent a subagent from invoking skills?
+- A: By managing it through Available Tools rather than the skills frontmatter field.
+- Q: What are the two ways to configure hooks for a subagent?
+- A: In the subagent's frontmatter, where hooks run only while it is active and are cleared when it finishes, or in settings.json, where hooks run in the main session whenever any subagent starts or stops.
+- Q: What is a fork?
+- A: A full copy of the current conversation operated as a subagent with specific instructions, always run as a separate instance.
+- Q: When should you fork a conversation instead of using a regular subagent?
+- A: When you want to share the existing context with the next task, since the spawned agent continues the work with that context and reports back only the final output.
+- Q: How do you fork a conversation, and what limitation does this command have?
+- A: With /fork directive, but you cannot specify which agent is used, since spawning an agent with the fork context by default is only possible through skills.
+- Q: Why is running a subagent inside a fork considered a subagent within another?
+- A: Because a subagent always runs within its own context, so a subagent invoked inside a fork is nested within the fork's own subagent context.
