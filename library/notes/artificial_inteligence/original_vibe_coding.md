@@ -440,24 +440,6 @@ By demonstrating what you want—rather than just explaining it—you give the m
 - SDD
 - TC-EBC
 - Show, don't tell
-## Guardrails
-constraints you set up to limit what an AI agent can do wrong. They're not instructions - they're boundaries.
-In software, guardrails come in many forms: type checkers that catch incorrect data shapes, test suites that catch regressions, linters that enforce code style, file access restrictions that prevent agents from touching production configs, and mandatory human review before code gets merged.
-
-The key insight is that guardrails are _automated_. They don't require you to watch the agent constantly. They fire automatically when something goes wrong, giving the agent feedback in its observe phase or blocking a bad change before it lands.
-
-Without guardrails, you're doing vibe coding - letting the AI do whatever it wants and hoping for the best. Guardrails are what make agentic engineering a disciplined practice. They let you give agents more autonomy without proportionally increasing risk.
-### In practice
-- **Type systems**: TypeScript's compiler, Python's mypy, Rust's borrow checker - catch bugs at build time before they reach runtime
-- **Test suites**: If the agent's changes break existing tests, the agent knows immediately and can self-correct
-- **Linting**: Enforces code style and catches common mistakes (unused variables, missing error handling)
-- **File access restrictions**: Limit which directories the agent can read or write - keep it out of secrets, configs, and infrastructure code
-- **Iteration limits**: Cap the number of times an agent can retry before escalating to a human
-- **Sandboxing**: Run agents in isolated environments so mistakes don't affect production
-- **Code review**: The ultimate guardrail - a human reviews every change before it ships
-- **Scope limits**: Restrict agents to specific tasks rather than giving them free rein over the entire codebase
-
-The best guardrails are the ones you'd want in place anyway, even without AI.
 ## Coding Guidelines - Ground Rules
 There are a lot of best practices and methodologies that exists in software engineering that are taken as common knowledge. It can be a universal best practice or even something specific of your team. The thing is, you shouldn't take it for granted with agents. Coding guidelines for agents need to be more explicit, demonstrative or patterns, and obvious.
 ### Guidelines to write code

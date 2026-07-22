@@ -25,6 +25,10 @@ The base case is the most important point of a recursive function and it often m
 The base case can be used to verify the correctness of a recursive function as well. Since for any *N* step in the function recursive step we must assume that the recursive call is going to work correctly (*leap of faith*), then it all comes down to whether the base case is implemented correctly or not.
 ## Recursive Case
 Set of rules that reduce all cases toward base cases. In other words, the recursive step should always make the problem smaller or simpler in some way.
+## Space Complexity
+The stack stores the variables and references for each function call, thus, memory must be allocated to keep track of the current stack.
+
+The space complexity of recursive solutions is usually related to the time complexity of the recursive function, given that for each recursive call, a new stack is created.
 ## Mutual Recursion
 When a recursive procedure is divided among two functions that call each other.
 ```go
