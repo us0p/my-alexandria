@@ -8,9 +8,10 @@
         "type": "tabs",
         "children": [
           {
-            "id": "7c2be545851482c3",
+            "id": "0b2b017828d4e53d",
             "type": "leaf",
             "state": {
+<<<<<<< HEAD
               "type": "markdown",
               "state": {
                 "file": "notes/artificial_inteligence/agent_loop.md",
@@ -75,6 +76,12 @@
               },
               "icon": "lucide-file",
               "title": "subagents"
+=======
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+>>>>>>> e44c7f62755f7e35e1deb4913bd1ec3e32f730b0
             }
           },
           {
@@ -90,15 +97,29 @@
               "icon": "lucide-file",
               "title": "vibe_coding"
             }
+          },
+          {
+            "id": "571791319c05c987",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/artificial_inteligence/spec_driven_development.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "spec_driven_development"
+            }
           }
         ]
       },
       {
-        "id": "13a5d2240c968495",
+        "id": "fcbf376151a31f36",
         "type": "tabs",
         "children": [
           {
-            "id": "456b41dc7ed02185",
+            "id": "8b37cf9e0eef8803",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -110,37 +131,8 @@
               "icon": "lucide-file",
               "title": "original_vibe_coding"
             }
-          },
-          {
-            "id": "f05ed0e2a3d72962",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/recursion.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "recursion"
-            }
-          },
-          {
-            "id": "121089ecca273c58",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/golang/go_arrays_and_slices.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "go_arrays_and_slices"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -300,6 +292,7 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
+<<<<<<< HEAD
   "active": "7c2be545851482c3",
   "lastOpenFiles": [
     "Pasted image 20260828214538.png",
@@ -313,30 +306,45 @@
     "notes/artificial_inteligence/vibe_coding.md",
     "notes/artificial_inteligence/subagents.md",
     "notes/artificial_inteligence/spec_driven_development.md",
+=======
+  "active": "0b2b017828d4e53d",
+  "lastOpenFiles": [
+>>>>>>> e44c7f62755f7e35e1deb4913bd1ec3e32f730b0
     "notes/artificial_inteligence/claude_context_files.md",
     "notes/artificial_inteligence/ai_guardrails.md",
-    "notes/artificial_inteligence/subagents.md.tmp.21231.c440949014ef",
-    "notes/artificial_inteligence/agent_skills.md.tmp.21231.409fd94953a5",
-    "notes/artificial_inteligence/claude_context_files.md.tmp.21231.a95a02a492e5",
-    "notes/artificial_inteligence/ai_guardrails.md.tmp.21231.e415536973f5",
-    "notes/artificial_inteligence/spec_driven_development.md.tmp.21231.4f82e3769556",
-    "notes/artificial_inteligence/vibe_coding.md.tmp.21231.ff3bfff2beb5",
+    "notes/artificial_inteligence/ai_guardrails.md.tmp.62880.e8a58a882e74",
+    "notes/artificial_inteligence/ai_guardrails.md.tmp.62880.e61fde331b0c",
+    "notes/artificial_inteligence/original_vibe_coding.md",
+    "notes/artificial_inteligence/spec_driven_development.md",
+    "notes/artificial_inteligence/agent_skills.md",
+    "notes/artificial_inteligence/retrieval_augmented_generation.md",
+    "notes/artificial_inteligence/subagents.md",
+    "notes/recursion.md",
+    "notes/artificial_inteligence/subagents.md.tmp.169563.fd633400fde3",
+    "notes/artificial_inteligence/subagents.md.tmp.169563.288b9d76a246",
+    "notes/golang/go_functions.md",
+    "go_array_and_slices.md",
+    "notes/linked_lists.md",
+    "notes/recursion.md.tmp.13782.cd1c33338795",
+    "notes/recursion.md.tmp.13782.60ae6a351340",
+    "notes/golang/goroutine_infinite_stack.md",
+    "notes/golang/goroutine_infinite_stack.md.tmp.13782.9911f6ad6426",
+    "notes/golang/goroutine_infinite_stack.md.tmp.13782.a0403743be0b",
+    "go_goroutine_infinite_call_stack.md",
+    "notes/golang/go_iterators.md",
+    "notes/golang/go_iterators.md.tmp.73094.206f5585da13",
+    "notes/golang/go_iterators.md.tmp.73094.c34081b9000f",
+    "notes/golang/go_loops.md",
+    "notes/golang/go_arrays_and_slices.md",
+    "notes/artificial_inteligence/vibe_coding.md",
     "notes/artificial_inteligence/llm_agent.md",
     "notes/artificial_inteligence/llm_fundamentals.md",
-    "notes/artificial_inteligence/llm_fundamentals.md.tmp.18010.0a8fd35f80ae",
-    "notes/artificial_inteligence/llm_fundamentals.md.tmp.17789.2bc6741549f0",
     "introductions/regexp_word_boundary.md",
     "drawings/typical_retrieval_pipeline.md",
     "notes/two_complement.md",
     "keywords.md",
-    "notes/artificial_inteligence/retrieval_augmented_generation.md",
-    "notes/linked_lists.md",
     "notes/large_language_models.md",
     "notes/golang/go_garbage_collector.md",
-    "notes/memory_locations.md",
-    "Sem título.md",
-    "notes/golang/go_memory_model.md",
-    "Untitled.md",
     "images/Pasted image 20260608103323.png",
     "images/Pasted image 20260608101629.png",
     "images/Pasted image 20260608091100.png",
@@ -344,7 +352,10 @@
     "images/Pasted image 20260608083657.png",
     "images/Pasted image 20260601201740.png",
     "images/Pasted image 20260531220816.png",
+<<<<<<< HEAD
     "notes/golang/go_structs.md",
+=======
+>>>>>>> e44c7f62755f7e35e1deb4913bd1ec3e32f730b0
     "images/go_documentation_generation.png",
     "Pasted image 20260507073921.png",
     "images/typical_retrieval_pipeline_workflow.png"

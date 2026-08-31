@@ -120,9 +120,9 @@ Output is inserted as plain text. Output will not be scanned for command invocat
 
 For multi-line commands, use a fenced code block \`\`\`! instead of the inline form.
 ### Run skills in sub-agents
-A skill with a `context: fork` frontmatter is executed in isolation in a [separate agent](subagents.md) and don't have access to your conversation history.
+A skill with a `context: fork` frontmatter is executed in isolation in a [separate agent](subagents.md#Forks) and don't have access to your conversation history.
 
-A forked skill using `agent: Explore` skip `CLAUDE.md and git status` to keep their context small, so this agent sees only the `SKILL.md` content and the agent's own system prompt.
+>Forking a skill essentially converts it to an Agent. The skill's content become the task prompt for a spawned subagent (defaulting to `general-purpose`) agent, or other agent specified.
 
 ```plaintext
 ---
@@ -134,6 +134,16 @@ agent: Explore
 
 Research $ARGUMENTS thoroughly
 ```
+### When should a skill become an agent?
+Skills work best for specific, repeatable procedures, where the work is small, the steps are known, and you want it to happen the same way every time.
+
+If the same expertise is needed by more than one agent or conversation, it belongs in a Skill.
+
+**When to make it an [agent](subagents.md)***:
+- **Needs isolation**: Benefits from fresh eyes, you don't want the main conversation context biasing the output.
+- **Generates noise**: The task is a multi-step job that will generate a lot of intermediate noise that's not meaningful to your main conversation context.
+- **Requires Parallelism**: Multiple evaluations or analysis that don't depend on each other.
+- **Don't need interaction**: It's a job where you ask it and get an output, you don't need to iterate on the steps while it's working (agents run in a separate, isolated context, without user intervention, you can't interact with them even if you want it to).
 ## Limitations and constraints
 The exact runtime environment available to your skill depends on the product surface where you use it.
 - **Web Interface**:
@@ -169,6 +179,15 @@ Skills are a useful way to package repetitive tasks or input sensitive prompts s
 - **Context Window**: Adding too much information to a skill can give more background but can also make it less accurate as the skill content is loaded in your conversation history.
 - **Quality x Quantity**: Having too many skills in your agent can confuse the agent as it tries to determine which skill to use. Skills that do the same task but have different name/description can cause the agent to invoke different skill on the same problem which can produce non-deterministic output.
 ## Examples
+```markdown
+---
+name: sample-skill
+description: demonstrate how a skill is created, use it when user requests an explanation of what is a skill
+---
+
+# Sample Skill
+Give explanations on what is an Agent Skill, how to use it and when to create one.
+```
 ## References
 - [Context Files](claude_context_files.md)
 - [Agent](subagents.md)
@@ -178,8 +197,6 @@ Skills are a useful way to package repetitive tasks or input sensitive prompts s
 - [Permission Rules](https://code.claude.com/docs/en/permissions)
 - [String Substitution](https://code.claude.com/docs/en/skills#available-string-substitutions)
 - [Settings File](https://code.claude.com/docs/en/settings#settings-files)
-## Questions
-- What's the difference between agent skills and coding agents skills?
 ## Flashcards
 - Q: What are agent skills?
 - A: Modular, file-based packages of instructions, metadata, and optional resources that an agent loads automatically when relevant to specialize its behavior.
